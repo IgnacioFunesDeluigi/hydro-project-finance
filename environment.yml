@@ -1,0 +1,11 @@
+name: hydro
+channels:
+  - defaults
+dependencies:
+  - python=3.13
+  - pandas
+  - matplotlib
+  - openpyxl
+  - numpy
+  - jupyterlab
+prefix: C:\Users\Usuario\anaconda3\envs\hydro
