@@ -1,6 +1,6 @@
 name: hydro
 channels:
-  - defaults
+  - conda-forge
 dependencies:
   - python=3.13
   - pandas
@@ -8,4 +8,3 @@ dependencies:
   - openpyxl
   - numpy
   - jupyterlab
-prefix: C:\Users\Usuario\anaconda3\envs\hydro
