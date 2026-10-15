@@ -5,8 +5,8 @@
 - How much senior debt can a run-of-river power plant of approximately 10 MW on an Argentine river (with actual daily flow records) sustain, when sized based on a minimum DSCR calculated against P90 energy production; and what is the probability of breaching the DSCR covenant when historical hydrological variability is simulated?
 
 ## Hypotheses
-- H1: Debt capacity is determined by dry years in particular, by sequences of several consecutive dry years.
-- H2: The design storm method alters the CAPEX for the tailings storage facility and the losses in the tailings, but has little impact on the debt sized at the P90 level.
+- H1: Debt capacity is determined by dry years, in particular by sequences of several consecutive dry years.
+- H2: The design-storm method changes the spillway CAPEX and the tail losses (flood damage and downtime), but has little impact on the debt sized at P90.
 - H3: If the years are modeled as independent (ignoring the fact that a dry year often follows another), the probability of breaching the covenant is underestimated. 
 
 ## In scope
