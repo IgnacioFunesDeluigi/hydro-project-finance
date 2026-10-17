@@ -42,11 +42,11 @@ Considering that there are two types of data: consolidated data (data that has a
 
 ## D5 · 2026-10-16 · Criterion for determining a dry year
 
-**Decisions:**
+**Decision:**
 - A year is considered “dry” if its mean annual flow is below the median of the mean annual flows.
 - The median is calculated based on 69 full years (1957–2025), excluding 1956 and 2026 as they are incomplete.
-- The resulting threshold is 40.6 m³/s.
-- For now, calendar years (January to December) are being used. This is provisional, pending the definition of the hydrological year in D6.
+- The resulting threshold is 40.8 m³/s.
+- Updated: superseded by D6, analysis now uses hydrological years (Oct-Sep)
 
 **Why:**
 - The median divides the dataset into two equal halves and is not skewed by extreme years, such as 1983 or 1987, whereas the mean would be.
@@ -56,11 +56,35 @@ Considering that there are two types of data: consolidated data (data that has a
 
 **Limitations:**
 - This is a criterion based on the historical record itself: “dry” means “drier than half of the years on record for this river”. It is neither a physical nor an official threshold.
-- Calendar years are split in two each summer. This may change once D6 is defined.
 - It includes years that contain interpolated days (D4).
 
 **Sources:**
 - Own analysis, notebooks/01_hydrology.ipynb, section 1.5.
 - Method: https://pandas.pydata.org/docs/reference/api/pandas.Series.median.html
 - Alternative: https://www.irrigacion.gov.ar/web/wp-content/uploads/2024/06/DGI_INFORME_ANUAL_21_22.pdf
+- Own analysis, notebooks/01_hydrology.ipynb, section 1.6.
 - (EST)
+
+## D6 · 2026-10-17 · Determining the Hydrological Year
+
+**Decision:**
+ - D5 used calendar years provisionally; calendar years split each snowmelt season (Dec-Jan) in two. This requires us to adopt a different organizational approach in which the years begin with the period of lowest flow, so that a complete snowmelt season falls within the same year (July through October ≈ 20–27 m³/s; January ≈ 98 m³/s).
+ - As explained above, river flow is primarily influenced by snowmelt, so the snowmelt flow from a single season is spread across two different years (since the division occurs between December and January, a period of high flow).
+ - Therefore, the decision has been made to process the data by dividing it into hydrological years running from October to September.  
+ - Each hydrological year is labeled by the year in which it ends (hydrological year 1957 = 1956-10-01 to 1957-09-30)
+
+**Why:**
+ - The Mendoza General Irrigation Department (the provincial water resource authority for the river in question) has explicitly adopted this hydrological year as the official standard (OFICIAL). Every October, the DGI prepares a runoff forecast for the coming season.
+ - Looking ahead to the next stages of the project, the plant’s annual energy output will be calculated by adding up the days in each year. If the year ends in the middle of summer, the snowmelt from a single season is split between two different years. One year would appear to be dry and the other wet, even though the river has not changed. That distortion would be directly reflected in the P50 and P90 analyses.
+
+ **Alternative considered:**
+ - The historical data set from the Argentine National Water Information System begins in July 1956 and ends in June 2026. This time frame is another option and could be fully applied to the analysis. However, it was decided to rule it out since it would represent a personal, unofficial decision. It is worth noting that if this alternative had been chosen, 70 years of data would have been available instead of 69; however, given the large number of years for which data was available, it was decided to discard this alternative.
+
+ **Limitations:**
+ - 69 complete hydrological years (1957-2025, labeled by end year), one fewer than the July-June alternative (70), since 3 months are lost at the beginning and 9 months at the end of the historical time series of measurements
+
+**Sources:**
+ - Own analysis: notebooks/01_hydrology.ipynb (monthly mean flows).
+ - https://www.irrigacion.gov.ar/web/wp-content/uploads/2024/06/DGI_INFORME_ANUAL_21_22.pdf (OFICIAL)
+ - (EST)
+ 
