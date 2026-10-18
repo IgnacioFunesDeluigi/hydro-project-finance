@@ -88,3 +88,27 @@ Considering that there are two types of data: consolidated data (data that has a
  - https://www.irrigacion.gov.ar/web/wp-content/uploads/2024/06/DGI_INFORME_ANUAL_21_22.pdf (OFICIAL)
  - (EST)
  
+ ## D7 · 2026-10-18 · Ecological flow
+
+**Decision:**
+ - The ecological flow is constant and equal to 4.4 m³/s, which is 10% of the average daily flow over the 69 complete hydrological years (44.0 m³/s).
+ - Using the ecological flow: the river flow is reduced day by day: q_available = (q_hy − q_ec).clip(lower=0). Negative results are ignored because they are meaningless.
+ - The design flow and all energy calculations use q_available, not the river flow.
+
+**Why:**
+ - No biological studies of the site were found, nor were there any regulations from Mendoza or the DGI that establish a numerical value. This is why the Tennant (1975) method is used.
+ - 10% of the average annual flow corresponds to the “Poor or Minimum” threshold in Table 1. Although a flow corresponding to 30% is also defined as the “fair or degrading” level for the high-flow season, it was decided to use the minimum of 10% for the calculations.
+
+ **Alternative considered:**
+ - Tennant with seasonal values: a higher percentage during the peak season, which on the Mendoza River runs from October to March due to the reversal of seasons. This was ruled out at this stage for the sake of simplicity. However, it will be considered for the model's sensitivity analysis.
+
+ **Limitations:**
+ - 10% is Tennant's minimum: it is the least restrictive option for the plant and, therefore, optimistic in terms of energy. A regulator might require more.
+ - The method was developed using rivers in the Northern Hemisphere (Montana) and is not specifically calibrated for a snowmelt-fed Andean river.
+ - A constant value ignores seasonality.
+ - [PENDING]: P50/P90 energy sensitivity with an ecological flow of 20% and 30% of the mean annual flow
+
+**Sources:**
+ - Tennant, D. L. (1975), Instream Flow Regimens for Fish, Wildlife, Recreation and Related Environmental Resources, USFWS, Table 1: https://files.dep.state.pa.us/Water/BSDW/Public_Water_Supply_Permits/TennantMethodPaper_1975.pdf
+ - Own analysis: notebooks/01_hydrology.ipynb, section 1.8.
+ - Tags: (EST) for the method and (VERIFICAR) for the local regulatory requirement.
