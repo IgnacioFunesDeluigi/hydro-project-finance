@@ -112,3 +112,43 @@ Considering that there are two types of data: consolidated data (data that has a
  - Tennant, D. L. (1975), Instream Flow Regimens for Fish, Wildlife, Recreation and Related Environmental Resources, USFWS, Table 1: https://files.dep.state.pa.us/Water/BSDW/Public_Water_Supply_Permits/TennantMethodPaper_1975.pdf
  - Own analysis: notebooks/01_hydrology.ipynb, section 1.8.
  - Tags: (EST) for the method and (VERIFICAR) for the local regulatory requirement.
+
+  ## D8 · 2026-10-19 · Head, efficiency and turbine configuration
+
+**Decision:**
+ - The project is based on the assumption of an installed capacity of 10 MW 
+ - A constant efficiency value of η = 0.88 is assumed. For now, we will not consider that this value changes with the flow rate entering the turbine.
+ - The design flow rate is set at 43.0 m3/s. The methods used to arrive at this value are detailed in the notebook.
+ - Using the power equation, the required net head is calculated to be 26.9 meters.
+ - The configuration of the base hydroelectric power plant is “Config. B”: 1 Kaplan turbine with a capacity of 43.0 m3/s, with a technical minimum flow rate of 15% (6.45 m3/s).
+
+**Why:**
+ - 26.9 m is considered a low head according to ESHA [(European Small Hydropower Association, 2004), section 1.3] (<30 m) and falls within the range for a Kaplan turbine, but at the lower end of the range for a Francis turbine.
+ - Days below the minimum technical flow:
+
+ | Config | Complete period | Dry years |
+| :--- | :---: | ---: |
+| A (2×Francis) | 3.5% | 7.1% |
+| B (1×Kaplan) | 0.05% | 0.1% |
+| C (2×Kaplan) | 0.0% | 0.0% |
+
+ - Configuration B is virtually the same as C in terms of days lost and is simpler from an operational standpoint: a single machine.
+
+ **Alternative considered:**
+ - C (2×Kaplan): redundancy and better efficiency at partial load. Ruled out for the base case for simplicity; remains as an alternative.
+ - A (2×Francis): the worst in terms of lost days. This is reflected in the sensitivity analysis in 1.11 (P50/P90 of A versus B).
+
+ **Limitations:**
+ - η is constant : the model does not account for the drop in efficiency at partial load, so it is optimistic scenario for B.
+ - No redundancy: A failure or maintenance means zero power generation. Pending: Availability assumption.
+ - The head is back-calculated from the power equation [P = ρ · g · Q · H_n · η]. It has not been measured on site (VERIFICAR: DEM or topographic survey).
+ - Comparative CAPEX without a source: in other words, It is assumed that a single Kaplan unit has lower CAPEX than two units (A or C); no reliable source was found (VERIFICAR).
+
+**Sources:**
+ - ESHA (2004), Guide on How to Develop a Small Hydropower Plant: Section 1.3 (head classification) and Table 3-2, p. 62 (technical minimum). https://energycommunityplatform.eu/wp-content/uploads/2022/06/Merged-Guide-Develop-a-Small-Hydropower-Plant.pdf
+ - USBR (2005): efficiency ~90%. https://www.usbr.gov/power/edu/pamphlet.pdf
+ - NTUA: Power equation and net head. https://www.itia.ntua.gr/el/getfile/2050/7/documents/06_SmallHydroSupplementary.pdf
+ - Tsuanyo et al. (2023), Table 2: head ranges. https://tethys-engineering.pnnl.gov/publications/design-models-small-run-river-hydropower-plants-review
+ - (EST) for η and the configuration.
+ - (VERIFICAR) for the head and CAPEX.
+
