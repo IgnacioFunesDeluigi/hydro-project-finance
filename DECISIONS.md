@@ -152,3 +152,29 @@ Considering that there are two types of data: consolidated data (data that has a
  - (EST) for η and the configuration.
  - (VERIFICAR) for the head and CAPEX.
 
+## D9 · 2026-10-19 · Method for P50 and P90 of annual energy
+
+**Decision:**
+ - Annual energy is calculated by adding the daily energy of each complete hydrological year (69 years, 1957-2025, D6).
+ - P50 and P90 are the empirical percentiles of these 69 annual values: P50 = quantile(0.50), P90 = quantile(0.10), using pandas (linear interpolation).
+ - Results: mean 56.7 GWh, P50 57.1 GWh, P90 45.0 GWh, P90/P50 = 0.79. Plant factor: 65.1% (P50) and 51.4% (P90).
+
+**Why:**
+ - The record is long (69 complete years) and includes the main dry streaks, so the empirical distribution already contains the real variability of the river.
+ - The method is simple, reproducible and easy to explain to a committee. It does not need to assume a shape for the distribution.
+ - P50 and P90 are the values banks use to judge if a project can pay its debt; the P90 is used to size the debt (D1).
+
+**Alternative considered:**
+ - Fitting a statistical distribution (for example, a normal distribution) to the 69 annual values and reading the P90 from it. Not used for now because it adds an assumption about the shape of the distribution that is not needed with 69 years of data. It can be used later as a check.
+
+**Limitations:**
+ - The method treats years as independent. The data show that low years come in dry streaks (6 of the 7 years below the P90 are inside streaks). The risk of several bad years in a row is not captured by a one-year P90 (H1, to be tested in the financial stage).
+ - With 69 values, the P90 depends on a small number of low years.
+ - The results inherit the assumptions of D4, D7 and D8, and the simplification of constant flow during each day (section 1.10).
+
+**Sources:**
+ - Penn State EME 810, 8.4 Exceedance Probabilities: P50, P75, P90: https://courses.ems.psu.edu/eme810/node/630
+ - EIA Glossary, "Capacity factor": https://www.eia.gov/tools/glossary/index.php?id=C
+ - Own analysis: notebooks/01_hydrology.ipynb, section 1.11.
+ - Method: https://pandas.pydata.org/docs/reference/api/pandas.Series.quantile.html
+ - (EST)

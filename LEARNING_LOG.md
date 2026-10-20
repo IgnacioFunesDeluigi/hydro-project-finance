@@ -95,3 +95,45 @@
     - Diagnostico de buffer viejo en VScode
     - Verificación independiente de todos los resultados.
 
+## 2026-10-19 · 5 h
+- Hice: 
+    - Hoja de ruta de lo que queda de la fase 1, de la 1.9 a la 1.13.
+    - 1.9: salto y turbina.
+     - Ecuación de potencia. Salto neto requerido: H = 26.9 m, con 10 MW, 43.0 m3/s y η = 0.88.
+     - Encontrar fuente de ESHA (Tabla 3-2) con el mínimo técnico de cada turbina y se hizo la verificacion.
+     - Comparacion de tres configuraciones por días bajo el mínimo técnico:
+                    | Config | Complete period | Dry years |
+                    | :--- | :---: | ---: |
+                    | A (2×Francis) | 3.5% | 7.1% |
+                    | B (1×Kaplan) | 0.05% | 0.1% |
+                    | C (2×Kaplan) | 0.0% | 0.0% |
+
+     - Bug: los contadores de años secos usaban el contador del período completo.
+     - Primera propuesta de D8 con Francis, se reformuló y seleccionó B: 1 Kaplan de 43 m3/s.
+     - En D8 se corrigió la limitación de CAPEX.
+    - Investigación: cómo modelar η. La respuesta fue curvas de fabricante o de guía e interpolación, no regresión.
+    - 1.10: potencia y energía diaria
+     - q_turbined con .clip() y .where().
+     - Tres controles: 10 MW, 30% de días a plena potencia y 13 días en cero.
+    - 1.11: energía anual, P50, P90 y factor de planta
+     - Primer intento agrupado por año calendario: dio 70 años, con 1956 y 2025 parciales.
+     - Resultado final: P50 = 57.1 GWh, P90 = 45.0 GWh, P90/P50 = 0.79, factor de planta de 65% (P50) y 51% (P90).
+     - Los 7 años bajo el P90 son años secos y 6 están dentro de rachas, lo que apoya H1.
+    - Visión global: fase 1 al ~85%, adelantada en calendario y excedida en horas.
+
+
+- Aprendí:
+    - Salto bruto contra neto; eficiencia (USBR ~90%); clasificación de salto bajo (<30 m, ESHA).
+    - Caudal mínimo técnico por tipo de turbina; Kaplan contra Francis a carga parcial.
+    - Límite del modelo: con η constante no se distinguen B y C. Redundancia y disponibilidad.
+    - Potencia (MW) contra energía (MWh, GWh); compatibilidad de unidades en el factor de planta.
+    - Controles que dan bien “por construcción”: verifican el código.
+    - P50 y P90 como excedencia; mediana contra media.
+    - Variabilidad estacional (Q10/Q90) contra interanual (P90/P50); persistencia de los años malos.
+    - pandas: .clip, .where, groupby por año hidrológico, .describe(), formato :.1%, axhline y legend.
+- No entendí:
+    - Nada pendiente
+- Ayuda de IA:
+    - La estructura de la D8.
+    - Las explicaciones de por qué el modelo no distingue B de C y de cómo se modela η variable.
+    - Verificación independiente de resultados.
