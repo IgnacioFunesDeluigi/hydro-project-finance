@@ -33,12 +33,19 @@ Considering that there are two types of data: consolidated data (data that has a
 
 **Decision:** there are 103 missing dates, and they are grouped in 3 big clear groups (1962-09-01 to 1962-09-30 with 30 missing dates ; 1976-06-22 to 1976-07-31 with 40 missing dates ; 1985-06-01 to 1985-06-30 with 30 missing dates), the other 3 dates are scattered and they do not constitute a problem. With this in mind, it was decided to interpolate the flow ('q_m3s') values related with the missing dates, using the 'time' method, which interpolates the value associated with the index based on the time spans between the measured data points. 
 
-**Why:** it was decided to interpolate these values and not to discard the missing data groups because this would skew hypothesis H1. Also, the missing data groups are related with winter season: period of low, stable and predictable flow. Added to this, the measured values before and after the missing groups are similar. [To be validated by comparing P50/P90 annual energy with and without the 5 affected years.].
+**Why:** it was decided to interpolate these values and not to discard the missing data groups because this would skew hypothesis H1. Also, the missing data groups are related with winter season: period of low, stable and predictable flow. Added to this, the measured values before and after the missing groups are similar. Results [in section 1.12]:
+ - ΔP50 = +1.4% and ΔP90 = −1.8%, based on a 64-year time series.
+ - This is an upper bound on the interpolation effect, because measured days are also excluded, which changes the sample.
+ - It is non-material parameter compared to the ecological flow (−19% at the P90).
+ - Physical argument: 103 days (0.4% of the record), in winter, with low and stable flow.
+ - Conclusion: The interpolation remains unchanged.
+
 
 **Source:** 
 - Own analysis.
 - Notebooks/01_hydrology.ipynb, section 1.2 (gap table: long gaps fall in low-flow winter months).
 - Method: https://pandas.pydata.org/docs/reference/api/pandas.Series.interpolate.html (EST)
+- Notebooks/01_hydrology.ipynb, section 1.12 (validation).
 
 ## D5 · 2026-10-16 · Criterion for determining a dry year
 

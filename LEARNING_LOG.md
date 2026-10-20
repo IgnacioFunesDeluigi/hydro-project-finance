@@ -135,5 +135,6 @@
     - Nada pendiente
 - Ayuda de IA:
     - La estructura de la D8.
+    - El texto completo del markdown de concepto y de la interpretación de la 1.11.
     - Las explicaciones de por qué el modelo no distingue B de C y de cómo se modela η variable.
     - Verificación independiente de resultados.
