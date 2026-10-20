@@ -10,7 +10,7 @@
 
 ## D2 · 2026-10-15 · Python version
 
-**Decision:** dedicated conda environment "hydro" from conda-forge, Python pinned to 3.13.
+**Decision:** dedicated conda environment "hydro" from conda-forge, Python pinned to 3.13. Versions pinned in environment.yml on 2026-10-20 (python 3.13.16, pandas 3.0.6, numpy 2.5.4, matplotlib 3.11.2, openpyxl 3.1.5, jupyterlab 4.6.4)
 
 **Why:** pandas supports Python 3.14 only since 2.3.3; 3.13 has a longer track record and lowers the risk that later libraries (e.g. PyTorch in phase 6) lack 3.14 builds.
 
