@@ -168,10 +168,35 @@
 
 - No entendí:
     - Nada pendiente
-    
+
 - Ayuda de IA:
  - el esqueleto de la función;
  - el bloque corregido de la validación de D4;
  - la estructura de la tabla;
  - el arreglo del loop
  - checklists de contenido
+
+## 2026-10-21 · 5 h
+- Hice:
+ - learning log del 20/10
+ - README completo (corregido en dos rondas)
+ - puerta aprobada con correcciones
+ - justificación y limitación del Q30 en la D8
+ - auditoría completa del repo
+ - corrección de la leyenda del gráfico
+ - cierre del pendiente de la D7
+ - informe de cierre
+
+- Aprendí:
+ - qué va en un README y qué no (integridad)
+ - links e imágenes en Markdown
+ - la diferencia entre una elección convencional y una optimizada (Q30)
+ - que un archivo puede cambiar solo por los finales de línea
+
+- No entendí:
+ - Nada pendiente
+
+- Ayuda de IA:
+ - revisión del README
+ - auditoría independiente (recálculo del CSV y revisión de los gráficos)
+ - redacción del informe de cierre
