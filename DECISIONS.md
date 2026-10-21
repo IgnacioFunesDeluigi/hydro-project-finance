@@ -113,7 +113,7 @@ Considering that there are two types of data: consolidated data (data that has a
  - 10% is Tennant's minimum: it is the least restrictive option for the plant and, therefore, optimistic in terms of energy. A regulator might require more.
  - The method was developed using rivers in the Northern Hemisphere (Montana) and is not specifically calibrated for a snowmelt-fed Andean river.
  - A constant value ignores seasonality.
- - [PENDING]: P50/P90 energy sensitivity with an ecological flow of 20% and 30% of the mean annual flow
+ - Sensitivity done in section 1.12: at 20%, P50 −10.8% and P90 −19.4%; at 30%, P50 −25.5% and P90 −41.0%. It is the most material assumption (VERIFICAR)
 
 **Sources:**
  - Tennant, D. L. (1975), Instream Flow Regimens for Fish, Wildlife, Recreation and Related Environmental Resources, USFWS, Table 1: https://files.dep.state.pa.us/Water/BSDW/Public_Water_Supply_Permits/TennantMethodPaper_1975.pdf
