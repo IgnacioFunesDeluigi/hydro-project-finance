@@ -138,3 +138,40 @@
     - El texto completo del markdown de concepto y de la interpretación de la 1.11.
     - Las explicaciones de por qué el modelo no distingue B de C y de cómo se modela η variable.
     - Verificación independiente de resultados.
+
+## 2026-10-20 · 7 h
+- Hice:
+ - 1.12:
+    - función compute_annual_energy
+    - errores: el caudal de diseño se recalculaba en cada escenario y la Config A no dividía el mínimo técnico por unidades.
+    - assert sobre la potencia máxima
+    - tabla de 5 escenarios
+    - validación de D4: +1.4% y −1.8%, como cota superior y no material
+    - ranking de materialidad: el caudal ecológico primero, con la fuente más débil.
+ - 1.13:
+    - exportación del CSV con 6 columnas y control de ida y vuelta
+    - bug de isin (valores contra índice)
+    - tres gráficos guardados con savefig
+ - Bug del loop: for q in pisaba la serie q y aparecía con Run All
+ - Entorno: el kernel crasheó de nuevo por abrir VS Code fuera del prompt activado.
+ - Versiones fijadas en environment.yml.
+
+- Aprendí:
+ - análisis de sensibilidad y materialidad
+ - qué queda fijo y qué cambia en cada escenario
+ - funciones, parámetros por defecto y alcance de variables
+ - assert
+ - “la energía del caudal medio no es igual a la energía media”
+ - el control contra el límite físico (87,6 GWh)
+ - datos crudos contra procesados
+ - reproducibilidad
+
+- No entendí:
+    - Nada pendiente
+    
+- Ayuda de IA:
+ - el esqueleto de la función;
+ - el bloque corregido de la validación de D4;
+ - la estructura de la tabla;
+ - el arreglo del loop
+ - checklists de contenido
