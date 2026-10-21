@@ -141,15 +141,18 @@ Considering that there are two types of data: consolidated data (data that has a
 
  - Configuration B is virtually the same as C in terms of days lost and is simpler from an operational standpoint: a single machine.
 
+ - The design flow is Q30 of the available flow, a conventional starting point within the typical Q30–Q40 range for run-of-river plants
+ 
  **Alternative considered:**
  - C (2×Kaplan): redundancy and better efficiency at partial load. Ruled out for the base case for simplicity; remains as an alternative.
- - A (2×Francis): the worst in terms of lost days. This is reflected in the sensitivity analysis in 1.11 (P50/P90 of A versus B).
+ - A (2×Francis): the worst in terms of lost days. This is reflected in the sensitivity analysis in 1.12 (P50/P90 of A versus B).
 
  **Limitations:**
  - η is constant : the model does not account for the drop in efficiency at partial load, so it is optimistic scenario for B.
  - No redundancy: A failure or maintenance means zero power generation. Pending: Availability assumption.
  - The head is back-calculated from the power equation [P = ρ · g · Q · H_n · η]. It has not been measured on site (VERIFICAR: DEM or topographic survey).
  - Comparative CAPEX without a source: in other words, It is assumed that a single Kaplan unit has lower CAPEX than two units (A or C); no reliable source was found (VERIFICAR).
+ - Q30 was not optimized. ESHA (2004, section 3.6) identifies the design flow through an optimization over a range of flows; this requires CAPEX and will be tested in the financial model (stage 2)
 
 **Sources:**
  - ESHA (2004), Guide on How to Develop a Small Hydropower Plant: Section 1.3 (head classification) and Table 3-2, p. 62 (technical minimum). https://energycommunityplatform.eu/wp-content/uploads/2022/06/Merged-Guide-Develop-a-Small-Hydropower-Plant.pdf
