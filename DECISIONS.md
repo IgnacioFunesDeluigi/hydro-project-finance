@@ -150,7 +150,7 @@ Considering that there are two types of data: consolidated data (data that has a
  **Limitations:**
  - η is constant : the model does not account for the drop in efficiency at partial load, so it is optimistic scenario for B.
  - No redundancy: A failure or maintenance means zero power generation. Pending: Availability assumption.
- - The head is back-calculated from the power equation [P = ρ · g · Q · H_n · η]. It has not been measured on site (VERIFICAR: DEM or topographic survey).
+ - The head is back-calculated from the power equation [P = ρ · g · Q · H_n · η]. The Head is a design parameter for a hypothetical power plant. The relevant limitation is that, with a low head and high flow rate, the cost per installed kW is higher (IRENA 2012, section 4.1) : a factor that is factored into the CAPEX for stage 2.
  - Comparative CAPEX without a source: in other words, It is assumed that a single Kaplan unit has lower CAPEX than two units (A or C); no reliable source was found (VERIFICAR).
  - Q30 was not optimized. ESHA (2004, section 3.6) identifies the design flow through an optimization over a range of flows; this requires CAPEX and will be tested in the financial model (stage 2)
 
@@ -159,8 +159,9 @@ Considering that there are two types of data: consolidated data (data that has a
  - USBR (2005): efficiency ~90%. https://www.usbr.gov/power/edu/pamphlet.pdf
  - NTUA: Power equation and net head. https://www.itia.ntua.gr/el/getfile/2050/7/documents/06_SmallHydroSupplementary.pdf
  - Tsuanyo et al. (2023), Table 2: head ranges. https://tethys-engineering.pnnl.gov/publications/design-models-small-run-river-hydropower-plants-review
+ - IRENA (2012), Renewable Energy Technologies: Cost Analysis Series, Hydropower, section 4.1, fig. 4.3. https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2012/RE_Technologies_Cost_Analysis-HYDROPOWER.pdf
  - (EST) for η and the configuration.
- - (VERIFICAR) for the head and CAPEX.
+ - (VERIFICAR) for CAPEX.
 
 ## D9 · 2026-10-19 · Method for P50 and P90 of annual energy
 
@@ -178,15 +179,17 @@ Considering that there are two types of data: consolidated data (data that has a
  - Fitting a statistical distribution (for example, a normal distribution) to the 69 annual values and reading the P90 from it. Not used for now because it adds an assumption about the shape of the distribution that is not needed with 69 years of data. It can be used later as a check.
 
 **Limitations:**
- - The method treats years as independent. The data show that low years come in dry streaks (6 of the 7 years below the P90 are inside streaks). The risk of several bad years in a row is not captured by a one-year P90 (H1, to be tested in the financial stage).
+ - The method treats years as independent. The data show that low years come in dry streaks (runs test: 24 runs vs 35.5 expected, z = −2.79; lag-1 autocorrelation 0.64, section 1.14). The risk of several bad years in a row is not captured by a one-year P90. Persistence confirmed in 1.14; its effect on debt (H1) and covenant risk (H3) is tested in stages 2–3. (updated 2026-10-22)
  - With 69 values, the P90 depends on a small number of low years.
  - The results inherit the assumptions of D4, D7 and D8, and the simplification of constant flow during each day (section 1.10).
 
 **Sources:**
  - Penn State EME 810, 8.4 Exceedance Probabilities: P50, P75, P90: https://courses.ems.psu.edu/eme810/node/630
  - EIA Glossary, "Capacity factor": https://www.eia.gov/tools/glossary/index.php?id=C
- - Own analysis: notebooks/01_hydrology.ipynb, section 1.11.
+ - Own analysis: notebooks/01_hydrology.ipynb, section 1.11 and section 1.14
  - Method: https://pandas.pydata.org/docs/reference/api/pandas.Series.quantile.html
+ - NIST/SEMATECH e-Handbook 1.3.5.12, Autocorrelation. https://www.itl.nist.gov/div898/handbook/eda/section3/eda35c.htm
+ - NIST/SEMATECH e-Handbook 1.3.5.13, Runs Test. https://www.itl.nist.gov/div898/handbook/eda/section3/eda35d.htm
  - (EST)
 
  ## D10 · 2026-10-22 · Semiannual periods for the energy series [EST]

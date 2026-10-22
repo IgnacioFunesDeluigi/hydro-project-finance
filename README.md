@@ -19,7 +19,8 @@ Work in progress: Module A (hydrology) complete; financial model in progress
 
 ## Results from the hydrological module:
  - Base case: Ecological flow: 10% of the average flow (Tennant, 4.4 m3/s); 1 × Kaplan configuration; and design flow = Q30 of the available flow.
-- Design flow: 43 m3/s ; Head: 26.9 m ; Power: 10 MW
+- Design flow: 43 m3/s ; Head: 26.9 m [design parameter, calculated based on 10 MW]; Power: 10 MW.
+- Semiannual energy: 65.7% from Oct–Mar; P50/P90 values per semester are 38.0/29.8 GWh (Oct–Mar) and 18.7/13.6 GWh (Apr–Sep).
 
 | Value | Annual energy (GWh) | Plant factor |
 | :--- | :---: | :---: |
@@ -31,7 +32,7 @@ Work in progress: Module A (hydrology) complete; financial model in progress
  - Graph: Annual energy 
  ![Annual energy](docs/figures/annual_energy.png)
 
-  - **Most important result:** All 7 years below the P90 are dry years, and 6 of them fall within dry spells (1967–72, 1996–97, 2011–15, 2018–23).
+  - **Most important result:** The results from section 1.14 indicate a total of 24 runs (wet and dry years) against an expected 35.5, with a z-score of −2.79 and an autocorrelation of 0.64. This points to a persistence of dry years: independence is rejected at 95% confidence (a bad year tends to be followed by another bad year). Nevertheless, the impact on debt capacity will be analyzed in the subsequent stages (2 and 3).
 
  - Sensitivity Analysis: Comparative Table of Scenarios
 
@@ -62,15 +63,17 @@ Scenarios:
  - Head, installed capacity and turbine type: Determine head using the power equation, determine the power generation thresholds for each configuration and determine the percentage of days below the threshold.
  - Daily power and energy: Filter the flow data to create 'q_turbined', and calculate power and energy , storing them in 'power_mw' and 'energy_mwh' series respectively. 
  - Annual energy, P50, P90 and plant factor: Obtain the energy generated per year, determine P50 and P90 values, determine the plant factor and identify the years below P90. The key ratio is P90/P50.
- - Sensitivity Analysis: create different scenarios (Eco 20%, Eco 30%, Config. A, No interpolated years) to measure how much the values of interest change (P50 ,P90, P90/P50, ΔP50 vs base (%), ΔP90 vs base (%))
+ - Sensitivity Analysis: create different scenarios (Eco 20%, Eco 30%, Config. A, No interpolated years) to measure how much the values of interest change (P50 ,P90, P90/P50, ΔP50 vs base (%), ΔP90 vs base (%)).
+ - Analyze the persistence of dry years (1.14).
+ - Organize the energy values into six month blocks (1.15, D10).
 
 ## Principal assumptions and limitations:
  - No official source was found that establishes a specific value or methodology for determining the ecological flow. Tennant 10% (VERIFICAR: no local regulation found); it is the most material assumption: at 20%, P90 falls 19.4% 
  - A constant value of η is assumed, even though many sources state that the efficiency ‘η’ varies depending on the flow rate entering the turbine.
- - A “head” value is set, and it is calculated based on a power output of 10 MW. In the future, a topographical survey of the area should be conducted to determine whether the specified “head” can be achieved. 
+ - A “head” value is set, and it is calculated based on a power output of 10 MW. This is a design parameter for a hypothetical power plant. The relevant limitation is that, with a low head and high flow rate, the cost per installed kW is higher (IRENA 2012, section 4.1): a factor that is factored into the CAPEX for stage 2.
  - We are assuming a hypothetical plant (one that does not currently exist), and it is also understood that all parameters that cannot be changed after the plant is built are fixed (such as the type of turbine, for example).
  - The average daily flow is assumed to be constant over a 24-hour period.
- - P90 treats each year as independent,  even though the data show dry streaks (persistence)
+ - P90 treats each year as independent,  even though the data show dry streaks (persistence). Section 1.14 demonstrates that dry years are not purely independent (z = −2.79, autocorrelation 0.64). For this reason, it is necessary to perform resampling in stage 3 using blocks of years rather than individual years.
  - Country risk, the exchange rate, and the energy buyer's risk have not yet been modeled.
 
 For a more complete list of assumptions and limitations, see: [DECISIONS.md](DECISIONS.md)
@@ -103,5 +106,3 @@ For a more complete list of assumptions and limitations, see: [DECISIONS.md](DEC
 LEARNING_LOG.md documents the entire learning process (what was done, reasons, what I learned, what I didn't understand), including any AI assistance received.
 
  ## License: MIT
-
-
