@@ -105,4 +105,23 @@ For a more complete list of assumptions and limitations, see: [DECISIONS.md](DEC
  ## Transparency:
 LEARNING_LOG.md documents the entire learning process (what was done, reasons, what I learned, what I didn't understand), including any AI assistance received.
 
- ## License: MIT
+What the AI did:
+ - Environment setup and debugging (Git, conda, VS Code kernel)
+ - Code blocks: FDC plot, function skeleton (1.12), D4 validation block, semiannual export (1.15); direct file edits: loop variable rename, removal of invisible characters
+ - Text: 1.11 markdown and interpretation, structure of D8 and D10, content checklists
+ - Explanations of concepts, with sources
+ - Source search and verification
+ - Independent verification of all numerical results; README review and final audit
+ - Personal study guide (PDF) and closing report, outside the repository
+
+What I did:
+ - Defined the research question, hypotheses (H1-H3) and project charter; set up the repository and the conda environment.
+ - Selected the gauge (Guido, SNIH 1413) and the data; loaded and quality-checked 25,567 days of records.
+ - Took and documented the decisions D1-D10 (gap filling, dry-year criterion, hydrological year, ecological flow, design flow, head, turbine configuration, P50/P90 method, semiannual periods), choosing between the alternatives and stating their limitations.
+ - Wrote most of the notebook code (sections 1.0-1.14), including the persistence tests (1.14), and all checks against earlier results.
+ - Found and fixed most bugs (calendar vs hydrological year, cumulative counters, design flow recalculated per scenario, isin on values vs index, dry-year counters).
+ - Interpreted every result: percentage points vs relative change, days vs energy, P90/P50 gap, materiality ranking of assumptions.
+ - Wrote the README, DECISIONS.md and LEARNING_LOG.md, and corrected them after each review.
+ - Passed the stage gate: explained P50 vs P90 and the design-flow choice without notes.
+
+## License: MIT

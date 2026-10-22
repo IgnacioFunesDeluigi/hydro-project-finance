@@ -200,3 +200,26 @@
  - revisión del README
  - auditoría independiente (recálculo del CSV y revisión de los gráficos)
  - redacción del informe de cierre
+ - Guía de estudio en PDF (la escribió la IA completa).
+
+ ## 2026-10-22 · 5 h
+- Hice:
+ - Analisis de persistencia de años secos (1.14).
+ - Organizacion de años por semestre (1.15).
+ - Completar D10.
+ - Correcciones y completar README.
+ - Correcciones y completar Learning Log.
+
+- Aprendí:
+ - Importancia de organizacion de datos por semestre, por su implicancia financiera.
+
+- No entendí:
+ - Nada pendiente
+
+- Ayuda de IA:
+ - Ayuda en la celda de código 1.15 y la línea que calcula la participación del caudal oct-mar (72,7%).
+ - Explicación de los conceptos de la 1.14 (autocorrelación, test de rachas) con fuentes. 
+ - Verificación independiente de los resultados de la 1.14 y de la 1.15.
+ - Búsqueda y verificación de fuentes: IRENA (2012), Operis y Wall Street Playbook.
+ - Edición directa de la IA en el repo: borró los caracteres invisibles de DECISIONS.md y un archivo de bloqueo de git.
+ - Actualización del informe de cierre y de la guía en PDF.
