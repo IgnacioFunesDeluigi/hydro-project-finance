@@ -202,16 +202,22 @@
  - redacción del informe de cierre
  - Guía de estudio en PDF (la escribió la IA completa).
 
- ## 2026-10-22 · 5 h
+ ## 2026-10-22 · 7 h
 - Hice:
  - Analisis de persistencia de años secos (1.14).
  - Organizacion de años por semestre (1.15).
  - Completar D10.
  - Correcciones y completar README.
  - Correcciones y completar Learning Log.
+ - Análisis de Población mezcla (1.16).
+ - Análisis de Estacionariedad (1.17).
+ - Se obtuvo respuesta de Dr. Catalini y su colocación de la cita en D1
+
 
 - Aprendí:
  - Importancia de organizacion de datos por semestre, por su implicancia financiera.
+ - Análisis de población mezcla (1.16) mediante coeficiente de pearson y spearman
+ - Análisis de estacionariedad mediante prueba de Mann-Kendall
 
 - No entendí:
  - Nada pendiente
@@ -223,3 +229,5 @@
  - Búsqueda y verificación de fuentes: IRENA (2012), Operis y Wall Street Playbook.
  - Edición directa de la IA en el repo: borró los caracteres invisibles de DECISIONS.md y un archivo de bloqueo de git.
  - Actualización del informe de cierre y de la guía en PDF.
+ - Esqueletos de código de la 1.16 y la 1.17, los conceptos con fuentes (Helsel) y verificacion de control con calculos independientes.
+ - Borrado de los caracteres invisibles del notebook.
