@@ -188,3 +188,27 @@ Considering that there are two types of data: consolidated data (data that has a
  - Own analysis: notebooks/01_hydrology.ipynb, section 1.11.
  - Method: https://pandas.pydata.org/docs/reference/api/pandas.Series.quantile.html
  - (EST)
+
+ ## D10 · 2026-10-22 · Semiannual periods for the energy series [EST]
+
+ **Decision:**
+ - It was decided to generate another .CSV file ['data/processed/semiannual_energy.csv'] in which the years are organized by semester. Specifically, the semesters spanning October–March and April–September are selected. These semesters are labeled according to the hydrological year in which they end; additionally, the energy generated during each half of the year is broken down.
+
+**Why:**
+ - The financial model is structured on a semi-annual basis, as this is the typical frequency for debt service in project finance. In other words, the data is organized in this stage to facilitate its interpretation in subsequent phases.
+ - The semesters—October–March and April–September—are chosen to ensure consistency with the previous decision (D6): this allows the thaw periods to be contained entirely within a single semester, thereby preventing them from being split across the transition between semesters.
+ - The cutoff separates the high-generation season (Oct–Mar, accounting for 65.7% of the energy and 72.7% of the flow) from the low-generation season. The P50/P90 values for each six-month period are 38.0/29.8 GWh (Oct–Mar) and 18.7/13.6 GWh (Apr–Sep).
+
+ **Alternative considered:**
+ - The alternative considered was to use calendar semesters (Jan–Jun / Jul–Dec): Calendar semesters split the thaw period in two, and each semester combines months of high and low generation. This is why it was ultimately discarded to ensure consistency with the aforementioned D6.
+
+ **Limitations:**
+ - This setup exports the base scenario; it does not export alternative scenarios such as eco20, eco30, or Config A.
+ - The contribution from October to March is flattened due to the design flow limit. From October to March, an average of 65.7% of the energy is generated, yet 72.7% of the river's flow occurs during this period.
+ - The actual debt payment dates are set in stage 2, which means they might not align with the end of the semesters. This will need to be verified at a later stage.
+
+**Sources:**
+ - D6: 'Determining the Hydrological Year'
+ - https://www.operis.com/loan-life-cover-ratio-explanation/
+ - https://www.wallstreetplaybook.org/blog/project-finance-modeling-guide
+ - Notebook section 1.15.
