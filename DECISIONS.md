@@ -6,7 +6,9 @@
 
 **Why:** design storms drive flood peaks, not annual energy yield.
 
-**Source:** project roadmap, section 1.
+**Source:**
+ - Project roadmap, section 1.
+ - C. G. Catalini, personal communication, October 22, 2026: written authorization to use and cite his design-storm methodologies and neural-network-generated series in the flood-risk module (v2).
 
 ## D2 · 2026-10-15 · Python version
 
