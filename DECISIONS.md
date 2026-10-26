@@ -201,7 +201,7 @@ Considering that there are two types of data: consolidated data (data that has a
 
 **Why:**
  - The financial model is structured on a semi-annual basis, as this is the typical frequency for debt service in project finance. In other words, the data is organized in this stage to facilitate its interpretation in subsequent phases.
- - The semesters—October–March and April–September—are chosen to ensure consistency with the previous decision (D6): this allows the thaw periods to be contained entirely within a single semester, thereby preventing them from being split across the transition between semesters.
+ - The semesters: October - March and April - September are chosen to ensure consistency with the previous decision (D6): this allows the thaw periods to be contained entirely within a single semester, thereby preventing them from being split across the transition between semesters.
  - The cutoff separates the high-generation season (Oct–Mar, accounting for 65.7% of the energy and 72.7% of the flow) from the low-generation season. The P50/P90 values for each six-month period are 38.0/29.8 GWh (Oct–Mar) and 18.7/13.6 GWh (Apr–Sep).
 
  **Alternative considered:**
@@ -301,7 +301,7 @@ The sum of both is 43.4 GWh. As can be seen, this total is lower than the 45.0 G
    2) Construction works and equipment in Argentina are subject to import costs. 
    3) A single turbine does not allow for the dilution of fixed costs.
  10,000 kW × 3,300 = USD 33 million in 2024 dollars. The ±15% CAPEX sensitivity from step 2.9 covers a range of 2,800 to 3,800.
- The IRENA costs are in 2024 dollars. Since the model uses nominal dollars, the CAPEX for each half-year—on the "Construction" sheet—is adjusted from 2024 to the date of expenditure, using the 2% rate already established.
+ The IRENA costs are in 2024 dollars. Since the model uses nominal dollars, the CAPEX for each half year on the "Construction" sheet is adjusted from 2024 to the date of expenditure, using the 2% rate already established.
  - Contingency % = 0% : IRENA’s cost figures reflect the actual costs of projects that have already been built. Any cost overruns that occurred are already factored into the average; therefore, adding an additional contingency would result in double-counting. 
 In any case, a bank would still require a contingency in the construction budget, but in this instance, it will be covered by the sensitivity analysis.
  - Development costs = 0 : IRENA defines its total installed cost as “including fixed financing costs,” and also clarifies that “owner costs” encompass project development. Therefore, development costs are already included in the 3,300 figure.
