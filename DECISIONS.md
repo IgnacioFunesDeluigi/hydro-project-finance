@@ -389,5 +389,33 @@ In any case, a bank would still require a contingency in the construction budget
  - Tax loss carryforwards: https://taxsummaries.pwc.com/argentina/corporate/deductions 
  - Project life / water concession: https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024 ; https://www.diariouno.com.ar/sociedad/mendoza-abrio-el-proceso-licitar-los-nihuiles-y-buscar-un-nuevo-operador-30-anos-n1579308
 
+## D16 · 2026-10-26 · Timeline conventions [EST]
 
+**Decision:**
+ - Semesters aligned with the hydrological year
+ - Financial close (FC) date: 1 October 2027
+ - Debt tenor and project life calculated from the COD
+ - Flags evaluated based on the period start date
+ - Escalation base: 1 July of CAPEX base year
+ - 70 columns ; Minimum number of periods : 60 operation periods + 4 construction periods
+ 
+**Why:**
+ - Data_Energy data is organized by hydrological semester (D10, D11), so the model's time periods must align with the data. The Data_Energy semesters represent periods of high and low production; therefore, analysis by semester is the most appropriate approach.
+ - The financial close date must fall on October 1st or April 1st so that the six-month periods align with D10. Furthermore, setting it for October 2027 allows for about 12 months to secure permits and financing.
+ - Debt tenor and project life are calculated from the Commercial Operation Date (COD), as this marks the point at which the power plant has been constructed and is operational, the precise moment when the construction phase ends and the commercial operation phase begins.
+ - FC, COD and debt maturity always fall on a period start date (1 October or 1 April), so evaluating flags on the start date assigns each period to exactly one phase 
+ - IRENA provides an annual average for 2024, and the midpoint of the year serves as its representative point.
+ - 70 columns are used in timeline because 6 spare periods allow Project life to increase up to 33 years without adding columns
+
+
+**Limitations:**
+ - The construction check assumes that the construction period is a multiple of 6 months.
+ - The closing date is tentative.
+ - If Project Life exceeds 33 years, there will be a shortage of columns, so they would need to be added manually.
+
+
+**Sources:**
+ - https://courses.renewablesvaluationinstitute.com/pages/academy/how-to-use-flags-in-financial-models
+ - https://support.microsoft.com/en-us/office/edate-function-3c920eb2-6e66-44e7-a1f5-753ae47ee4f5
+ - https://support.microsoft.com/en-us/office/eomonth-function-7314ffa1-2bc9-4005-9d66-f49db127d628
 
