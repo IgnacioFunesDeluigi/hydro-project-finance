@@ -202,7 +202,7 @@
  - redacción del informe de cierre
  - Guía de estudio en PDF (la escribió la IA completa).
 
- ## 2026-10-22 · 7 h
+## 2026-10-22 · 7 h
 - Hice:
  - Analisis de persistencia de años secos (1.14).
  - Organizacion de años por semestre (1.15).
@@ -231,3 +231,89 @@
  - Actualización del informe de cierre y de la guía en PDF.
  - Esqueletos de código de la 1.16 y la 1.17, los conceptos con fuentes (Helsel) y verificacion de control con calculos independientes.
  - Borrado de los caracteres invisibles del notebook.
+
+## 2026-10-22 - 2026-10-23 · 5 h
+- Hice:
+ - Estructura del repo: model/, exercises/, docs/model_book.md, y ~$* en .gitignore.
+ - Workbook hydro_pf_model_v1.xlsx con 13 hojas (Cover → Checks).
+ - Ejercicio 01_sculpting_3_periods.xlsx. El límite de gearing es el que manda (19.6 < 21.01): ajuste con el factor k, saldo final 0 y DSCR resultante 1.394.
+
+- Aprendí:
+ - SPV y deuda non-recourse.
+ - CFADS y DSCR, distinguiendo el target de dimensionamiento del covenant.
+ - Sculpting. Debt capacity = VP(CFADS/DSCR) a la tasa de la deuda.
+ - Deuda = mín(capacidad por DSCR, límite de gearing). Cuando manda el gearing, DSCR = target / k.
+ - LLCR, DSRA, cascada de flujos, lock-up y default, IDC y circularidad, Sources & Uses.
+ - Estándar FAST: inputs en azul, tiempo en columnas, sin valores fijos dentro de las fórmulas, porcentajes como decimales.
+
+- No entendí:
+ - Nada pendiente
+
+- Ayuda de IA:
+ - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
+ - Recopilacion de fuentes verificadas
+ - Guía de conceptos y cheat sheet en Drive, y la hoja de ruta 2.1–2.10.
+
+
+## 2026-10-24 · 5 h
+- Hice:
+ - Data_Energy:
+     - P50 = 57.07 GWh, P90 = 45.02 GWh, P90 reciente (2010–2025) = 42.24 GWh.
+     - Participación Oct–Mar: 65.73% en el período completo y 67.75% en el reciente.
+     - Tabla de casos semestrales (Oct–Mar / Abr–Sep, GWh): P50 37.51/19.56, P90 29.59/15.43, Recent 28.62/13.62.
+ - D11: P90 semestral con el método A (P90 anual × perfil estacional medio, calculado como promedio de ratios).
+ - D12:
+     - Availability factor 92%, Energy price 65 USD/MWh, Price escalation 0.
+     - Fixed O&M 3% del CAPEX, Variable O&M 0, O&M escalation 2% (meta de la Fed).
+ - D13:
+     - CAPEX 3,300 USD/kW (IRENA 2024, tabla 6.3).
+     - Development costs 0 y Contingency 0, porque el costo de IRENA ya los incluye.
+     - CAPEX base year 2024.
+     - CAPEX disbursement 15/35/35/15, con CONTROL en la fila siguiente.
+     - Construction period 24 meses.
+
+- Aprendí:
+ - Los percentiles no se suman: P90 anual ≠ suma de los P90 semestrales.
+ - Promedio de ratios contra ratio de sumas.
+ - El DSCR se mide sobre 12 meses (Forvis Mazars).
+ - Valores nominales contra reales, y escalación desde un año base.
+ - Costo real de obra (as-built) contra costo presupuestado: sumar contingencia a un costo real es contarla dos veces.
+
+- No entendí:
+ - Nada pendiente
+
+- Ayuda de IA:
+ - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
+ - Recopilacion de fuentes verificadas
+
+## 2026-10-26 · 5 h
+- Hice:
+ - D14:
+     - Debt tenor 12 años (BID Invest).
+     - Debt interest rate 9% (comparable: Genneia) y Semiannual interest rate = tasa / 2.
+     - Grace period 0.
+     - Target DSCR 1.35, Lock-up DSCR covenant 1.20, Default DSCR covenant 1.10 (Forvis Mazars).
+     - Maximum gearing 70% y DSRA de 6 meses.
+     - Upfront fee 1.5% y Commitment fee 0.5% (IDCOL).
+ - D15:
+     - Income tax rate 35%.
+     - Share of civil works in CAPEX 50%.
+     - Vidas fiscales: 50 años la obra civil y 10 para los equipos.
+     - Tax loss carryforwards 5 años.
+     - Project life 30 años (IRENA y el caso de Los Nihuiles).
+ - Inputs reorganizado en 6 bloques.
+
+- Aprendí:
+ - Cupón contra rendimiento (yield) de un bono, y riesgo país (675 bps).
+ - Tasa nominal / 2 contra tasa efectiva.
+ - Covenants de lock-up y default.
+ - Impuesto a las ganancias progresivo en pesos
+ - Amortización fiscal por tipo de activo y quebrantos impositivos.
+ - La concesión del agua limita la vida del proyecto.
+
+- No entendí:
+ - Nada pendiente
+
+- Ayuda de IA:
+ - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
+ - Recopilacion de fuentes verificadas

@@ -97,7 +97,7 @@ Considering that there are two types of data: consolidated data (data that has a
  - https://www.irrigacion.gov.ar/web/wp-content/uploads/2024/06/DGI_INFORME_ANUAL_21_22.pdf (OFICIAL)
  - (EST)
  
- ## D7 · 2026-10-18 · Ecological flow
+## D7 · 2026-10-18 · Ecological flow
 
 **Decision:**
  - The ecological flow is constant and equal to 4.4 m³/s, which is 10% of the average daily flow over the 69 complete hydrological years (44.0 m³/s).
@@ -122,7 +122,7 @@ Considering that there are two types of data: consolidated data (data that has a
  - Own analysis: notebooks/01_hydrology.ipynb, section 1.8.
  - Tags: (EST) for the method and (VERIFICAR) for the local regulatory requirement.
 
-  ## D8 · 2026-10-19 · Head, efficiency and turbine configuration
+## D8 · 2026-10-19 · Head, efficiency and turbine configuration
 
 **Decision:**
  - The project is based on the assumption of an installed capacity of 10 MW 
@@ -194,7 +194,7 @@ Considering that there are two types of data: consolidated data (data that has a
  - NIST/SEMATECH e-Handbook 1.3.5.13, Runs Test. https://www.itl.nist.gov/div898/handbook/eda/section3/eda35d.htm
  - (EST)
 
- ## D10 · 2026-10-22 · Semiannual periods for the energy series [EST]
+## D10 · 2026-10-22 · Semiannual periods for the energy series [EST]
 
  **Decision:**
  - It was decided to generate another .CSV file ['data/processed/semiannual_energy.csv'] in which the years are organized by semester. Specifically, the semesters spanning October–March and April–September are selected. These semesters are labeled according to the hydrological year in which they end; additionally, the energy generated during each half of the year is broken down.
@@ -217,3 +217,177 @@ Considering that there are two types of data: consolidated data (data that has a
  - https://www.operis.com/loan-life-cover-ratio-explanation/
  - https://www.wallstreetplaybook.org/blog/project-finance-modeling-guide
  - Notebook section 1.15.
+ 
+## D11 · 2026-10-24 · Structuring of the semestral P90 [EST]
+
+**Decision:**
+ - It was decided (A) to divide the annual P90 value into semesters as follows: P90 (annual) * average profile (for the semester). This results in the following:
+    - Oct to Mar = 45.0 GWh * 65.7% = 29.6 GWh
+    - Apr to Sep = 45.0 GWh * 34.3% = 15.4 GWh
+Thus, the sum totals 45.0 GWh.
+ - Alternative (B) is discarded as a base case and remains as a sensitivity analysis case for the subsequent steps. The risk of a dry semester occurring is not entirely eliminated, as it will be accounted for in the Monte Carlo simulation in stage 3, using actual years and semesters.
+ - The participation rate is the year-by-year average from October to March (65.7%), rather than the ratio of the sums (65.05%).
+ - The recent case (2010–2025) uses the P90 value for the 2010–2025 period (42.24 GWh) along with the recent profile (67.75%), ensuring that both the level and the seasonality correspond to the same period.
+
+**Why:**
+ - P90 is annual, and banks typically measure the DSCR over a 12-month period (Forvis Mazars, https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/). The bank aims to secure the P90 year, and, as determined in the previous stage, the annual value is 45.0 GWh.
+
+ - The analysis of participation is based on annual averages (rather than the ratio of the sums) because:
+   - It ensures consistency with the results from stage 1 (hydrology).
+   - It allows each year to carry equal weight in determining the percentage of participation for the two periods: Oct–Mar and Apr–Sep. If these percentages were calculated as the ratio of the sums, wetter years would have a disproportionately greater influence on the resulting percentages.
+
+ - It has been decided to calculate a distinct P90 value for the recent period (2010–2025), as this timeframe coincides with the recent "megadrought." This period is atypical compared to preceding years, and it is worth treating it separately, given that its P90 value is even lower.
+
+**Alternative considered:**
+ - Another alternative was considered in which the P90 value for each six-month period is calculated separately (Alternative B):
+    - Oct to Mar = 29.8 GWh
+    - Apr to Sep = 13.6 GWh
+The sum of both is 43.4 GWh. As can be seen, this total is lower than the 45.0 GWh previously determined; this is because this alternative combines the dry six-month period of one year with that of another, effectively constructing a 43.4 GWh year (a more conservative scenario than the annual P90). In other words, it is a doubly conservative scenario, which is why the decision was made to discard this alternative as a base case.
+
+**Limitations:**
+ - Alternative (A) does not account for the risk of an actual dry semester. However, this will be covered by the Monte Carlo simulation in later stages.
+ - The case of the recent decade: 2010–2025 is a unique one, as it constitutes a 16 year "megadrought."
+
+**Sources:**
+ - Forvis Mazars, https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/
+ - EST
+
+## D12 · 2026-10-24 · Operating assumptions [EST]
+
+**Decision:**
+ - Availability factor = 92% 
+ - Energy price = 65	USD/MWh 
+ - Price escalation =	0	%/yr 
+ - Fixed O&M (% of CAPEX) =	3	%/yr
+ - Variable O&M = 0	USD/MWh
+ - O&M escalation =	2	%/yr
+
+**Why:**
+ - Availability factor = 92% ; 95% as a technical baseline (accounting for preventive maintenance and mechanical repairs), minus 3% due to operational shutdowns forced by water turbidity. Dr. Catalini confirmed that there are occasional shutdowns due to turbidity, but the 3% reduction was not a figure provided by him; rather, it was an assumption.
+ - Energy price = 65	USD/MWh ; Recent MATER contracts (for eolic and solar energy) indicate a value in the range of 60 to 70 USD/MWh. A figure of 65 USD/MWh is taken as an estimate, assuming that the same prices apply to hydroelectric energy.The ±10% sensitivity in step 2.9 covers that uncertainty.
+ - Price escalation =	0	%/yr ; In the absence of public disclosure of adjustment clauses in private contracts. It maintains a nominal flat rate throughout the term of the contract.
+ - Fixed O&M (% of CAPEX) =	0.03	%/yr ; The IRENA paper states that O&M costs generally range from 1% to 6% of total CAPEX for small hydroelectric plants. A figure of 3% is assumed as a central value within the 1–6% range.
+ - Variable O&M = 0	USD/MWh ; Run-of-river power plants have a marginal variable cost that is practically zero (as they require no fuel or direct inputs per MWh). All operational and preventive expenses are covered under fixed O&M costs.
+ - O&M escalation =	2 %/yr ; It corresponds to the official long-term inflation target of the United States Federal Reserve (US CPI/PCE) for financial models structured in nominal dollars.
+
+**Limitations:**
+ - Availability factor: Both the 95% technical baseline and the 3% reduction for turbidity-related stoppages are purely our own estimates. Tested with a sensitivity (e.g., 88%) in step 2.9
+ - Energy price = 65	USD/MWh ; The sources consulted establish a price range of 60 to 70 USD/MWh for wind and solar energy sources. It is assumed that this same range applies to hydroelectric energy.
+ - Fixed O&M (% of CAPEX) = 3%/yr; The IRENA paper states that for small hydroelectric power plants, these percentages can be even higher. In this case, it has been decided to use a central value within the 1–6% range.
+
+**Sources:**
+ - Availability factor: Own criteria ; Personal communication with Dr. Catalini [EST]
+ - Energy price: https://www.energiaestrategica.com/energiaestrategica/en/notes/del-renovar-al-mater-cuanto-cuestan-las-renovables-en-argentina-y-que-esperar-a-futuro [EST]
+ - Price escalation: Own criteria [EST]
+ - Fixed O&M (% of CAPEX): IRENA: RENEWABLE ENERGY TECHNOLOGIES: COST ANALYSIS SERIES [2012] https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2012/RE_Technologies_Cost_Analysis-HYDROPOWER.pdf. Added to this,IRENA RENEWABLE POWER GENERATION COSTS IN 2024 https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf stablishes that the average O&M is “slightly less than 2%” and also “smaller projects approach the higher end of the range”
+ - Variable O&M: Own criteria [EST]
+ - O&M escalation: Statement on Longer-Run Goals and Monetary Policy Strategy https://www.federalreserve.gov/monetarypolicy/files/FOMC_LongerRunGoals.pdf [EST]
+
+
+## D13 · 2026-10-24 · Construction assumptions [EST]
+
+**Decision:**
+ - Construction period = 24 months
+ - CAPEX = 3300 USD/kW. 
+ - Contingency % = 0% 
+ - Development costs = 0
+ - CAPEX disbursement curve	= 15% / 35% / 35% / 15%	 per period
+ 
+**Why:**
+ - Construction period =	24 months ; The construction period for a hydroelectric power plant depends essentially on its specific details; therefore, there is no fixed, predetermined timeframe. In the case of a small hydroelectric power plant, an execution period of 24 months is assumed.
+ - CAPEX = 3300 USD/kW ; IRENA 2024 data (Table 6.3, small-scale hydropower of 10 MW or less, in 2024 dollars): “Other South America” for 2010–2017 shows 3,307. Brazil shows 2,698 for 2010–2017 and 2,534 for 2018–2024. The global total for the 0–50 MW range (Table 6.2) shows an average of 2,067, with a range of 1,011 to 4,407. 
+ The regional data point closest to Argentina is used, and a value higher than that of Brazil is selected because: 
+   1) The 26.9 m head falls right at the threshold below 25–30 m where, according to IRENA (2012), economies of scale related to hydraulic head are "modest." 
+   2) Construction works and equipment in Argentina are subject to import costs. 
+   3) A single turbine does not allow for the dilution of fixed costs.
+ 10,000 kW × 3,300 = USD 33 million in 2024 dollars. The ±15% CAPEX sensitivity from step 2.9 covers a range of 2,800 to 3,800.
+ The IRENA costs are in 2024 dollars. Since the model uses nominal dollars, the CAPEX for each half-year—on the "Construction" sheet—is adjusted from 2024 to the date of expenditure, using the 2% rate already established.
+ - Contingency % = 0% : IRENA’s cost figures reflect the actual costs of projects that have already been built. Any cost overruns that occurred are already factored into the average; therefore, adding an additional contingency would result in double-counting. 
+In any case, a bank would still require a contingency in the construction budget, but in this instance, it will be covered by the sensitivity analysis.
+ - Development costs = 0 : IRENA defines its total installed cost as “including fixed financing costs,” and also clarifies that “owner costs” encompass project development. Therefore, development costs are already included in the 3,300 figure.
+ - CAPEX disbursement curve	= 15% / 35% / 35% / 15%	 per period ; It follows the typical “S-curve”: low expenditure at the beginning (mobilization, engineering) and at the end (installation, commissioning), with high expenditure in the middle. For small run-of-river power plants, civil works account for 50% of the cost, mechanical components for 30%, and electrical components for 20%. Civil works are carried out during the first three semesters, while equipment is paid for upon delivery between the second and fourth semesters.
+
+**Limitations:**
+ - Construction period =	24 months ; A 6 month delay is a potential sensitivity.
+ - CAPEX : Since there was no fixed, clear value for CAPEX, an estimate had to be made. Furthermore, the amount had to be expressed in 2024 USD and escalated to nominal USD of each disbursement period at 2%/yr.
+ - Contingency %: The risk of cost overruns is addressed through a sensitivity analysis using a +15% CAPEX scenario.
+ - CAPEX disbursement curve	= 15% / 35% / 35% / 15%	 per period: It does not correspond to any actual, existing curve; rather, it is an estimate based on the typical curves associated with this type of project.
+
+**Sources:**
+ - Construction period: Own criteria,IRENA: RENEWABLE ENERGY TECHNOLOGIES: COST ANALYSIS SERIES https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2012/RE_Technologies_Cost_Analysis-HYDROPOWER.pdf 
+ - CAPEX: Own criteria, IRENA: RENEWABLE POWER GENERATION COSTS IN 2024, table 6.3. https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
+ - Contingency %: Own criteria, IRENA: RENEWABLE POWER GENERATION COSTS IN 2024, chapter 6. https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
+ - Development costs: IRENA: RENEWABLE POWER GENERATION COSTS IN 2024, chapter 6. https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
+ - CAPEX disbursement curve: Own criteria, IRENA: RENEWABLE POWER GENERATION COSTS IN 2024, table 6.1. https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
+ 
+
+## D14 · 2026-10-26 · Debt term sheet [EST]
+
+**Decision:**
+ - Debt tenor	= 12 years
+ - Debt interest rate =	9	%/yr
+ - Semiannual interest rate	= 4.5	%/semester
+ - Target DSCR (P90) = 1.35 x
+ - Lock-up DSCR covenant = 1.2 x
+ - Default DSCR covenant = 1.1 x
+ - Maximum gearing = 70 %
+ - DSRA (months of debt service) = 6 months
+ - Upfront fee = 1.5 %
+ - Commitment fee = 0.5 %
+ 
+**Why:**
+ - Debt tenor	= 12 years ; Reference case: BID invest provided a loan to Central Puerto for La Castellana wind farm (99 MW) with a total tenor of 15 years (holding a contract with CAMMESA, under RenovAr program, a more robust counterparty than a private entity under the MATER framework). For this reason, it was decided to select a 12 year repayment period (14 years including construction phase).
+ - Debt interest rate =	9	%/yr ; Reference case: In November 2025, Genneia (largest renewable energy generator in Argentina), issued an 8 year corporate bond for 400 million, with 7.75 coupon and 8% yield. In this case, it was decided to select a debt interest rate slightly higher because this SPV is a new company, with a single asset, no previous projects and a private buyer in MATER framework. Added to this, country risk rose to 675 points on 10/19/2026, the highest level of the year.
+ - Semiannual interest rate	= 4.5	%/semester ; When a loan involves semiannual payments, splitting the debt interest rate in half is the standard practice.
+ - Target DSCR (P90) = 1.35 x ; Forvis Mazars suggest a multiple of around 1.3x for infrastructure with contracted revenue, and a multiplier between 1.2x and 1.35x when there is a solid buyer. It was decided to choose the upper limit of this range because the buyer is a private entity and the project is located in Argentina (country risk). Added to this, The projections are made based on the P90 scenario, therefore there is no need to go any higher.
+ - Lock-up DSCR covenant = 1.2x & Default DSCR covenant = 1.1x ; According to Forvis Mazars, the lock up threshold is set below the target DSCR, and the default threshold is set even lower. Their example uses 1.1x for default. It was decided to pick a multiple of 1.2x because it falls between the two.
+ - Maximum gearing = 70 % ; Wall Street Prep uses 75% in their example. According to argentine risk, it was decided to pick a maximum gearing of 70%.
+ - DSRA (months of debt service) = 6 months ; This is the standard, cited by CFI and BIWS.
+ - Upfront fee = 1.5 % & Commitment fee = 0.5 % ; IDCOL (Bangladesh´s state owned infrastructure bank) sets its rates for foreign currency loans as 1%-2% of the loan amount, and a commitment fee of 0.50%-0.75%. Even though this is not an Argentina bank, it serves as reference.
+
+**Limitations:**
+ - Debt tenor	= 12 years ; The term of the power purchase agreement must be at least as long as the term of the debt.
+ - Debt interest rate =	9	%/yr ; The rate is obtained from a corporate bond issued by a large company, not from a project finance loan to an SPV. 
+
+**Sources:**
+ - Debt tenor : https://idbinvest.org/es/medios-y-prensa/bid-invest-financia-el-proyecto-eolico-la-castellana-para-diversificar-la-matriz
+ - Debt interest rate: https://www.lanacion.com.ar/economia/genneia-coloco-una-on-por-us400-millones-nid20112025/ ; https://www.noticiasnqn.com.ar/noticias/2026/10/19/357254-el-riesgo-pais-subio-a-675-puntos-y-alcanzo-su-nivel-mas-alto-de-2026
+ - Semiannual interest rate	: Own criteria
+ - Target DSCR (P90) : https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/
+ - Lock-up DSCR covenant & Default DSCR covenant : https://financialmodelling.forvismazars.com//resources/debt-service-coverage-ratio-dscr/
+ - Maximum gearing: https://www.wallstreetprep.com/knowledge/debt-sizing-in-project-finance/
+ - DSRA : CFI & BIWS: https://corporatefinanceinstitute.com/resources/commercial-lending/debt-service-reserve-account-dsra/ ; https://breakingintowallstreet.com/kb/project-finance/debt-service-reserve-account/
+ - Upfront fee & Commitment fee : https://idcol.org/home/fees 
+
+## D15 · 2026-10-26 · Tax and project life [EST]
+
+**Decision:**
+ - Income tax rate = 35% 
+ - Share of civil works in CAPEX = 50 %
+ - Fiscal life of equipment = 10 years
+ - Fiscal life of civil works = 50 years
+ - Tax loss carryforwards = 5 years
+ - Project life / water concession = 30 years
+ 
+**Why:**
+ - Income tax rate = 35% ; According to PwC, a 35% rate applies to taxable income exceeding ARS 1,335 million (based on 2026 figures). With the wholesale dollar exchange rate at ARS 1,513 (Rava, Oct 14, 2026), that threshold is approximately USD 0.88 million. The power plant generates revenues of about 45 GWh × 92% × 65 USD/MWh ≈ USD 2.7 million per year, with O&M costs of around USD 1.0 million. Therefore the SPV falls in the top bracket once equipment depreciation ends; a flat 35% is used as a simple, slightly conservative assumption.
+ - Share of civil works in CAPEX = 50% ; Table 6.1 from IRENA 2024 indicates that for small run of river power plants, 50% for civil works, 30% for mechanical components, and 20% electrical. Mechanical and electrical components together constitute the equipment.
+ - Fiscal life of civil works = 50 years & Fiscal life of equipment = 10 years ; PWC Deductions establishes that buildings are depreciated at 2% per year (50 years lifespan), and machinery and equipment have a standard useful life of 10 years.
+ - Tax loss carryforwards = 5 years ; According to PWC, Loss carrybacks are not permitted, the carryforward period is 5 years.
+ - Project life / water concession = 30 years ; IRENA 2024 uses a conservative economic life of 30 years for hydroelectric plants. In July 2026, the province of Mendoza launched the bidding process for the Los Nihuiles complex with a 30 year concession. 
+
+**Limitations:**
+ - Income tax rate ; The scale is in Argentinian pesos, and is indexed annually ; The minimum tax and other levies (gross receipts taxes, municipal fees) are not modeled.
+ - Project life / water concession ; The concession for the river is not defined, the 30 year term is derived from an analogous case
+ - During the first 10 years, the depreciation of equipment generates tax losses, and a portion of these may expire before they can be used
+
+
+**Sources:**
+ - Income tax rate:  https://taxsummaries.pwc.com/argentina/corporate/taxes-on-corporate-income ; https://www.rava.com/cotizaciones/historico/dolar-mayorista/2026/10/14/
+ - Share of civil works in CAPEX: https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024
+ - Fiscal life of civil works & Fiscal life of equipment: https://taxsummaries.pwc.com/argentina/corporate/deductions
+ - Tax loss carryforwards: https://taxsummaries.pwc.com/argentina/corporate/deductions 
+ - Project life / water concession: https://www.irena.org/Publications/2025/Jun/Renewable-Power-Generation-Costs-in-2024 ; https://www.diariouno.com.ar/sociedad/mendoza-abrio-el-proceso-licitar-los-nihuiles-y-buscar-un-nuevo-operador-30-anos-n1579308
+
+
+
