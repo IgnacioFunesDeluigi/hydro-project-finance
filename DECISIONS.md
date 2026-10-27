@@ -443,4 +443,29 @@ In any case, a bank would still require a contingency in the construction budget
  - BIWS IDC: https://breakingintowallstreet.com/kb/project-finance/interest-during-construction-idc/
  - D14 for commissions fees
 
+## D18 · 2026-10-27 · Operating cash flow [EST]
+
+**Decision:**
+ - Case selector
+ - Fixed O&M based on the 2024 CAPEX, escalated from 01/07/2024
+ - Price escalated from the COD
+ - Pre-tax CFADS = EBITDA.
+ 
+**Why:**
+ - Case selector: Allows switching between different scenarios: P50, P90 and recent historical series.
+ - Fixed O&M based on the 2024 CAPEX, escalated from 01/07/2024: IRENA reference capital and operating costs in a specific base year (2024). Taking July 1st represents the midpoint of that base year.Fixed O&M is a % of the 2024 USD CAPEX, so it is in 2024 USD and must be escalated from the same base date.
+ - Price escalated from the COD: The contract price applies from COD, so its escalation starts there (own criteria). With Price escalation = 0% (D12), this has no effect in the base case
+ - Pre-tax CFADS = EBITDA: BIWS defines CFADS as EBITDA – cash taxes +/- change in working capital – maintenance CapEx. Taxes are added in step 2.5, and working capital and maintenance CapEx are not modeled in v1, so pre-tax CFADS equals EBITDA
+
+**Limitations:**
+ - There is no consideration of working capital or a reserve for major maintenance.
+ - Fixed O&M is constant in real terms for 30 years (only escalated by inflation); plant ageing is not modeled.
+
+**Sources:**
+ - D11
+ - https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
+ - https://www.federalreserve.gov/monetarypolicy/files/FOMC_LongerRunGoals.pdf
+ - D12
+ - https://breakingintowallstreet.com/kb/project-finance/cash-flow-available-for-debt-service-cfads/
+
 
