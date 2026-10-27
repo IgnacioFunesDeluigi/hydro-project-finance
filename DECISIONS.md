@@ -407,15 +407,40 @@ In any case, a bank would still require a contingency in the construction budget
  - IRENA provides an annual average for 2024, and the midpoint of the year serves as its representative point.
  - 70 columns are used in timeline because 6 spare periods allow Project life to increase up to 33 years without adding columns
 
-
 **Limitations:**
  - The construction check assumes that the construction period is a multiple of 6 months.
  - The closing date is tentative.
  - If Project Life exceeds 33 years, there will be a shortage of columns, so they would need to be added manually.
 
-
 **Sources:**
  - https://courses.renewablesvaluationinstitute.com/pages/academy/how-to-use-flags-in-financial-models
  - https://support.microsoft.com/en-us/office/edate-function-3c920eb2-6e66-44e7-a1f5-753ae47ee4f5
  - https://support.microsoft.com/en-us/office/eomonth-function-7314ffa1-2bc9-4005-9d66-f49db127d628
+
+## D17 · 2026-10-27 · Construction funding, fees and IDC [EST]
+
+**Decision:**
+ - Model units in USD
+ - Type of disbursement: pro rata
+ - Provisional debt = maximum gearing rate x construction cost
+ - Commissions and IDC paid in equity
+ - IDC and commitment fee calculated based on the average balance for the half year
+ - Upfront fee paid during the first six months (first semester) of construction
+ 
+**Why:**
+ - Pro rata: Yescombe states that banks accept either an "equity first" or a "pro rata" approach. The pro rata method represents a middle point for the sponsor’s IRR and it adjusts automatically when the debt amount changes
+ - Paying with equity avoids circularity in v1
+ - Average balance: disbursements occur throughout the semester; calculating based on the opening balance would leave the first semester without interest
+ - Upfront fee at closing: charged a single time, upon signing
+
+**Limitations:**
+ - With commissions and IDC paid via equity, the effective gearing drops to 65%; in practice, IDC and fees are often capitalized into the loan or funded with a debt/equity mix (BIWS); revisited in step 2.6
+ - The average balance is an approximation: it assumes that disbursements are distributed evenly throughout the semester
+ - The debt is provisional until section 2.6
+
+**Sources:**
+ - Yescombe 13.3: https://www.globalspec.com/reference/38628/203279/13-3-drawdown-of-debt-and-equity
+ - BIWS IDC: https://breakingintowallstreet.com/kb/project-finance/interest-during-construction-idc/
+ - D14 for commissions fees
+
 
