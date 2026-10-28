@@ -522,3 +522,29 @@ In any case, a bank would still require a contingency in the construction budget
  - https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/
  - https://breakingintowallstreet.com/kb/project-finance/interest-during-construction-idc/
  - exercises/01_sculpting_3_periods.xlsx
+
+## D21 · 2026-10-28 · DSRA and cash waterfall [EST]
+
+**Decision:**
+ - DSRA target = 6/12 of the next 12 months debt service, funded with equity at COD
+ - Lock-up and default, measured using the DSCR for the last 12 months.
+ - All available cash is distributed. A negative distribution represents an equity injection
+
+**Why:**
+ - DSRA target on the next 12 months: a target equal to the next semester's debt service would swing between about 896k and 264k, requiring a top-up of about 620k in dry semesters with only about 95k of cash available. Using the next 12 months smooths the target and keeps the input in months
+ - 12-month DSCR for covenants, as stated in D11 (Forvis Mazars)
+ - Full distribution with negative distributions as equity injections: sponsors are the only party that would fund an operating shortfall.
+
+**Results:**
+ - DSRA initial funding = 588,265
+ - Total distributions = 20,257,172
+ - No lock-up or default events.
+
+**Limitations:**
+ - The four dry semesters from 2056 to 2059 show a negative CFADS, as O&M costs increase by 2% while prices remain flat (0% escalation). It is required to review this in section 2.9, using a sensitivity analysis for price escalation.
+ - DSRA does not generate interest
+ - A default is merely a flag, its consequences are not modeled
+
+**Sources:**
+ - BIWS DSRA: https://breakingintowallstreet.com/kb/project-finance/debt-service-reserve-account/
+ - https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/
