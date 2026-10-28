@@ -548,3 +548,33 @@ In any case, a bank would still require a contingency in the construction budget
 **Sources:**
  - BIWS DSRA: https://breakingintowallstreet.com/kb/project-finance/debt-service-reserve-account/
  - https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/
+
+## D22 · 2026-10-28 · Ratios and returns [EST]
+
+**Decision:**
+ - Semiannual DSCR and 12 month DSCR.
+ - LLCR discounted at the debt rate.
+ - Annualized semiannual IRR, calculated as (1 + IRR)^2 − 1.
+ - Project cash flow = CFADS − construction cost; equity cash flow = dividends − contributions.
+ - Minimum values using function AGGREGATE (compatible with Excel 2013).
+
+**Why:**
+ - The semiannual DSCR checks that sculpting delivers the target in every period; the 12-month DSCR is the covenant measure used for lock-up and default (D11, D21, Forvis Mazars).
+ - LLCR is the PV of CFADS over the remaining loan life, discounted at the cost of debt, divided by the outstanding balance (FE Training). With perfect sculpting it must equal the target DSCR in every period, so it also works as a check of the sculpting
+ - Model periods are semesters, so IRR returns a semiannual rate; compounding twice gives the effective annual rate, comparable with the 9% debt rate
+ - Project IRR measures the asset’s return before financing, so financing items (IDC, loan fees, DSRA) are excluded
+ - Equity IRR measures the sponsor's return on the cash it actually puts in (construction equity, fees, IDC and DSRA) against the distributions it receives, including negative distributions as injections (D21)
+ - The model is built in Excel 2013, which does not have MINIFS; AGGREGATE (function 15, option 6) ignores the non-repayment periods without array formulas
+
+**Results:**
+ - DSCR and LLCR = 1.35.
+ - Project IRR −0.67%, equity IRR −2.02%, multiple 0.70.
+
+**Limitations:**
+ - The project cash flow includes the tax effect of interest.
+ - Returns are calculated using the P90 scenario; the sponsor’s P50 assessment is addressed in section 2.9.
+ - Negative leverage (cost of debt > project IRR).
+
+**Sources:**
+ - FE Training, Coverage Ratios: https://fe.training/free-resources/credit/coverage-ratios
+ - TIR Function, Microsoft: https://support.microsoft.com/es-ES/Excel/functions/irr-function
