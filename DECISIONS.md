@@ -468,4 +468,30 @@ In any case, a bank would still require a contingency in the construction budget
  - D12
  - https://breakingintowallstreet.com/kb/project-finance/cash-flow-available-for-debt-service-cfads/
 
+## D19 · 2026-10-27 · Income tax [EST]
 
+**Decision:**
+ - Depreciable base = CAPEX + contingency + development costs. IDC and loan fees are deducted when accrued, not capitalized
+ - Straight line depreciation from COD
+ - Tax calculated per semester
+ - Losses with a 10 semester expiration period, applied on a FIFO basis (first in first out, MIN method)
+ - Interest expense in operations = 0 (placeholder) until step 2.6
+ 
+**Why:**
+ - LIG art. 85 a) allows deducting interest and loan fees in the fiscal year,  Decree 862/2019 art. 207 excludes interest from the cost of depreciable assets. The 30% limit of art. 85 applies only to debt with related parties; the senior loan is from an unrelated lender
+ - Loss expiry is material: about USD 5.4M of losses expire unused in the P90 case, so it cannot be simplified
+ - FIFO: the oldest losses are used first, and the balance never exceeds those generated within the window
+
+**Limitations:**
+ - Interpretation of the tax rules is my own and has not been reviewed by a tax advisor
+ - If sponsors fund part of the equity as shareholder loans, the 30% limit of art. 85 would apply
+ - 40% of the civil base is not depreciated within 30 years
+ - The tax is calculated by hydrological half year, not by fiscal year, and without advance payments
+ - There is no minimum tax or gross receipts tax (this was already included in D15).
+
+**Sources:**
+ - Law (t.o. 2019): https://servicios.infoleg.gob.ar/infolegInternet/anexos/330000-334999/332890/texact.htm
+ - Decree 862/2019: https://www.argentina.gob.ar/normativa/nacional/decreto-862-2019-332991/actualizacion
+ - BIWS CFADS (cash taxes). https://breakingintowallstreet.com/kb/project-finance/cash-flow-available-for-debt-service-cfads/
+ - PwC Deductions (losses already included in D15)
+ - Microsoft Support, SUMIFS. https://support.microsoft.com/es-ES/Excel/functions/sumifs-function
