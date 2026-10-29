@@ -578,3 +578,37 @@ In any case, a bank would still require a contingency in the construction budget
 **Sources:**
  - FE Training, Coverage Ratios: https://fe.training/free-resources/credit/coverage-ratios
  - TIR Function, Microsoft: https://support.microsoft.com/es-ES/Excel/functions/irr-function
+
+## D23 · 2026-10-29 · Sensitivities and main answer [EST]
+
+**Decision:**
+ - Sizing mode with two options: sizing based on the selected scenario, or keeping the P90 debt service schedule fixed.
+ - Case 4: 20% Ecological flow, with the P90 seasonal distribution.
+ - Sensitivities for one assumption at a time, recorded as values.
+
+**Why:**
+ - Bank (P90) versus sponsor (P50 with fixed debt).
+ - The fixed schedule keeps the real debt constant across cases.
+
+**Results:**
+ - Sizing based on P90 rather than P50 reduces debt by 32.6%. In all cases, the DSCR is the governing factor, never the gearing.
+ - With P90 debt and P50 production, the minimum 12-month DSCR is 1.87, compared to the required 1.35.
+ - In the scenario anticipated by the sponsor (P50 case with P90-level debt), the equity IRR is 1.48% and the project IRR is 2.51%. No sensitivity analysis pushes the equity IRR above 1.5%; the project is marginal under these assumptions.
+ - Ecological flow carries more weight than any financial assumption. Next in importance are price and its escalation, while the interest rate carries the least weight: in this project, hydrological and regulatory risks outweigh financial risks.
+ - Higher price, more debt ; higher CAPEX or higher interest rate, less debt.
+
+**Limitations:**
+ - Sensitivities for one assumption at a time, without combining them. 
+ - Manual recording of the results from all analyzed scenarios
+ - E-flow 20% uses the seasonal distribution of the base case.
+ - The risk of a sequence of dry years (H1) is not addressed here; it is reserved for Stage 3 (Monte Carlo simulation).
+ - Lender sizing practice varies: some lenders size on P50 with a higher DSCR plus a P99 constraint (RVI). Sizing on P90 at 1.35x is a conservative combination; the 32.6% reduction depends on that choice.
+
+**Sources:**
+ - https://www.operis.com/renewable-energy-projects-maximising-equity-returns-through-modelling/
+ - https://courses.renewablesvaluationinstitute.com/pages/academy/p50-vs-p99-in-project-finance-how-lenders-size-debt
+ - D7, Module 1, section 1.12
+ - D11
+ - D12
+ - D13
+ - D14
