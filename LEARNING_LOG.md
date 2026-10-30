@@ -301,6 +301,7 @@
     - Vidas fiscales: 50 años la obra civil y 10 para los equipos.
     - Tax loss carryforwards 5 años.
     - Project life 30 años (IRENA y el caso de Los Nihuiles).
+  - Timeline y D16
   - Inputs reorganizado en 6 bloques.
 
 - Aprendí:
@@ -317,3 +318,139 @@
 - Ayuda de IA:
   - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
   - Recopilacion de fuentes verificadas
+
+## 2026-10-27 · 6 h
+- Hice:
+  - 2.2 Timeline (completado la noche del 26/10):
+    - Fechas clave: FC, COD, inicio de repago, vencimiento de la deuda y fin de la operación.
+    - 70 semestres alineados al año hidrológico, banderas de construcción, operación y repago, Years from base.
+    - Checks y D16.
+  - 2.3 Construction:
+    - CAPEX nominal escalado (35,72 M) e INDICE en la curva de desembolso.
+    - Funding pro rata y corkscrew de la deuda durante la obra.
+    - Comisiones e IDC sobre el saldo promedio.
+    - Sources & Uses y D17.
+  - 2.4 Operations:
+    - Selector de caso, energía, precio escalado desde el COD.
+    - O&M escalado desde 2024, EBITDA y D18.
+  - 2.5 Tax:
+    - Amortización de obra civil y equipos.
+    - Quebrantos con vencimiento a 10 semestres (método MIN y SUMAR.SI.CONJUNTO), impuesto y CFADS.
+    - Investigación de la LIG (art. 85) y del Decreto 862/2019 (art. 207): IDC y comisiones se deducen al devengarse, no se activan.
+    - D19.
+
+- Aprendí:
+  - FECHA.MES / FIN.MES, banderas 1/0 y fechas evaluadas al inicio del período.
+  - Nominal contra real en el CAPEX.
+  - Órdenes de desembolso: equity first, pro rata, debt first (Yescombe).
+  - Upfront fee, commitment fee, IDC y circularidad.
+  - Sources & Uses.
+  - EBITDA y CFADS (BIWS).
+  - Amortización fiscal, quebrantos y FIFO.
+  - IAS 23 (contable) contra la ley argentina (fiscal).
+  - Una misma columna = un mismo semestre en todas las hojas.
+
+- Errores:
+  - Ambigüedad día/mes en las fechas (usar el formato 2027-10-01).
+  - Referencias a filas de Inputs que se corrieron (CAPEX escalation en lugar de Price escalation).
+  - Checks que daban 0 por casualidad (bases civil y de equipos invertidas).
+  - Fórmulas corregidas en una sola columna.
+  - Valores escritos a mano donde iba un link (selector de caso).
+
+- No entendí:
+  - Nada pendiente
+
+- Ayuda de IA:
+  - Recopilación de conceptos y respuesta de dudas respecto a conceptos financieros
+  - Recopilación de fuentes verificadas
+  - Investigación de la normativa fiscal argentina (LIG y Decreto 862/2019)
+  - Verificación de valores por cálculos independientes
+
+## 2026-10-28 · 5 h
+- Hice:
+  - Debt:
+    - Capacidad por DSCR (VP del CFADS / 1,35) y límite de gearing.
+    - Deuda de 8,06 M, la manda el DSCR.
+    - Tabla de deuda, circularidad cerrada con valores pegados (deuda y k) y D20.
+  - Cashflow:
+    - DSRA (6/12 de los próximos 12 meses).
+    - Cascada, DSCR a 12 meses, lock-up y default, dividendos (las distribuciones negativas son aportes) y D21.
+  - Ratios y Returns: DSCR y LLCR (1,35), project IRR −0,67%, equity IRR −2,02% y D22.
+
+- Aprendí:
+  - Una deuda vale el VP de sus pagos a su propia tasa.
+  - Circularidad y su cierre copiando y pegando valores.
+  - DSRA, cascada de caja, covenants de lock-up y default.
+  - LLCR
+  - TIR semestral anualizada.
+  - Apalancamiento negativo.
+  - AGGREGATE cuando falta MINIFS (Excel 2013).
+
+- Hallazgos:
+  - Principal negativo en los semestres secos (v2).
+  - CFADS negativo en 2056–2059.
+  - Proyecto marginal con P90.
+
+- Errores:
+  - Referencias de fila corridas al insertar filas.
+  - Totales en lugar de valores por semestre (el Debt service).
+  - Fórmulas que miraban hacia adelante (DSCR a 12 meses).
+  - Fórmula del lock-up invertida.
+
+- No entendí:
+  - Nada pendiente
+
+- Ayuda de IA:
+  - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
+  - Recopilacion de fuentes verificadas
+  - Verificacion de valores por calculos independientes
+
+## 2026-10-29 · 5 h
+- Hice:
+  - Modo de dimensionamiento (1 y 2) y cronograma de P90 pegado.
+  - Caso e-flow 20%.
+  - Tabla de 12 sensibilidades.
+  - Respuesta principal: −32,6% de deuda con P90 contra P50.
+  - D23.
+  - Hoja Checks (23 checks, status y Info).
+  - Aportes de los sponsors durante el lock-up y D24.
+
+- Aprendí:
+  - Caso del banco (P90) contra caso del sponsor (P50 con la deuda fija).
+  - Sensibilidades de a un supuesto por vez.
+  - Ranking de supuestos: el caudal ecológico pesa más que cualquier supuesto financiero.
+  - Un check que falla puede estar mostrando una situación real (default con e-flow 20%), no un error.
+
+- Errores:
+  - Fijacion de celdas faltante en la referencia al modo.
+  - Porcentaje cargado como entero (escalamiento de 2 en lugar de 0,02).
+  - Pasar al modo 2 sin repegar la deuda de P90.
+
+- No entendí:
+  - Nada pendiente
+
+- Ayuda de IA:
+  - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
+  - Recopilacion de fuentes verificadas
+  - Verificacion de valores por calculos independientes
+
+## 2026-10-30 · 5 h
+- Hice:
+  - Model book completo, con estructura ampliada.
+  - Caso disponibilidad 88% (deuda 7,43 M).
+  - Corrección de los labels I-02 e I-03.
+  - Reconstrucción de la fórmula del sculpting (criterio de la puerta de la etapa 2)
+
+- Aprendí:
+  - Qué es un model book y para qué lo usa un revisor.
+  - Cómo se documenta un modelo: run procedure, test log, issue log.
+  - La reconstrucción del sculpting: DSCR resultante = objetivo / k y por qué LLCR = DSCR.
+
+- No entendí:
+  - Nada pendiente
+
+- Ayuda de IA:
+  - Recopilacion de conceptos y respuesta de dudas respecto a conceptos financieros
+  - Recopilacion de fuentes verificadas
+  - Verificacion de valores por calculos independientes
+  - Revision y edicion del model book
