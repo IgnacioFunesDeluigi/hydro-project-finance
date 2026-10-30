@@ -612,3 +612,28 @@ In any case, a bank would still require a contingency in the construction budget
  - D12
  - D13
  - D14
+
+## D24 · 2026-10-29 · Model checks and sponsor support [EST]
+
+**Decision:**
+ - Checks sheet containing the 23 checks in absolute values, a rounded total, and the model status; includes information on lock-up and default.
+ - During a lock-up period, sponsors cover cash shortfalls.
+
+**Why:**
+ - Absolute values prevent errors of opposite sign from offsetting each other.
+ - Without contributions from sponsors, a shortfall amounts to a payment default, something outside the scope of v1.
+
+**Results:**
+ - With an e-flow of 20% and debt sized based on the P90 flow, the 12-month DSCR falls to 0.82–0.97, the DSRA is depleted by the 14th half-year period, and the sponsors are required to contribute approximately 1.13 million during the repayment phase. Such an ecological flow is incompatible with debt sized based on the base flow.
+
+**Limitations:**
+ - The consequences of a default (acceleration, refinancing) are not modeled.
+ - The contribution from the sponsors is assumed to be unlimited.
+
+**Sources:**
+ - Own Criteria
+ - Lock-up and default: Forvis Mazars: https://financialmodelling.forvismazars.com/resources/debt-service-coverage-ratio-dscr/
+ - D11
+ - D14
+ - D21
+ - BIWS: https://breakingintowallstreet.com/kb/project-finance/debt-service-reserve-account/
