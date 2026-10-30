@@ -596,6 +596,7 @@ In any case, a bank would still require a contingency in the construction budget
  - In the scenario anticipated by the sponsor (P50 case with P90-level debt), the equity IRR is 1.48% and the project IRR is 2.51%. No sensitivity analysis pushes the equity IRR above 1.5%; the project is marginal under these assumptions.
  - Ecological flow carries more weight than any financial assumption. Next in importance are price and its escalation, while the interest rate carries the least weight: in this project, hydrological and regulatory risks outweigh financial risks.
  - Higher price, more debt ; higher CAPEX or higher interest rate, less debt.
+ - Availability 88%: debt 7.43 M (−7.8%), project IRR −1.35%, equity IRR −2.65%
 
 **Limitations:**
  - Sensitivities for one assumption at a time, without combining them. 
