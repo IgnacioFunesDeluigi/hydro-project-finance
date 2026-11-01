@@ -2,7 +2,7 @@
 If a river's flow is less reliable than the bank assumes, how much less debt can the power plant take on?
 
 ## Project status:
-Work in progress: Module A (hydrology) complete; financial model in progress
+Work in progress: Module A (hydrology) and Stage 2 (financial model) complete; Stage 3 (Monte Carlo of the hydrology) next
 
 ## Question and hypotheses:
  - Question: How much senior debt can a run-of-river power plant of approximately 10 MW on an Argentine river (with actual daily flow records) sustain, when sized based on a minimum DSCR calculated against P90 energy production; and what is the probability of breaching the DSCR covenant when historical hydrological variability is simulated?
@@ -55,6 +55,24 @@ Scenarios:
     - Mec. 2) Pushes the number of days below the technical minimum: at 20%, the number of days with power 0 increases from 13 to 611
  - The effect of increasing the ecological flow is not proportional: it has a greater impact on poor years.
 
+## Results from the financial model (Stage 2):
+ - Model: [model/hydro_pf_model_v1.xlsx](model/hydro_pf_model_v1.xlsx) (v1.1), documented in the [model book](docs/model_book.md). Semiannual periods, 2-year construction, 30-year concession.
+ - Base case: 10 MW, CAPEX 3,300 USD/kW, 20-year USD contract (MATER type) at 65 USD/MWh and recontracting afterwards at the same real price (D27); senior debt at 9% for 12 years, sculpted to a 12-month DSCR of 1.35 with interest-only dry semesters (D25); maximum gearing 70%.
+
+| Debt sized on | Senior debt (USD M) | Debt / total uses | Binding constraint |
+| :--- | :---: | :---: | :---: |
+| P50 | 11.94 | 31.5% | DSCR |
+| P90 | 8.06 | 21.7% | DSCR |
+
+ - **Main answer:** sizing on P90 instead of P50 cuts senior debt by **32.5%** at 65 USD/MWh.
+ - At 65 USD/MWh the project does not pay its cost of capital: project IRR 1.28%, equity IRR 0.37% (P90 case). The LCOE (P50, 9%) is 93.8 USD/MWh.
+ - Required tariff (sponsor case, P50 energy with P90 debt, D28):
+    - 100.77 USD/MWh for a project IRR equal to the cost of debt (9%).
+    - 159.71 USD/MWh for an equity IRR equal to the hurdle rate (18.88%, Damodaran estimate, VERIFICAR).
+    - Both are far above the 49-66 USD/MWh of MATER contracts in 2025 (wind and solar): this plant could not win a contract at those prices.
+ - At 159.71 USD/MWh the debt reduction falls to 20.2% on the DSCR alone, because of operating leverage: fixed O&M weighs less as the price rises, so CFADS falls less than proportionally to energy (limit about 21%). The actual reduction is 9.5%, because the P50 debt hits the 70% gearing limit.
+ - Most material assumption: the ecological flow. At 20% of the mean flow, P90 debt falls from 8.06 to 5.26 USD M (−35%), more than any financial sensitivity (price ±10%: ±18%; CAPEX ±15%: about ±12%).
+
 ## Method:
  - data quality control: Rename rows and columns, standardize the data, and verify the results. Identify expected days, missing days, and duplicate dates.  
  - Hydrological year: Organize the time series by hydrological year; identify wet and dry years using own criteria [dry year = annual mean flow below the median of the 69 complete hydrological years (D5)].
@@ -75,6 +93,7 @@ Scenarios:
  - The average daily flow is assumed to be constant over a 24-hour period.
  - P90 treats each year as independent,  even though the data show dry streaks (persistence). Section 1.14 demonstrates that dry years are not purely independent (z = −2.79, autocorrelation 0.64). For this reason, it is necessary to perform resampling in stage 3 using blocks of years rather than individual years.
  - Country risk, the exchange rate, and the energy buyer's risk have not yet been modeled.
+ - Financial model: no terminal value; price fixed in nominal USD during the contract; spot exposure after the contract only as a sensitivity (D27); the equity hurdle rate is an estimate (VERIFICAR); the required tariffs come from manual Goal Seek rounds (±0.10 USD/MWh). Full list in the [model book](docs/model_book.md), section 10.
 
 For a more complete list of assumptions and limitations, see: [DECISIONS.md](DECISIONS.md)
 
@@ -84,7 +103,11 @@ For a more complete list of assumptions and limitations, see: [DECISIONS.md](DEC
     - raw: SNIH data
  - Docs
     - figures: .png graph files
+    - model_book.md: documentation of the financial model
     - project_charter.md
+ - Exercises: practice workbooks (sculpting)
+ - Model
+    - hydro_pf_model_v1.xlsx: project finance model (Stage 2)
  - Notebooks
     - 01_hydrology.ipynb: Main hydrology notebook
  - .gitignore
@@ -102,6 +125,8 @@ For a more complete list of assumptions and limitations, see: [DECISIONS.md](DEC
 ```
    Then open `notebooks/01_hydrology.ipynb` and run all cells (VS Code or JupyterLab).
 
+   Financial model: open `model/hydro_pf_model_v1.xlsx` in Excel (2013 or later) and follow the run procedure in the model book, section 4.3. The Checks sheet must show Model status = OK.
+
  ## Transparency:
 LEARNING_LOG.md documents the entire learning process (what was done, reasons, what I learned, what I didn't understand), including any AI assistance received.
 
@@ -112,6 +137,7 @@ What the AI did:
  - Explanations of concepts, with sources
  - Source search and verification
  - Independent verification of all numerical results; README review and final audit
+ - Stage 2: research of sources (MATER, spot prices, Damodaran, Bodmer), proposed formula designs (sculpting window, zero-debt guards), independent recalculation of the model in Python, and edits to DECISIONS.md, the model book and this README
  - Personal study guide (PDF) and closing report, outside the repository
 
 What I did:

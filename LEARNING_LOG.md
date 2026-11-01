@@ -454,3 +454,32 @@
   - Recopilacion de fuentes verificadas
   - Verificacion de valores por calculos independientes
   - Revision y edicion del model book
+
+## 2026-10-31 a 2026-11-01 · 5 h
+- Hice:
+  - Paso 3.0 de correcciones antes del Monte Carlo (D25-D28).
+  - Semestres secos solo intereses: ventana de 12 meses, descuento anual 1 + 2r, checks de primer y último semestre (cierra I-01).
+  - Piso de deuda y guardas para deuda cero; test T-05 con precio 0 (pasa).
+  - Plazo de contrato de 20 años y precio poscontrato: opción B como base y C (spot) como sensibilidad.
+  - LCOE, tasa hurdle (Damodaran H1) y tarifa requerida por rondas manuales de Goal Seek: 100.77 y 159.71 USD/MWh.
+  - Nueva corrida de la tabla de sensibilidades y tablas 2 y 3 (respuesta principal a la tarifa requerida).
+
+- Aprendí:
+  - Por qué el banco no acepta amortización negativa y cómo se evita con semestres secos solo intereses.
+  - El LCOE como precio de equilibrio y la diferencia con la tarifa que exige el sponsor.
+  - Apalancamiento operativo: a mayor precio, la reducción de deuda P90 vs P50 tiende al 21%.
+  - Goal Seek tiene una tolerancia de 0.001; se resuelve con una celda auxiliar multiplicada por 1.000.000.
+
+- Errores:
+  - Pegar la deuda con el selector equivocado y sobrescribir la fórmula de C17 con un valor.
+  - Olvidar repegar el cronograma P90 y copiar resultados antes de que Excel recalculara.
+  - Tasa hurdle cargada como 0.188 en lugar de 0.1888; checks sin ABS en la hoja Checks.
+
+- No entendí:
+  - Nada pendiente
+
+- Ayuda de IA:
+  - Investigación de fuentes (MATER, precio spot, Damodaran, Bodmer).
+  - Diseño propuesto de fórmulas (ventana de 12 meses, descuento 1 + 2r, guardas de deuda cero).
+  - Verificación independiente de todos los valores con una réplica en Python.
+  - Correcciones de DECISIONS.md (D25-D28) y edición del model book y del README.

@@ -638,3 +638,111 @@ In any case, a bank would still require a contingency in the construction budget
  - D14
  - D21
  - BIWS: https://breakingintowallstreet.com/kb/project-finance/debt-service-reserve-account/
+
+## D25 · 2026-10-31 · Interest-only dry semesters [EST]
+
+**Decision:**
+ - In dry semesters (S2), only interest is paid.
+ - In wet semesters (S1),  the amount is determined by the 12-month window (April to March) divided by 1.35, minus the interest from S2.
+ - The first and last six-month periods are based on their respective CFADS divided by 1.35.
+ - Capacity = Σ A × DF, with an annual discount rate of 1 + 2r.
+
+**Why:**
+ - Negative amortization is not acceptable to the bank (Bodmer).
+ - The 12-month DSCR is consistent with D11.
+
+**Results:**
+ - Debt = 8,063,244 (−0.02%), with no negative principal.
+ - Initial LLCR 1.3503.
+ - 12 month DSCR of 1.35 for the March dates; in September, 1.278 initially and 1.186 at maturity.
+
+**Limitations:**
+ - We are assuming that repayment begins at S1 and ends at S2 (with checks in place).
+ - There is a technical lock-up period during the final six-month interval.
+ - The LLCR is no longer identical to the DSCR, and the check becomes: LLCR ≥ target.
+
+**Sources:**
+ - https://edbodmer.com/resolving-negative-repayment/
+
+## D26 · 2026-10-31 · Debt floor and zero-debt guards [EST]
+
+**Decision:**
+ - MAX(0; …) in Annual debt service capacity (A) and for the debt.
+ - k protected against division by zero.
+ - DSCR, LLCR, and covenants included only if there is debt service.
+ - IRR calculated using IFERROR, returning “N/A”.
+
+**Why:**
+ - Debt and debt service capacity can never be negative: a negative CFADS cannot create negative debt.
+ - In the absence of debt, the ratios do not apply.
+ - This was identified by the T-05 test.
+
+**Results:**
+ - With a price of 0, debt of 0, checks at 0, and an IRR of “N/A”.
+
+**Limitations:**
+ - With zero debt, the ratios show 0, not “n/a”.
+
+**Sources:**
+ - Own criteria
+ - T-05
+
+## D27 · 2026-10-31 · Contract term and post-contract price [EST / VERIFICAR]
+
+**Decision:**
+ - 20-year contract.
+ - Afterwards (Option B, base case): re-contracting at the contract price, escalated by 2%/year from the COD.
+ - Option C as a sensitivity analysis: a fixed spot price of 56.5 USD/MWh.
+
+**Why:**
+ - MATER contracts have terms of 5, 10, and 20 years (AGUEERA 2025), with terms and conditions freely negotiable (IDE-BA 2020).
+ - The "B" component prevents margin erosion without the need to devise a spot price.
+
+**Results:**
+ - Project IRR / equity IRR, P90 case:
+   - A (flat contract price for 30 years, previous model): −0.67% / −2.02%.
+   - B: 1.28% / 0.37%.
+   - C: −1.30% / −2.84%.
+ - The debt remains unchanged (repayment as per the contract).
+
+**Limitations:**
+ - The spot price is highly volatile (ranging from 56.5 to 189 USD/MWh in 2026).
+ - The dry season coincides with the high spot prices seen in winter, and it is not modeled.
+
+**Sources:**
+ - AGUEERA: https://www.agueera.com.ar/wp-content/uploads/2025/08/AGUEERA-Presentacion-contratos-MATER-ene2025.pdf
+ - IDE-BA: https://www.ide-ba.org.ar/wp-content/uploads/2020/09/MATER-Evoluci%C3%B3n-2017-2020-IDE-22-septiembre-2020.pdf
+ - El Economista: https://eleconomista.com.ar/energia/el-verano-electrico-tiene-una-paradoja-podria-bajar-costo-promedio-pero-dispararse-horas-criticas-n98930
+
+## D28 · 2026-10-31 · LCOE and required tariff [EST / VERIFICAR]
+
+**Decision:**
+ - LCOE = PV(construction cost + O&M) / PV(MWh), at 9%.
+ - Required tariff determined via "Goal Seek" in iterative rounds: based on P90 sizing, a fixed schedule, and "Goal Seek" applied to the sponsor’s case.
+ - Hurdle rate (H1) based on Damodaran: 4.94% + 4.23% + 9.71% = 18.88%.
+
+**Why:**
+ - The LCOE is the break-even price.
+ - The sponsor evaluates the project using P50 for the equity side and P90 for the debt side (Operis).
+ - H1 is the standard methodology; it does not combine a bond spread with an equity risk premium.
+
+**Results:**
+ - P50 LCOE of 93.8 USD/MWh (76.7 at a 6% discount rate and 112.9 at 12%).
+ - Tariff for a project IRR of 9%: 100.77 USD/MWh.
+ - Tariff for an equity IRR of 18.88%: 159.71 USD/MWh, with P90-based debt of 26.04 million (64% of total uses).
+ - Reduction (P90 vs. P50) at that tariff: 9.5% actual (with the P50 constrained by the gearing ratio) and 20.2% based solely on the DSCR (Debt Service Coverage Ratio).
+ - Due to operating leverage (CFI), the reduction decreases from 32.5% toward the 21% limit imposed by the energy gap.
+ - Both tariffs are well above the 49–66 USD/MWh range seen in the MATER market; the power plant cannot compete with wind and solar at those price levels.
+
+**Limitations:**
+ - Hurdle: VERIFICAR (Damodaran estimate, not a market quote for this project).
+ - The tariffs are subject to manual convergence (±0.10 USD/MWh).
+ - The actual reduction to the required tariff depends on the gearing limit.
+
+**Sources:**
+ - Damodaran: https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html
+ - YCharts: https://ycharts.com/indicators/10_year_treasury_rate
+ - IRENA (2025), Renewable Power Generation Costs in 2024: https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
+ - CFI: https://corporatefinanceinstitute.com/resources/accounting/degree-of-operating-leverage/
+ - Microsoft Goal Seek: https://support.microsoft.com/en-us/excel/use-goal-seek-to-find-the-result-you-want-by-adjusting-an-input-value 
+ 
