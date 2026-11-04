@@ -56,22 +56,22 @@ Scenarios:
  - The effect of increasing the ecological flow is not proportional: it has a greater impact on poor years.
 
 ## Results from the financial model (Stage 2):
- - Model: [model/hydro_pf_model_v1.xlsx](model/hydro_pf_model_v1.xlsx) (v1.1), documented in the [model book](docs/model_book.md). Semiannual periods, 2-year construction, 30-year concession.
- - Base case: 10 MW, CAPEX 3,300 USD/kW, 20-year USD contract (MATER type) at 65 USD/MWh and recontracting afterwards at the same real price (D27); senior debt at 9% for 12 years, sculpted to a 12-month DSCR of 1.35 with interest-only dry semesters (D25); maximum gearing 70%.
+ - Model: [model/hydro_pf_model_v1.xlsx](model/hydro_pf_model_v1.xlsx) (v1.2), documented in the [model book](docs/model_book.md). Semiannual periods, 2-year construction, 30-year concession.
+ - Base case: 10 MW, CAPEX 3,300 USD/kW, 20-year USD contract (MATER type) at 65 USD/MWh and recontracting afterwards at the same real price (D27); senior debt at 9% for 12 years, sculpted so that every 12-month DSCR equals 1.35, with a constant seasonal transfer from wet to dry semesters (D29); maximum gearing 70%.
 
 | Debt sized on | Senior debt (USD M) | Debt / total uses | Binding constraint |
 | :--- | :---: | :---: | :---: |
 | P50 | 11.94 | 31.5% | DSCR |
-| P90 | 8.06 | 21.7% | DSCR |
+| P90 | 8.04 | 21.6% | DSCR |
 
- - **Main answer:** sizing on P90 instead of P50 cuts senior debt by **32.5%** at 65 USD/MWh.
+ - **Main answer:** sizing on P90 instead of P50 cuts senior debt by **32.65%** at 65 USD/MWh.
  - At 65 USD/MWh the project does not pay its cost of capital: project IRR 1.28%, equity IRR 0.37% (P90 case). The LCOE (P50, 9%) is 93.8 USD/MWh.
  - Required tariff (sponsor case, P50 energy with P90 debt, D28):
     - 100.77 USD/MWh for a project IRR equal to the cost of debt (9%).
-    - 159.71 USD/MWh for an equity IRR equal to the hurdle rate (18.88%, Damodaran estimate, VERIFICAR).
+    - 159.90 USD/MWh for an equity IRR equal to the hurdle rate (18.88%, Damodaran estimate, VERIFICAR).
     - Both are far above the 49-66 USD/MWh of MATER contracts in 2025 (wind and solar): this plant could not win a contract at those prices.
- - At 159.71 USD/MWh the debt reduction falls to 20.2% on the DSCR alone, because of operating leverage: fixed O&M weighs less as the price rises, so CFADS falls less than proportionally to energy (limit about 21%). The actual reduction is 9.5%, because the P50 debt hits the 70% gearing limit.
- - Most material assumption: the ecological flow. At 20% of the mean flow, P90 debt falls from 8.06 to 5.26 USD M (−35%), more than any financial sensitivity (price ±10%: ±18%; CAPEX ±15%: about ±12%).
+ - At 159.90 USD/MWh the debt reduction falls to 20.2% on the DSCR alone, because of operating leverage: fixed O&M weighs less as the price rises, so CFADS falls less than proportionally to energy (limit about 21%). The actual reduction is 9.3%, because the P50 debt hits the 70% gearing limit.
+ - Most material assumption: the ecological flow. At 20% of the mean flow, P90 debt falls from 8.04 to 5.22 USD M (−35%), more than any financial sensitivity (price ±10%: ±18%; CAPEX ±15%: about ±12%).
 
 ## Method:
  - data quality control: Rename rows and columns, standardize the data, and verify the results. Identify expected days, missing days, and duplicate dates.  

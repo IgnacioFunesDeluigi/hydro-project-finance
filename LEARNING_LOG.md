@@ -483,3 +483,32 @@
   - Diseño propuesto de fórmulas (ventana de 12 meses, descuento 1 + 2r, guardas de deuda cero).
   - Verificación independiente de todos los valores con una réplica en Python.
   - Correcciones de DECISIONS.md (D25-D28) y edición del model book y del README.
+
+## 2026-11-01 a 2026-11-04 · 3 h
+- Hice:
+  - Paso 3.0b (D29): las ventanas de 12 meses octubre-septiembre no estaban controladas (1.278 en la primera fecha de septiembre y 1.186 al vencimiento, debajo del lock-up de 1.20).
+  - Sculpting semestral con traspaso estacional constante c (69,000 USD): todos los DSCR a 12 meses en 1.35 salvo la primera fecha de test, sin lock-up.
+  - Checks nuevos: DSCR a 12 meses = objetivo / k, c pegado = c calculado, principal >= 0.
+  - Sensibilidades nuevas de tasa ±0.5 pt y nueva corrida de las tablas 1 y 2 (tarifas 100.77 y 159.90 USD/MWh; respuesta principal 32.65%).
+
+- Aprendí:
+  - Cómo funcionan las ventanas móviles de 12 meses del covenant y por qué cada pago entra en dos ventanas.
+  - Si todas las ventanas valen el objetivo, el servicio de deuda solo puede ser CFADS / objetivo ± una constante.
+  - Redondear c no cambia las ventanas y hace converger el bucle de pegado más rápido.
+  - El costo de la opción A: DSCR semestral menor a 1 en los últimos semestres secos, cubierto por la DSRA.
+  - La reducción porcentual se calcula siempre sobre la deuda del caso base.
+
+- Errores:
+  - Fórmula de la fila 12 pegada una columna corrida y bloque de c una fila más arriba.
+  - Checks nuevos escritos en la hoja Checks en lugar de Debt (pisaron el vínculo al check del LLCR).
+  - Celda auxiliar de Goal Seek con la fórmula de 2.A al correr 2.B (dio 97.34).
+  - Reducción por tasa +1 pt dividida por la deuda nueva (4.8% en lugar de 4.63%).
+  - Filas de sensibilidad sin pegar como valores y modelo dejado con la deuda del último escenario.
+
+- No entendí:
+  - Nada pendiente
+
+- Ayuda de IA:
+  - Diagnóstico de las ventanas de septiembre, derivación de la opción A y propuesta de fórmulas y checks.
+  - Verificación independiente de todos los valores con una réplica en Python.
+  - Redacción de D29 y actualización del model book, del README y de este registro.

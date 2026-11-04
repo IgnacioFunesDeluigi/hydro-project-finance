@@ -641,6 +641,8 @@ In any case, a bank would still require a contingency in the construction budget
 
 ## D25 · 2026-10-31 · Interest-only dry semesters [EST]
 
+**Status:** superseded by D29 (2026-11-04).
+
 **Decision:**
  - In dry semesters (S2), only interest is paid.
  - In wet semesters (S1),  the amount is determined by the 12-month window (April to March) divided by 1.35, minus the interest from S2.
@@ -744,5 +746,30 @@ In any case, a bank would still require a contingency in the construction budget
  - YCharts: https://ycharts.com/indicators/10_year_treasury_rate
  - IRENA (2025), Renewable Power Generation Costs in 2024: https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf
  - CFI: https://corporatefinanceinstitute.com/resources/accounting/degree-of-operating-leverage/
- - Microsoft Goal Seek: https://support.microsoft.com/en-us/excel/use-goal-seek-to-find-the-result-you-want-by-adjusting-an-input-value 
- 
+ - Microsoft Goal Seek: https://support.microsoft.com/en-us/excel/use-goal-seek-to-find-the-result-you-want-by-adjusting-an-input-value
+
+## D29 · 2026-11-04 · Seasonal transfer sculpting [EST]
+
+**Decision:**
+ - Semiannual sculpting with a constant seasonal transfer c: debt service capacity (A) = CFADS / target DSCR − c in wet semesters (S1) and CFADS / target DSCR + c in dry semesters (S2); debt service = A × k; discount factor 1 / (1 + r)^n.
+ - c = the smallest value that keeps principal ≥ 0 in every S2, MAX over S2 of (interest / k − CFADS / target DSCR), rounded up to the next 1,000 USD and pasted as a value together with the debt and k.
+ - Replaces the interest-only rule and the 1 + 2r discounting of D25. The S1/S2 checks of D25 are replaced by three checks: every 12-month DSCR = target / k except the first test date; c pasted = c calculated; principal ≥ 0 in every period.
+
+**Why:**
+ - Under D25 only the April-March windows were sculpted. The October-September windows were not controlled: 1.278 at the first September test date and 1.186 at maturity, below the 1.20 lock-up. The base case cannot breach its own covenant, and in the Monte Carlo it would inflate the lock-up probability.
+ - If every rolling 12-month window equals the target, subtracting two consecutive windows gives DS_t − DS_t-2 = (CFADS_t − CFADS_t-2) / target, so DS = CFADS / target ± c with c constant (own derivation, verified with the Python replica). Each window holds one S1 (−c) and one S2 (+c), so c cancels in every window.
+ - Any constant c keeps the windows at the target; c only has to be large enough to cover the interest of the dry semesters. Rounding it up to 1,000 USD lets the paste loop converge in 3 to 5 rounds instead of 7 to 12.
+
+**Results:**
+ - P90 debt 8,042,953.51 USD (−0.25% vs 8,063,244.23); c = 69,000; k = 1; principal ≥ 0 in every semester (lowest 903 USD, first dry semester).
+ - Every 12-month DSCR = 1.35 except the first test date (1.46, because its window includes a construction semester without debt service). No lock-up and no default in the base case.
+ - Main answer: 32.65% (P50 debt 11,942,413.09). Required tariffs: 100.77 and 159.90 USD/MWh. Reduction at 159.90: 9.31% actual and 20.24% on DSCR only.
+
+**Limitations:**
+ - c is set by the first dry semester (highest interest) and stays constant while the dry-semester CFADS falls (O&M escalates, contract price flat). The last three dry semesters pay more than their CFADS (semiannual DSCR 0.994, 0.980 and 0.964), and the last LLCR is 0.964. The DSRA covers the gap (15,377 USD withdrawn) with no sponsor injections. It is not a covenant breach, because the covenants are tested on the 12-month DSCR (D21).
+ - The first test date is above the target by construction.
+ - One more pasted value (c) in the paste loop.
+
+**Sources:**
+ - Own derivation, verified with the independent Python replica (T-06, T-11).
+ - Bodmer: https://edbodmer.com/resolving-negative-repayment/

@@ -5,9 +5,9 @@
 | Field | Value |
 |---|---|
 | Model file | hydro_pf_model_v1.xlsx |
-| Model version | v1.1 |
-| Model Book version | 1.1 |
-| Date | 01/11/2026 |
+| Model version | v1.2 |
+| Model Book version | 1.2 |
+| Date | 04/11/2026 |
 | Author | Ignacio Funes Deluigi |
 | Reviewer | - |
 | Status | Under review  |
@@ -19,6 +19,7 @@
 |---|---|---|---|---|---|
 | 1.0 | 30/10/2026 | Ignacio Funes Deluigi | All | First complete version | n/a |
 | 1.1 | 01/11/2026 | Ignacio Funes Deluigi | All | Step 3.0: interest-only dry semesters, debt floor and zero-debt guards, contract term and post-contract price, LCOE and required tariff | P90 debt 8.065 to 8.063 USD M; equity IRR -2.02% to 0.37%; main answer 32.6% to 32.5% |
+| 1.2 | 04/11/2026 | Ignacio Funes Deluigi | Debt, Checks, Sensitivities | Step 3.0b: sculpting with a constant seasonal transfer c so every 12-month DSCR equals the target (D29); new checks; rate +/-0.5 pt sensitivities | P90 debt 8.063 to 8.043 USD M; min 12-month DSCR 1.19 to 1.35; no lock-up; main answer 32.5% to 32.65%; equity tariff 159.71 to 159.90 |
 
 ### 0.2 Review and sign-off
 | Stage | Reviewer | Date | Scope | Result |
@@ -43,24 +44,25 @@ Project finance model for a hypothetical 10 MW run-of-river hydropower plant on 
 | Output | Value | Unit |
 |---|---|---|
 | Total uses | 37.23 | USD M |
-| Senior debt | 8.06 | USD M |
+| Senior debt | 8.04 | USD M |
 | Debt / total uses | 21.7 | % |
 | Binding constraint | DSCR | |
-| Min 12-month DSCR | 1.19 | x |
-| Min LLCR | 1.19 | x |
+| Min 12-month DSCR | 1.35 | x |
+| Min semiannual DSCR / min LLCR (last dry semester) | 0.96 | x |
+| Seasonal transfer c | 69,000 | USD |
 | Project IRR (annual, post-tax) | 1.28 | % |
 | Equity IRR (annual) | 0.37 | % |
 | Equity multiple | 1.08 | x |
 | LCOE (P50, 9%) | 93.8 | USD/MWh |
 | LCOE (P90, 9%) | 118.9 | USD/MWh |
 | Required tariff: project IRR = cost of debt (9%) | 100.77 | USD/MWh |
-| Required tariff: equity IRR = hurdle (18.88%) | 159.71 | USD/MWh |
-| Debt reduction P90 vs P50 at 65 USD/MWh | 32.5 | % |
-| Debt reduction P90 vs P50 at 159.71 USD/MWh (actual / DSCR only) | 9.5 / 20.2 | % |
-| Lock-up semesters (base case) | 1 (technical, at maturity) | |
+| Required tariff: equity IRR = hurdle (18.88%) | 159.90 | USD/MWh |
+| Debt reduction P90 vs P50 at 65 USD/MWh | 32.65 | % |
+| Debt reduction P90 vs P50 at 159.90 USD/MWh (actual / DSCR only) | 9.3 / 20.2 | % |
+| Lock-up semesters (base case) | 0 | |
 | Model status | OK | |
 
-Values correspond to model v1.1. Update this table with every new version.
+Values correspond to model v1.2. Update this table with every new version.
 
 ## 2. Purpose, scope and intended use
 
@@ -160,11 +162,11 @@ flowchart LR
 ### 4.3 How to run the model
 Mode 1 (size debt on the selected case):
 1. Set the energy case selector (Inputs, row 6) and Debt sizing mode = 1 (Inputs, row 7). Change any other input for the scenario.
-2. In Debt, copy Debt size (calculated, C17) and paste it as a value into Debt size (pasted value, C21); do the same from k (C19) to k pasted (C22). Repeat until the Debt checks equal 0 (usually one to three rounds).
+2. In Debt, copy Debt size (calculated, C17) and paste it as a value into Debt size (pasted value, C21); do the same from k (C19) to k pasted (C22) and from c (calculated, C38) to c pasted (C39). Repeat until the Debt checks equal 0 (usually three to five rounds).
 3. Confirm Model status = OK in Checks.
 
 Mode 2 (keep the P90 debt and repayment schedule):
-1. First return to the base case (case 2, mode 1) and paste the P90 debt and k as in steps 2 and 3 above. Debt C21 must equal the P90 debt (8,063,244.23 in v1.1).
+1. First return to the base case (case 2, mode 1) and paste the P90 debt and k as in steps 2 and 3 above. Debt C21 must equal the P90 debt (8,042,953.51 in v1.2) and C39 the base case c (69,000).
 2. Set the energy case selector to the scenario case and Debt sizing mode = 2. Do not paste anything.
 3. Confirm Model status = OK in Checks.
 
@@ -173,7 +175,7 @@ P90 debt service schedule: the row "Debt service P90 (pasted values)" in Debt is
 Sensitivities: rerun each scenario manually with the steps above, paste the results as values in Sensitivities and return to the base case (case 2, mode 1, original inputs, P90 debt pasted).
 
 Required tariff (energy price that reaches a target IRR in the sponsor case), in rounds:
-1. Bank case: set case 2 and mode 1 at the current energy price; paste debt and k (Debt C17 to C21, C19 to C22) until the Debt checks equal 0.
+1. Bank case: set case 2 and mode 1 at the current energy price; paste debt, k and c (Debt C17 to C21, C19 to C22, C38 to C39) until the Debt checks equal 0.
 2. Paste the P90 debt service schedule (Debt row 26 into row 29, as values).
 3. Sponsor case: set case 1 and mode 2; confirm Model status = OK.
 4. Goal Seek (Data, What-If Analysis): set an auxiliary cell, Returns E9 = (Returns C9 - target) x 1,000,000 for the project IRR or (Returns C11 - target) x 1,000,000 for the equity IRR, to 0 by changing Inputs B15 (Energy price). The x 1,000,000 factor is needed because Goal Seek stops when the result is within 0.001 of the target.
@@ -196,7 +198,7 @@ Warning: while the Debt checks differ from 0, the outputs do not reflect the cur
 | A-02 | Availability factor | 92 | % | EST | Own criteria; personal communication | D12 | No | Medium |
 | A-03 | Energy price | 65 | USD/MWh | EST | RenovAr to MATER | D12 | +/-10%; 2% escalation | High |
 | A-04 | CAPEX | 3,300 | USD/kW | EST | IRENA 2024, table 6.3 | D13 | +/-15% | High |
-| A-05 | Debt interest rate | 9 | %/yr | EST | Comparable: Genneia | D14 | +/-1 pt | Medium |
+| A-05 | Debt interest rate | 9 | %/yr | EST | Comparable: Genneia | D14 | +/-0.5 pt, +/-1 pt | Medium |
 | A-06 | Target DSCR (P90) | 1.35 | x | EST | Forvis Mazars | D14 | No | High |
 | A-07 | Maximum gearing | 70 | % | EST | Wall Street Prep | D14 | No (never binding) | Low |
 | A-08 | Income tax rate | 35 | % | EST | PwC Tax Summaries | D15 | No | Medium |
@@ -291,15 +293,17 @@ Each sheet uses the same structure: Purpose, Inputs used, Structure, Key calcula
 
 ### 6.7 Debt
 - Key calculations:
-  - Annual debt service capacity (A) = MAX(0, (CFADS of S1 + CFADS of the previous S2) / target DSCR) in wet semesters (S1); CFADS / target DSCR in the last repayment semester; 0 otherwise (12-month window April-March, D25)
-  - Discount factor = 1 / [(1 + r)^(1 + last) x (1 + 2r)^INT((n - 1) / 2)], with r = semiannual rate and n = repayment period number
+  - Debt service capacity (A) = MAX(0, CFADS / target DSCR - c) in wet semesters (S1) and MAX(0, CFADS / target DSCR + c) in dry semesters (S2), in repayment periods (D29)
+  - Seasonal transfer c (calculated) = ROUNDUP to the next 1,000 USD of MAX over repayment S2 of (interest / pasted k - CFADS / target DSCR), floored at 0; pasted as a value (C39) like debt and k
+  - Discount factor = 1 / (1 + r)^n, with r = semiannual rate and n = repayment period number
   - DSCR capacity = sum of A x discount factor
   - Gearing limit = max gearing x total uses
   - Debt size = MAX(0, MIN(DSCR capacity, gearing limit)); k = debt size / DSCR capacity (0 if capacity <= 0)
-  - Debt service (mode 1): interest only in dry semesters (S2) except the last; A x pasted k - previous debt service in wet semesters (S1); A x pasted k in the last semester. Mode 2: pasted P90 debt service
+  - Debt service (mode 1) = A x pasted k. Mode 2: pasted P90 debt service
+  - Every 12-month window holds one S1 (-c) and one S2 (+c), so each window pays (CFADS of the two semesters) / target DSCR x k: all 12-month DSCR equal target / k except the first test date, whose window includes a construction semester (D29)
   - Principal = debt service - interest (never negative)
 - Circularity: debt size feeds IDC, interest feeds tax, tax feeds CFADS. Resolved by pasted values (Section 4.3).
-- Checks: pasted = calculated (debt, k; skipped in mode 2); closing balance at maturity = 0; first repayment semester is S1 and last is S2.
+- Checks: pasted = calculated (debt, k; skipped in mode 2); closing balance at maturity = 0; all 12-month DSCR = target / k except the first; pasted c = calculated c; principal >= 0 in every period.
 
 ### 6.8 Cashflow
 - Key calculations:
@@ -316,7 +320,7 @@ Each sheet uses the same structure: Purpose, Inputs used, Structure, Key calcula
 - Semiannual DSCR = CFADS / debt service (0 when there is no debt service)
 - 12-month DSCR = sum of CFADS over 2 semesters / sum of debt service over 2 semesters
 - LLCR = PV(CFADS to maturity at debt rate) / opening debt balance (0 when there is no debt)
-- Check: first-semester LLCR >= target DSCR (skipped in mode 2 or with zero debt). With interest-only dry semesters the first LLCR is 1.3503, slightly above the target (D25).
+- Check: first-semester LLCR >= target DSCR (skipped in mode 2 or with zero debt). With the seasonal transfer the first LLCR is 1.354, slightly above the target (D29).
 - Min and average ratios over repayment periods only, with AGGREGATE and AVERAGEIF, wrapped in IFERROR.
 
 ### 6.10 Returns
@@ -328,7 +332,7 @@ Each sheet uses the same structure: Purpose, Inputs used, Structure, Key calcula
 - Notes: no terminal value; cash flows end with the concession.
 
 ### 6.11 Sensitivities
-- Table 1: 13 scenarios, regenerated manually following Section 4.3. Results in Section 9.2. Main answer cell: Sensitivities D20 = 1 - P90 debt / P50 debt.
+- Table 1: 15 scenarios, regenerated manually following Section 4.3 and pasted as values. Results in Section 9.2. Main answer cell: Sensitivities D22 = 1 - P90 debt / P50 debt.
 - Table 2: required tariff for project IRR = cost of debt and for equity IRR = hurdle, and the debt reduction at the required tariff (actual and DSCR only). Results in Section 9.4.
 - Table 3: main answer at 65 USD/MWh and at the required tariff (links).
 
@@ -362,25 +366,27 @@ Each sheet uses the same structure: Purpose, Inputs used, Structure, Key calcula
 | C-21 | Cashflow | Retained cash >= 0 | 0 | Integrity |
 | C-22 | Cashflow | Cash reconciliation | 0 | Integrity |
 | C-23 | Ratios | First LLCR >= target DSCR | 0 | Integrity |
-| C-24 | Debt | First repayment semester is S1 | 0 | Integrity (D25 assumption) |
-| C-25 | Debt | Last repayment semester is S2 | 0 | Integrity (D25 assumption) |
-| AL-01 | Cashflow | Lock-up flag count | 1 in the base case (technical, at maturity) | Information (covenant) |
+| C-24 | Debt | All 12-month DSCR = target DSCR / k, except the first test date (mode 1, debt > 0) | 0 | Integrity (D29) |
+| C-25 | Debt | Pasted c = calculated c (mode 1) | 0 | Integrity (pasted values current) |
+| C-26 | Debt | Principal >= 0 in every period | 0 | Integrity (D29) |
+| AL-01 | Cashflow | Lock-up flag count | 0 in the base case | Information (covenant) |
 | AL-02 | Cashflow | Default flag count | 0 in the base case | Information (covenant) |
 
 ## 8. Testing and QA log
 
 | ID | Test | Expected behaviour | Result | Status |
 |---|---|---|---|---|
-| T-01 | P50 vs P90 sizing | P50 debt > P90 debt | 11.94 vs 8.06 USD M | Pass |
-| T-02 | Price +10% | Debt and IRR rise | Debt 9.51 USD M; project IRR 2.34% | Pass |
+| T-01 | P50 vs P90 sizing | P50 debt > P90 debt | 11.94 vs 8.04 USD M | Pass |
+| T-02 | Price +10% | Debt and IRR rise | Debt 9.50 USD M; project IRR 2.34% | Pass |
 | T-03 | Rate +/-1 pt | Project IRR unchanged; debt moves inversely | Project IRR 1.28% in both | Pass |
-| T-04 | CAPEX +15% | IRR falls; debt falls through higher O&M | Debt 7.10 USD M | Pass |
+| T-04 | CAPEX +15% | IRR falls; debt falls through higher O&M | Debt 7.06 USD M | Pass |
 | T-05 | Price = 0 | Revenue 0; debt 0; model runs without errors | Debt 0; zero-debt guards added to DSCR, LLCR, covenants and IRR (D26); all checks 0; IRR N/A | Pass |
-| T-06 | Independent recalculation of all 13 scenarios and the required tariffs outside the workbook (Python replica, AI-assisted review) | Matches model | Debt to the dollar; ratios and IRRs to 4 decimals; tariffs within 0.05 USD/MWh | Pass |
-| T-08 | E-flow 20% with P90 debt (case 4, mode 2) | Checks pass; covenant breaches flagged | Model status OK; 24 lock-up and 24 default semesters; DSRA depleted in semester 14 | Pass |
-| T-09 | Model status in every case | OK in cases 1-4 (mode 2) and in the base case | OK | Pass |
-| T-07 | Principal >= 0 every period | No negative amortisation | Principal 0 in dry semesters, positive in wet semesters (D25) | Pass |
-| T-10 | Required tariff convergence | Two consecutive Goal Seek rounds within 0.10 USD/MWh | 100.80 to 100.77; 159.71 (matches the independent replica within 0.04) | Pass |
+| T-06 | Independent recalculation of all 15 scenarios and the required tariffs outside the workbook (Python replica, AI-assisted review) | Matches model | Debt to the dollar; ratios and IRRs to 4 decimals; tariffs within 0.05 USD/MWh | Pass |
+| T-08 | E-flow 20% with P90 debt (case 4, mode 2) | Checks pass; covenant breaches flagged | v1.1: Model status OK; 24 lock-up and 24 default semesters; DSRA depleted in semester 14. Not rerun in v1.2 (replica: 24 lock-up semesters, min 12-month DSCR 0.82) | Pass (v1.1) |
+| T-09 | Model status in every case | OK in cases 1-4 (mode 2) and in the base case | OK in v1.1; base case and all mode 1 scenarios OK in v1.2 | Pass |
+| T-07 | Principal >= 0 every period | No negative amortisation | Now a check (C-26). Principal positive in every semester; lowest in the first dry semester (903 USD, from rounding c) (D29) | Pass |
+| T-10 | Required tariff convergence | Two consecutive Goal Seek rounds within 0.10 USD/MWh | v1.2: 100.77 (replica 100.78); 159.90 (replica 159.85) | Pass |
+| T-11 | Rolling 12-month DSCR (D29) | Every 12-month DSCR = 1.35 in the P90 base case except the first test date | 1.35 in 23 test dates; 1.46 at the first; no lock-up | Pass |
 
 ## 9. Scenarios, sensitivities and uncertainty
 
@@ -394,30 +400,32 @@ Each sheet uses the same structure: Purpose, Inputs used, Structure, Key calcula
 | E-flow 20% | Environmental flow | 4 | 1 |
 | Price +/-10% | Energy price | 2 | 1 |
 | CAPEX +/-15% | USD/kW | 2 | 1 |
-| Rate +/-1 pt | Debt interest rate | 2 | 1 |
+| Rate +/-0.5 pt and +/-1 pt | Debt interest rate | 2 | 1 |
 | Price escalation 2% | 2%/yr on price | 2 | 1 |
 | Availability 88% | Availability factor 92% to 88% | 2 | 1 |
 | Post-contract spot (option C) | Spot price 56.5 USD/MWh after year 20 | 2 | 1 |
 
-### 9.2 Results (model v1.1, energy price 65 USD/MWh, recontract after year 20)
+### 9.2 Results (model v1.2, energy price 65 USD/MWh, recontract after year 20)
 | Scenario | Debt (USD M) | Debt % uses | Min 12m DSCR | Project IRR | Equity IRR |
 |---|---|---|---|---|---|
-| Base P90 | 8.06 | 21.7% | 1.19 | 1.28% | 0.37% |
-| P50 sized | 11.94 | 31.5% | 1.13 | 3.94% | 2.81% |
-| P50 with P90 debt | 8.06 | 21.7% | 1.83 | 3.91% | 3.18% |
-| Recent 2010-2025 | 7.19 | 19.4% | 1.23 | 0.56% | -0.28% |
-| E-flow 20% | 5.26 | 14.3% | 1.23 | -1.20% | -1.87% |
-| Price +10% | 9.51 | 25.4% | 1.16 | 2.34% | 1.33% |
-| Price -10% | 6.61 | 17.9% | 1.23 | 0.07% | -0.73% |
-| CAPEX +15% | 7.10 | 16.7% | 1.25 | -0.33% | -1.09% |
-| CAPEX -15% | 9.03 | 28.2% | 1.15 | 3.09% | 2.02% |
-| Rate +1 pt | 7.70 | 20.7% | 1.19 | 1.28% | 0.30% |
-| Rate -1 pt | 8.45 | 22.7% | 1.18 | 1.28% | 0.45% |
-| Price escalation 2% | 9.50 | 25.4% | 1.14 | 2.57% | 1.49% |
-| Availability 88% | 7.43 | 20.0% | 1.20 | 0.77% | -0.10% |
-| Post-contract spot (option C) | 8.06 | 21.7% | 1.19 | -1.30% | -2.84% |
+| Base P90 | 8.04 | 21.6% | 1.35 | 1.28% | 0.37% |
+| P50 sized | 11.94 | 31.5% | 1.35 | 3.94% | 2.81% |
+| P50 with P90 debt | 8.04 | 21.6% | 1.96 | 3.91% | 3.18% |
+| Recent 2010-2025 | 7.14 | 19.3% | 1.35 | 0.56% | -0.29% |
+| E-flow 20% | 5.22 | 14.2% | 1.35 | -1.20% | -1.88% |
+| Price +10% | 9.50 | 25.4% | 1.35 | 2.34% | 1.33% |
+| Price -10% | 6.59 | 17.8% | 1.35 | 0.07% | -0.73% |
+| CAPEX +15% | 7.06 | 16.7% | 1.35 | -0.33% | -1.09% |
+| CAPEX -15% | 9.02 | 28.2% | 1.35 | 3.09% | 2.02% |
+| Rate +0.5 pt | 7.85 | 21.1% | 1.35 | 1.28% | 0.33% |
+| Rate +1 pt | 7.67 | 20.6% | 1.35 | 1.28% | 0.30% |
+| Rate -0.5 pt | 8.24 | 22.2% | 1.35 | 1.28% | 0.41% |
+| Rate -1 pt | 8.44 | 22.7% | 1.35 | 1.28% | 0.44% |
+| Price escalation 2% | 9.46 | 25.3% | 1.35 | 2.57% | 1.48% |
+| Availability 88% | 7.41 | 20.0% | 1.35 | 0.77% | -0.10% |
+| Post-contract spot (option C, replica only) | 8.04 | 21.6% | 1.35 | -1.30% | -2.85% |
 
-Debt reduction from P90 vs P50 sizing at 65 USD/MWh: 32.5%. All scenarios are DSCR-bound. The minimum 12-month DSCR is below 1.35 because of the September test dates under interest-only dry semesters, mainly the technical lock-up at maturity (D25).
+Debt reduction from P90 vs P50 sizing at 65 USD/MWh: 32.65%. All scenarios are DSCR-bound and every sized case has a minimum 12-month DSCR of 1.35 (D29). Option C is not in the Sensitivities sheet; its v1.2 values come from the independent replica.
 
 ### 9.3 Uncertainty register
 | Source | Treatment in model | Quantified |
@@ -428,7 +436,7 @@ Debt reduction from P90 vs P50 sizing at 65 USD/MWh: 32.5%. All scenarios are DS
 | Energy price | +/-10%, 2% escalation | Yes |
 | Post-contract price | Recontract at real price (base); spot 56.5 (option C) | Yes |
 | Equity hurdle rate | Damodaran estimate (VERIFICAR) | No |
-| Interest rate | +/-1 pt | Yes |
+| Interest rate | +/-0.5 pt, +/-1 pt | Yes |
 | Availability | 88% case | Yes |
 | Regulatory / tax | Fixed | No |
 
@@ -437,12 +445,12 @@ Debt reduction from P90 vs P50 sizing at 65 USD/MWh: 32.5%. All scenarios are DS
 |---|---|
 | LCOE, P50, 6% / 9% / 12% | 76.7 / 93.8 / 112.9 USD/MWh |
 | LCOE, P90, 9% | 118.9 USD/MWh |
-| Tariff for project IRR = cost of debt (9%) | 100.77 USD/MWh (P90 debt 15.88 USD M; sponsor equity IRR 8.42%) |
+| Tariff for project IRR = cost of debt (9%) | 100.77 USD/MWh (P90 debt 15.91 USD M; sponsor equity IRR 8.42%) |
 | Equity hurdle rate (Damodaran, VERIFICAR) | 18.88% |
-| Tariff for equity IRR = hurdle | 159.71 USD/MWh (sponsor project IRR 15.55%; min 12-month DSCR 1.41) |
-| P90 debt / P50 debt at 159.71 USD/MWh | 26.04 USD M (DSCR) / 28.77 USD M (gearing) |
-| Debt reduction at 159.71 USD/MWh, actual | 9.5% (P50 debt capped by the 70% gearing limit) |
-| Debt reduction at 159.71 USD/MWh, DSCR only | 20.2% (operating leverage; limit about 21% set by the P90/P50 energy gap) |
+| Tariff for equity IRR = hurdle | 159.90 USD/MWh (sponsor project IRR 15.57%; min 12-month DSCR 1.53) |
+| P90 debt / P50 debt at 159.90 USD/MWh | 26.20 USD M (DSCR) / 28.89 USD M (gearing; P50 DSCR capacity 32.84 USD M) |
+| Debt reduction at 159.90 USD/MWh, actual | 9.3% (P50 debt capped by the 70% gearing limit) |
+| Debt reduction at 159.90 USD/MWh, DSCR only | 20.2% (operating leverage; limit about 21% set by the P90/P50 energy gap) |
 
 MATER contracts in 2025 ranged from 49 to 66 USD/MWh (AGUEERA, wind and solar): both required tariffs are well above that range.
 
@@ -455,8 +463,8 @@ MATER contracts in 2025 ranged from 49 to 66 USD/MWh (AGUEERA, wind and solar): 
 - Losses expire after 5 years (USD 7.7 M expire in the base case).
 - 40% of the civil works base is not depreciated within the 30-year life (D19).
 - Negative CFADS in the dry semesters of 2056-2059 only under the spot option (option C, D27).
-- Interest-only dry semesters create a technical lock-up in the last repayment semester (12-month DSCR 1.19 at maturity, D25).
-- Required tariffs (100.77 and 159.71 USD/MWh) are well above MATER prices (49-66 USD/MWh); the equity hurdle rate is an estimate (VERIFICAR, D28).
+- The seasonal transfer c is constant while dry-semester CFADS falls: the last three dry semesters pay more than their CFADS (semiannual DSCR 0.99, 0.98 and 0.96; last LLCR 0.96). The DSRA covers the gap (15,377 USD), with no sponsor injections; covenants are tested on the 12-month DSCR only (D21, D29).
+- Required tariffs (100.77 and 159.90 USD/MWh) are well above MATER prices (49-66 USD/MWh); the equity hurdle rate is an estimate (VERIFICAR, D28).
 - Sponsor support during lock-up is assumed unlimited; default consequences are not modelled (D24).
 - Sensitivities change one assumption at a time; sizing on P90 at 1.35x is a conservative lender practice (D23).
 - An e-flow of 20% is not compatible with the debt sized on the base flow (D24).
@@ -466,9 +474,10 @@ MATER contracts in 2025 ranged from 49 to 66 USD/MWh (AGUEERA, wind and solar): 
 ### 10.2 Issue log
 | ID | Sheet | Description | Impact | Status |
 |---|---|---|---|---|
-| I-01 | Debt | Semiannual sculpting produces negative principal in S2; balance rises (e.g. 7.52 to 7.59 USD M in period 6) | Lenders would not accept negative amortisation | Closed (D25, step 3.0) |
+| I-01 | Debt | Semiannual sculpting produces negative principal in S2; balance rises (e.g. 7.52 to 7.59 USD M in period 6) | Lenders would not accept negative amortisation | Closed (D25, then D29) |
 | I-02 | Inputs | Label for Energy price shows "0" instead of OFICIAL/EST/VERIFICAR | Documentation | Closed |
 | I-03 | Tax | Interest row label still reads "placeholder, linked in step 2.6" | Labelling | Closed |
+| I-04 | Debt | With interest-only dry semesters (D25) the October-September 12-month DSCR was not controlled: 1.28 at the first September test date and 1.19 at maturity (below the 1.20 lock-up) | The base case breached its own covenant; would inflate the lock-up probability in the Monte Carlo | Closed (D29, step 3.0b) |
 
 ## Appendix A. Glossary
 | Term | Definition |
@@ -484,15 +493,16 @@ MATER contracts in 2025 ranged from 49 to 66 USD/MWh (AGUEERA, wind and solar): 
 | E-flow | Environmental flow kept in the river |
 | MATER | Argentine term market for renewable energy |
 | Sculpting | Repayment profile set so DSCR equals the target each period (here, over 12-month windows) |
+| Seasonal transfer (c) | Constant amount moved from each wet-semester payment to each dry-semester payment so that dry semesters cover their interest while every 12-month window stays at the target DSCR (D29) |
 | LCOE | Levelized cost of energy: constant price that recovers all costs at a given discount rate |
 | Hurdle rate | Minimum return an investor requires to commit equity |
 | Merchant tail | Period after the contract in which the plant sells at market prices |
 | Lock-up | Distribution block when DSCR falls below the covenant |
 
 ## Appendix B. References
-- [DECISIONS.md](../DECISIONS.md): every assumption with its reason, limitations and sources (D1-D28).
+- [DECISIONS.md](../DECISIONS.md): every assumption with its reason, limitations and sources (D1-D29).
 - [README.md](../README.md): research question, hypotheses, Stage 1 and Stage 2 results.
-- Bodmer, E. Resolving negative repayment: https://edbodmer.com/resolving-negative-repayment/ (D25)
+- Bodmer, E. Resolving negative repayment: https://edbodmer.com/resolving-negative-repayment/ (D25, D29)
 - AGUEERA (2025), MATER contracts presentation: https://www.agueera.com.ar/wp-content/uploads/2025/08/AGUEERA-Presentacion-contratos-MATER-ene2025.pdf (D27)
 - Damodaran, country risk premiums: https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html (D28)
 - IRENA (2025), Renewable Power Generation Costs in 2024: https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_2025.pdf (D12, D13, D28)
