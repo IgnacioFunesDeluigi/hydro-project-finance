@@ -221,3 +221,5 @@ __marimo__/
 
 # Excel lock files
 ~$*
+
+.vscode/
