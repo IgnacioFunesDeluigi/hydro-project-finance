@@ -792,3 +792,14 @@ In any case, a bank would still require a contingency in the construction budget
  - Künsch (1989): https://en.wikipedia.org/wiki/Bootstrapping_(statistics)
  - Hall, Horowitz y Jing (1995): https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext
  - Wilks (2011), Statistical Methods in the Atmospheric Sciences, ch. 5, as cited in the xskillscore documentation: https://xskillscore.readthedocs.io/en/stable/api/xskillscore.effective_sample_size.html
+
+## D31 · 2026-11-05 · Main simulation with the fixed P90 debt schedule [EST]
+
+**Decision:**
+ - The P90 debt (8,042,953.51 USD) and its associated repayment schedule (row 29 of the 'Debt' sheet, model v1.2) remain fixed across all trajectories; adjusting the debt amount for each trajectory is optional, to be decided in section 3.6 for H1.
+
+**Why:**
+ - It has been decided to maintain the P90 debt and its corresponding repayment schedule for the purpose of analyzing the loan schedule established in the base case. This allows the repayment schedule to be set before the hydrology is known, simulating a real world risk scenario for the bank and enables us to address one of the project's key questions.
+
+**Source:**
+ - Own criteria.
