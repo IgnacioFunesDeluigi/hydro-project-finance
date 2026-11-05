@@ -773,3 +773,22 @@ In any case, a bank would still require a contingency in the construction budget
 **Sources:**
  - Own derivation, verified with the independent Python replica (T-06, T-11).
  - Bodmer: https://edbodmer.com/resolving-negative-repayment/
+
+## D30 · 2026-11-05 · Pre-registered predictions for H3 [EST]
+
+**Decision and Why:**
+- Regarding hypothesis H3: It is expected that for a covenant default, the result for H3 will be "false," whereas for the DSRA and the sponsors, it will be "true."
+
+| Metric | L = 4 | L = 1 | Why |
+| :--- | :---: | :---: | :---: |
+| P(at least one covenant default) | Down  | Up  | A single very dry year can trigger a covenant default, because the DSRA is not included in the CFADS. In the formula P(covenant) = (trajectories with at least 1 covenant default) / N : The denominator is N trajectories, not the total number of years. Therefore, if the bad years are concentrated, fewer trajectories are affected. |
+| P(deplete DSRA) | Up | Down  | With L=4, we experience more severe streaks of dry years, which threatens to deplete the DSRA. |
+| Expected contribution from sponsors | Up | Down | With L=4, there is a higher probability of the project ending up at zero (with no cash, due to a string of bad years), which in turn increases the likelihood of having to pressure sponsors to inject equity. |
+| Expected semesters in lock-up (average) | About the same  | About the same| The total number of semesters expected over the 12-year span (24 semesters) remains the same; what changes is their distribution. The values ​​are not exactly identical because the circular nature of block bootstrapping can introduce variations, and because of the 12-month windows from April to March, which span two hydrological years. |
+| Dispersion of the equity IRR | Up | Down.|  When we consider a 30-year period with independent annual outcomes, the average trajectory remains close to the historical norm. However, when dry years occur in succession, the likelihood of experiencing extended streaks—whether of dry or wet years—increases. This widens the gap between dry (unfavorable) and wet (favorable) trajectories, which broadens the distribution and increases the dispersion. Effective sample size 30 × (1 − 0.64)/(1 + 0.64) ≈ 6.6 years. |
+
+**Sources:**
+ - Own criteria
+ - Künsch (1989): https://en.wikipedia.org/wiki/Bootstrapping_(statistics)
+ - Hall, Horowitz y Jing (1995): https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext
+ - Wilks (2011), Statistical Methods in the Atmospheric Sciences, ch. 5, as cited in the xskillscore documentation: https://xskillscore.readthedocs.io/en/stable/api/xskillscore.effective_sample_size.html
