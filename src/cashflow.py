@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import numpy_financial as npf
 
 def read_row(path, sheet, label):
 
@@ -24,7 +25,7 @@ def load_constants(path):
         "financing_costs": read_row(path, "Tax", "Total deductible financing costs"),
         "dsra_target": read_row(path, "Cashflow", "DSRA target"),
         "initial_funding": read_row(path, "Cashflow", "+ Initial funding"),
-        "equity_cashflow": read_row(path, "Returns", "Equity cash flow"),
+        "equity_contribution": read_row(path, "Construction", "Total equity contribution"),
         "tax_rate" : 0.35,
         "lockup": 1.2,
         "default": 1.1,
@@ -64,5 +65,54 @@ def run_trajectory(energy_gwh, c):
     tax = (np.maximum(0,taxable) - used) * c["tax_rate"]  # (Positive earning - loss) * 35% tax rate
     cfads = ebitda - tax
 
-    
-    return {"net_mwh": net_mwh, "revenue": revenue, "ebitda": ebitda,"used":used, "expired":expired, "tax": tax, "cfads":cfads}
+    # 4. Cash waterfall: DSRA, 12-month DSCR, covenants, distributions (model book 6.8)
+    ds = c["debt_service"]
+    cash_after_ds = cfads - ds
+    topup = np.zeros(70)
+    withdrawal = np.zeros(70)
+    release = np.zeros(70)
+    dsra = np.zeros(70)
+    dscr_12m = np.zeros(70)
+    lockup = np.zeros(70)
+    default = np.zeros(70)
+    distributions = np.zeros(70)
+    retained = np.zeros(70)
+
+    for t in range(70):
+        # DSRA corkscrew
+        dsra_open = dsra[t - 1] if t > 0 else 0.0
+        if c["repayment_flag"][t] == 1:
+            topup[t] = min(max(0,(c["dsra_target"][t] - dsra_open)),max(0,cash_after_ds[t]))
+        withdrawal[t] = min(dsra_open,max(0,-cash_after_ds[t]))
+        release[t] = max(0,dsra_open+c["initial_funding"][t]+topup[t]-withdrawal[t]-c["dsra_target"][t])
+        dsra[t] = dsra_open + c["initial_funding"][t] + topup[t] - withdrawal[t] - release[t]
+        cash_available = cash_after_ds[t] - topup[t] + withdrawal[t] + release[t]
+
+        # 12-month DSCR and covenants
+        ds_window = ds[t] + (ds[t - 1] if t > 0 else 0.0)
+        if c["repayment_flag"][t] == 1 and ds_window > 0:
+            dscr_12m[t] = (cfads[t-1] + cfads[t]) / (c["debt_service"][t-1] + c["debt_service"][t])
+            if dscr_12m[t] < c["lockup"] :
+                lockup[t] = 1 
+            else:
+                lockup[t] = 0 
+            if dscr_12m[t] < c["default"] :
+                default[t] = 1 
+            else:
+                default[t] = 0 
+
+        # Retained cash corkscrew
+        retained_open = retained[t-1] if t > 0 else 0.0
+        if lockup[t] == 1:
+            distributions[t] = min(0,retained_open+cash_available)
+        else:
+            distributions[t] = retained_open+cash_available
+        retained[t] = retained_open + cash_available - distributions[t]
+
+    equity_cf = distributions - c["equity_contribution"]
+    equity_irr = ( 1 + npf.irr(equity_cf))**2 -1
+
+    return { "net_mwh": net_mwh, "revenue": revenue, "ebitda": ebitda,"used":used, "expired":expired, "tax": tax, "cfads":cfads, "dsra": dsra, "withdrawal": withdrawal, "release": release, "dscr_12m": dscr_12m, "lockup": lockup, "default": default, "distributions": distributions, "equity_cf": equity_cf, "equity_irr": equity_irr }
+
+
+
