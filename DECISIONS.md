@@ -803,3 +803,14 @@ In any case, a bank would still require a contingency in the construction budget
 
 **Source:**
  - Own criteria.
+
+## D32 · 2026-11-06 · Reconciliation scope for step 3.3 [EST]
+
+**Decision:**
+ - The 3.3 reconciliation covers the scenarios with P90 fixed debt (P90 base case, P50 with P90 debt, and T-08 e-flow 20% with P90 debt) as well as the 100.77 tariff with its own P90 debt. The 13 sculpted scenarios are excluded from the test.
+
+**Why:**
+ - This decision is made for the sake of time efficiency and to focus on the Monte Carlo methodology; furthermore, the Monte Carlo code does not perform debt sculpting, meaning those scenarios test something that the simulation itself does not utilize. If Option B is selected in step 3.6, the corresponding debt sculpting is reconciled at that stage.
+
+**Source:**
+ - Own criteria.

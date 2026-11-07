@@ -13,7 +13,7 @@ def read_row(path, sheet, label):
 
 def load_constants(path):
     constants = {
-        "debt_service": read_row(path, "Debt", "Debt service P90 (pasted values)"),
+        "debt_service": read_row(path, "Debt", "Debt service"),
         "construction_flag": read_row(path, "Timeline", "Construction flag"),
         "operations_flag": read_row(path, "Timeline", "Operations flag"),
         "repayment_flag": read_row(path, "Timeline", "Repayment flag"),
