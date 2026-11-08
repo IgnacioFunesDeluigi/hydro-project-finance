@@ -114,5 +114,3 @@ def run_trajectory(energy_gwh, c):
 
     return { "net_mwh": net_mwh, "revenue": revenue, "ebitda": ebitda,"used":used, "expired":expired, "tax": tax, "cfads":cfads, "dsra": dsra, "withdrawal": withdrawal, "release": release, "dscr_12m": dscr_12m, "lockup": lockup, "default": default, "distributions": distributions, "equity_cf": equity_cf, "equity_irr": equity_irr }
 
-
-

@@ -827,12 +827,13 @@ In any case, a bank would still require a contingency in the construction budget
 | :--- | :---: | :---: |
 | n^(1/3) | 4   | Order of magnitude only; omits a data-dependent constant |
 | Actual autocorrelation vs. band | 6 - 7 | The band is not that precise: the actual autocorrelation, which crosses the 0.236 threshold between 6 and 7 years—as opposed to 3 to 4 years according to 0.64^k |
-| Politis-White (circular) | Circular = 7.99 ; Statioanry = 6.98 | Published method, automatic, without estimated ranges |
+| Politis-White (circular) | Circular = 7.99 ; Stationary = 6.98 | Published method, automatic, without estimated ranges |
 
 **Source:**
  - Own criteria.
  - https://arch.readthedocs.io/en/latest/bootstrap/generated/arch.bootstrap.optimal_block_length.html
  - https://www.tandfonline.com/doi/abs/10.1081/ETC-120028836
  - https://academic.oup.com/biomet/article-lookup/doi/10.1093/biomet/82.3.561
+ - https://www.itl.nist.gov/div898/handbook/eda/section3/autocopl.htm
 
 
