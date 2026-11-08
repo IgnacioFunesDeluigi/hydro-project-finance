@@ -784,7 +784,7 @@ In any case, a bank would still require a contingency in the construction budget
 | P(at least one covenant default) | Down  | Up  | A single very dry year can trigger a covenant default, because the DSRA is not included in the CFADS. In the formula P(covenant) = (trajectories with at least 1 covenant default) / N : The denominator is N trajectories, not the total number of years. Therefore, if the bad years are concentrated, fewer trajectories are affected. |
 | P(deplete DSRA) | Up | Down  | With L=4, we experience more severe streaks of dry years, which threatens to deplete the DSRA. |
 | Expected contribution from sponsors | Up | Down | With L=4, there is a higher probability of the project ending up at zero (with no cash, due to a string of bad years), which in turn increases the likelihood of having to pressure sponsors to inject equity. |
-| Expected semesters in lock-up (average) | About the same  | About the same| The total number of semesters expected over the 12-year span (24 semesters) remains the same; what changes is their distribution. The values ​​are not exactly identical because the circular nature of block bootstrapping can introduce variations, and because of the 12-month windows from April to March, which span two hydrological years. |
+| Expected semesters in lock-up (average) | About the same  | About the same| The total number of semesters expected over the 12-year span (24 semesters) remains the same; what changes is their distribution. The values are not exactly identical because the circular nature of block bootstrapping can introduce variations, and because of the 12-month windows from April to March, which span two hydrological years. |
 | Dispersion of the equity IRR | Up | Down.|  When we consider a 30-year period with independent annual outcomes, the average trajectory remains close to the historical norm. However, when dry years occur in succession, the likelihood of experiencing extended streaks—whether of dry or wet years—increases. This widens the gap between dry (unfavorable) and wet (favorable) trajectories, which broadens the distribution and increases the dispersion. Effective sample size 30 × (1 − 0.64)/(1 + 0.64) ≈ 6.6 years. |
 
 **Sources:**
@@ -814,3 +814,25 @@ In any case, a bank would still require a contingency in the construction budget
 
 **Source:**
  - Own criteria.
+
+## D33 · 2026-11-07 · Block length L [EST]
+
+**Decision:**
+ - After determining the block length using three methods: n^{1/3}, comparison of actual versus theoretical autocorrelation, and Politis-White, it was decided to set L=8, and to use the following values of L for sensitivity analysis: 1, 2, 4, 6, 8, 10, and 12.
+
+**Why:**
+ - It is decided to use L=8, as the method from which it is derived (Politis-White) is a published method and does not require the visual assessment of thresholds. The selected range for L=1,2,4,6,8,10,12. Allowing us to observe the behavior of the bootstrap with both small and large values of L, given that the Politis-White method is, ultimately, an estimation. L = 1 is the comparison required by H3 (independent years), and L = 4 shows how much the result changes if the shortcut 0.64^k had been used instead.
+
+| Method | Suggested L | Observation |
+| :--- | :---: | :---: |
+| n^(1/3) | 4   | Order of magnitude only; omits a data-dependent constant |
+| Actual autocorrelation vs. band | 6 - 7 | The band is not that precise: the actual autocorrelation, which crosses the 0.236 threshold between 6 and 7 years—as opposed to 3 to 4 years according to 0.64^k |
+| Politis-White (circular) | Circular = 7.99 ; Statioanry = 6.98 | Published method, automatic, without estimated ranges |
+
+**Source:**
+ - Own criteria.
+ - https://arch.readthedocs.io/en/latest/bootstrap/generated/arch.bootstrap.optimal_block_length.html
+ - https://www.tandfonline.com/doi/abs/10.1081/ETC-120028836
+ - https://academic.oup.com/biomet/article-lookup/doi/10.1093/biomet/82.3.561
+
+

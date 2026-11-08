@@ -10,5 +10,5 @@ dependencies:
   - jupyterlab=4.6.4
   - numpy-financial=1.0.0
   - pytest=9.2.0
-
+  - arch-py=8.0.0
 
