@@ -835,5 +835,24 @@ In any case, a bank would still require a contingency in the construction budget
  - https://www.tandfonline.com/doi/abs/10.1081/ETC-120028836
  - https://academic.oup.com/biomet/article-lookup/doi/10.1093/biomet/82.3.561
  - https://www.itl.nist.gov/div898/handbook/eda/section3/autocopl.htm
+ - Patton, Politis and White (2009), Correction to "Automatic Block-Length Selection for the Dependent Bootstrap", Econometric Reviews 28(4), 372-375
 
+## D34 · 2026-11-08 · Monte Carlo metric definitions [EST]
 
+**Decision:**
+ - In the "summarize_trajectory" function, the following metrics are used: 
+    - min_dscr_12m: Minimum DSCR in repay period
+    - any_lockup: If there was any lockup event
+    - lockup_semesters: How many semesters in total, were lockups
+    - any_default: If there was any default event
+    - dsra_depleted : DSRA paid less than the shortfall (1 USD tolerance). shortage greater than what the DSRA paid, with a tolerance of 1 USD
+    - sponsor_support: Quantity of money that the sponsors need to inject when DSRA is depleted. sum of negative distributions
+    - equity_irr: Equity IRR
+
+**Why:**
+ - The approach chosen for measuring defaults in the simulation is based on the entire trajectory: it assesses whether at least one default occurs at any point during the 12-year projection period. P(default) is defined as the fraction of simulated future scenarios that include at least one default.
+ - This method is used because it reflects how a loan agreement functions. If the DSCR falls below 1.10 (even just once) it constitutes an event of default. From that moment on, the lender has the right to demand early repayment of the entire debt (a process known as "acceleration"), seize collateral, or renegotiate the terms in its favor. Consequently, from the lender's perspective, a scenario involving one default is essentially just as serious as one involving ten.
+
+**Source:**
+ - Own criteria
+ - Gatti, "Project Finance in Theory and Practice", chapter on loan agreements.
