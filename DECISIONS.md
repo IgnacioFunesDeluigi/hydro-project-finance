@@ -856,3 +856,16 @@ In any case, a bank would still require a contingency in the construction budget
 **Source:**
  - Own criteria
  - Gatti, "Project Finance in Theory and Practice", chapter on loan agreements.
+
+## D35 · 2026-11-08 · Recent-period scenario [EST]
+
+**Decision:**
+- An analysis was conducted for the recent period (2010–2025) with the base-case P90 debt (8.04 M USD) and its fixed schedule, at 65 USD/MWh, with calculations performed for both L=4 and L=8; P(default) = 0% with both L; the other metrics differ by less than 3 points. Given that this is a short time series (16 years), the level of confidence is low. Consequently, this case is reported as sensitivity rather than as a definitive result.
+- Although these 16 years were poor, they were also consistent; the absence of an extreme year during this period does not prove that such events do not occur within the current climate. If the frequency of these events were to remain constant, the probability of not observing any over a 16-year span would be (67/69)^16 = 62%. It is most likely that the sample simply failed to capture any such events.
+
+
+**Why:**
+- At 65 USD/MWh, the lock-up threshold occurs below approximately 42.8 GWh (95% of the P90 value), and the default threshold below approximately 40.5 GWh (90% of the P90 value). Three recent years fall within the "gray zone" (2011 at 42.5, 2020 at 42.0, and 2022 at 41.0), while none fall below 40.5. The two years from the full dataset that would have triggered a default—1969 (34.7) and 1971 (38.4), are not included in this sample.
+
+**Source:**
+- Own criteria 
