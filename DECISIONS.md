@@ -863,12 +863,18 @@ In any case, a bank would still require a contingency in the construction budget
 ## D35 · 2026-11-08 · Recent-period scenario [EST]
 
 **Decision:**
-- An analysis was conducted for the recent period (2010–2025) with the base-case P90 debt (8.04 M USD) and its fixed schedule, at 65 USD/MWh, with calculations performed for both L=4 and L=8; P(default) = 0% with both L; the other metrics differ by less than 3 points. Given that this is a short time series (16 years), the level of confidence is low. Consequently, this case is reported as sensitivity rather than as a definitive result.
-- Although these 16 years were poor, they were also consistent; the absence of an extreme year during this period does not prove that such events do not occur within the current climate. If the frequency of these events were to remain constant, the probability of not observing any over a 16-year span would be (67/69)^16 = 62%. It is most likely that the sample simply failed to capture any such events.
+- An analysis was conducted for the recent period (2010–2025) with the base-case P90 debt (8.04 M USD) and its fixed schedule, at 65 USD/MWh, with calculations performed for both L=4 and L=8; P(default) = 0.00% with both L; the other metrics differ by less than 3 points. Given that this is a short time series (16 years), the level of confidence is low. Consequently, this case is reported as sensitivity rather than as a definitive result.
 
+- Although these 16 years were poor, they were also consistent; the absence of an extreme year during this period does not prove that such events do not occur within the current climate. If the frequency of these events were to remain constant, the probability of not observing any over a 16-year span would be (67/69)^16 = 62%. It is most likely that the sample simply failed to capture any such events.
 
 **Why:**
 - At 65 USD/MWh, the lock-up threshold occurs below approximately 42.8 GWh (95% of the P90 value), and the default threshold below approximately 40.5 GWh (90% of the P90 value). Three recent years fall within the "gray zone" (2011 at 42.5, 2020 at 42.0, and 2022 at 41.0), while none fall below 40.5. The two years from the full dataset that would have triggered a default—1969 (34.7) and 1971 (38.4), are not included in this sample.
+
+**Results:**
+With N=10,000, L=8:
+ - P(lock up) = 81.2%
+ - P(DSRA depleted) = 12.0%
+ - Mean equity IRR = 1.9%
 
 **Source:**
 - Own criteria 
@@ -882,17 +888,23 @@ In any case, a bank would still require a contingency in the construction budget
 - This scenario was chosen because it adds greater significance to the Monte Carlo simulation: it allows us to determine how much the covenant risk for a power plant with a 20% e-flow differs from that of the 10% e-flow base case.
 
 **Results:**
-- Results (65 USD/MWh, L = 8, N = 1,000, seed 42):
-    - P(default) 66.2%
-    - P(lock-up) 70.4%
-    - P(DSRA depleted) 99.0%
-    - Mean sponsor support 1.33 M USD
+- Results (65 USD/MWh, L = 8, N = 10,000, seed 42):
+    - P(default) 62.7%
+    - P(lock-up) 67.6%
+    - P(DSRA depleted) 76.4%
+    - Mean sponsor support 208,076 USD
 
 **Alternative considered:**
 - Alternatively, a scenario was considered in which a simulation is run using an e-flow of 20%, while keeping the fixed P90 debt level from the base case (without recalculation). This scenario models a situation where a loan was originally signed based on an e-flow of 10%, but the regulatory body subsequently increased it to 20%. In this case, we already know from T-08 that applying the P90 value corresponding to a 20% e-flow for every year results in a default being triggered on 24 separate dates.
 
 **Limitation:**
-- the Excel e-flow 20% case uses the base seasonal profile (65.7% in Oct-Mar, D11), while the e-flow 20% series puts 71% in Oct-Mar. Forcing the 65.7% profile leaves P(default) unchanged (66.1%) but lowers P(DSRA depleted) to 78.9% and sponsor support to 0.18 M USD; DSRA and sponsor metrics for this scenario are therefore overstated.
+- the Excel e-flow 20% case uses the base seasonal profile (65.7% in Oct-Mar, D11), while the e-flow 20% series puts 71% in Oct-Mar. Forcing the 65.7% profile leaves P(default) practically unchanged (62.6%) but lowers P(DSRA depleted) to 25.5% and sponsor support to 48,040 USD; DSRA and sponsor metrics for this scenario are therefore overstated.
+
+|E-flow 20%| real series (71%) | Excel's profile (65.7%)|
+|:------|:------|:------|
+|P(default)| 62.7%| 62.6%|
+|P(DSRA depleted)| 76.4%|25.5%|
+|Sponsor support| 208,076 USD| 48,040 USD|
 
 **Source:**
 - Own criteria 
@@ -940,3 +952,35 @@ Comparison: Predictions in D30 vs actual results:
 **Source:**
 - Own criteria 
 - D30
+
+## D38 · 2026-11-10 · Number of simulations and convergence [EST]
+
+**Decision:**
+-  It was decided to use a number of runs N = 10,000.
+
+**Why:**
+
+N test result table:
+|N|p_default|se|±95%|ci_low|ci_high|
+|:-----|:-----|:-----|:-----|:-----|:-----|
+|1000 |0.2600	|0.0139|	0.0272|	0.2328|	0.2872|
+|5000	|0.2414	|0.0061	|0.0119	|0.2295	|0.2533|
+|10000	|0.2444	|0.0043|	0.0084	|0.2360|	0.2528|
+|20000	|0.2442	|0.0030	|0.0060	|0.2383	|0.2502|
+
+Seed test result table:
+|seed|N|p_default|se|ci_low|ci_high|
+|:-----|:-----|:-----|:-----|:-----|:-----|
+|	1	|10000|	0.2525|	0.0043	|0.2440|	0.2610|
+|2	|10000|	0.2444	|0.0043	|0.2360|	0.2528|
+|3|	10000	|0.2499|	0.0043|	0.2414|	0.2584|
+|4	|10000	|0.2412	|0.0043	|0.2328	|0.2496|
+|5|	10000|	0.2523	|0.0043|	0.2438	|0.2608|
+|42	|10000	|0.2444	|0.0043	|0.2360	|0.2528|
+
+**Conclusion:** 
+ - Note that the deviation between seeds is 0.47. Comparing this to the deviation of 0.43 observed for each individual seed, we can conclude that the two values are of similar magnitude; therefore, the variation is driven by the randomness associated with the seed. 
+ - Furthermore, it should be noted that for the chosen value of N = 10,000, the variation is 0.85 points, which is a small figure when compared to the differences reported earlier: 6 points for H3, 12 points for the tariff change, and 4 points for the tax change.
+
+**Source:**
+- Own criteria 
