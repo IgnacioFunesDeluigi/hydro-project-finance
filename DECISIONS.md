@@ -849,6 +849,9 @@ In any case, a bank would still require a contingency in the construction budget
     - sponsor_support: Quantity of money that the sponsors need to inject when DSRA is depleted. sum of negative distributions
     - equity_irr: Equity IRR
 
+**Corrections:**
+ - [CORRECTION:2026-11-10]; Both metrics: DSRA depleted and Sponsor Support are limited to the loan term, because after maturity the CFADS may turn negative during dry periods (given a fixed price until year 20 and O&M costs escalating at 2%); this represents an operational risk for the sponsor, not the bank.
+
 **Why:**
  - The approach chosen for measuring defaults in the simulation is based on the entire trajectory: it assesses whether at least one default occurs at any point during the 12-year projection period. P(default) is defined as the fraction of simulated future scenarios that include at least one default.
  - This method is used because it reflects how a loan agreement functions. If the DSCR falls below 1.10 (even just once) it constitutes an event of default. From that moment on, the lender has the right to demand early repayment of the entire debt (a process known as "acceleration"), seize collateral, or renegotiate the terms in its favor. Consequently, from the lender's perspective, a scenario involving one default is essentially just as serious as one involving ten.
@@ -870,7 +873,7 @@ In any case, a bank would still require a contingency in the construction budget
 **Source:**
 - Own criteria 
 
-## D36 · 2026-11-08 · E-flow 20% scenario with its own P90 debt [EST]
+## D36 · 2026-11-09 · E-flow 20% scenario with its own P90 debt [EST]
 
 **Decision:**
 - It was decided to analyze the 20% e-flow scenario (as opposed to the base case, where e-flow = 10%) using its corresponding P90 debt figure (5.22 M). This approach assumes that the power plant is financed with the prior knowledge that the ecological flow will be 20% (rather than it changing at some point later). 
@@ -894,3 +897,46 @@ In any case, a bank would still require a contingency in the construction budget
 **Source:**
 - Own criteria 
 
+## D37 · 2026-11-10 · H3 test result [EST]
+
+**Decision:**
+- **Conclusion:** H3 is rejected for the lender: assuming independent years overstates the probability of a covenant default (30% vs 24%), because persistence concentrates the extreme dry years in fewer trajectories. It holds for the sponsor: independence halves the dispersion of the equity IRR. The direction of both effects was pre-registered in D30.
+The same happens for a tariff = 100.77 USD/MWh 
+
+**Why [N = 10,000, seed 42, base case at 65 USD/MWh]:**
+
+With Tariff = 65 USD/MWh:
+
+|Metric|L=1 (independent years)|L=8 (reference case)|Conclusion|
+|:-----|:-----|:-----|:-----|
+|P(default)|30.4%|24.4%| L=1 overestimates P(default) over 6 points|
+|P(DSRA depleted)| 10.0%| 10.0%| No effect|
+|Sponsor support|5,292 USD |2,627 USD | Practically no effect: very low USD contribution|
+|Semesters in lockup| 1.15| 1.27| Rises 10%|
+|Equity IRR standard deviation| 0.39% | 0.74%| L=1 underestimates it by half|
+
+Compating L=4 vs L=12:
+
+|Metric|L=4|L=10 |L=12| Conclusion|
+|:-----|:-----|:-----|:-----|:-----|
+|P(default)|25.8%|27.5%|23.4%| For L = 4 to 12, P(default) ranges from 23.3% (L=6) to 27.5% (L=10); non-monotonic, within about 2 points of the reference|
+
+With Tariff = 100.77 USD/MWh:
+
+|Metric|L=1 (independent years)|L=8 (reference case)|Conclusion|
+|:-----|:-----|:-----|:-----|
+|P(default)|47.8%|36.3%| L=1 overestimates P(default) over 11.5 points|
+
+Comparison: Predictions in D30 vs actual results:
+
+|D30 Metric|Prediction|Result (N=10000) |Conclusion|
+|:-----|:-----|:-----|:-----|
+|P(default)|Lower with High L|30.4% -> 24.4%| Correct prediction|
+|P(DSRA depleted)| Goes up | Remains the same 10% -> 10% | Wrong prediction |
+|Sponsor support| Goes up | 5.292 USD -> 2.628 USD | Inmaterial change: it was less than 0.1% of the total debt |
+|Semesters in lockup| Practically the same | +10% | Approximatelly correct prediction |
+|Equity IRR standard deviation| Goes up  | 0.39% -> 0.74% | Correct prediction |
+
+**Source:**
+- Own criteria 
+- D30

@@ -24,10 +24,10 @@ def summarize_trajectory(r, c):
         "any_lockup": bool(r["lockup"].sum() > 0),  # If there was any lockup event
         "lockup_semesters": int(np.sum(r["lockup"] == 1 )) ,  # How many semesters in total, were lockups
         "any_default": bool(r["default"].sum() > 0),  # If there was any default event
-        "dsra_depleted": bool(np.any(shortfall - r["withdrawal"] > 1)),   # DSRA paid less than the shortfall (1 USD tolerance)
-        "sponsor_support": -1 * np.sum(r["distributions"][r["distributions"] < 0]),
-        "equity_irr": r["equity_irr"],
-    }
+        "dsra_depleted": bool(np.any((shortfall - r["withdrawal"])[repay] > 1)), # DSRA paid less than the shortfall (1 USD tolerance)
+        "sponsor_support": -1 * np.sum(r["distributions"][repay][r["distributions"][repay] < 0]), # Equity injected by the sponsors during the loan
+        "equity_irr": r["equity_irr"], # Equity IRR
+       }
 
 
 def simulate(table, c, n_sims, L, rng, n_years=30):
