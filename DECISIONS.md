@@ -869,3 +869,28 @@ In any case, a bank would still require a contingency in the construction budget
 
 **Source:**
 - Own criteria 
+
+## D36 · 2026-11-08 · E-flow 20% scenario with its own P90 debt [EST]
+
+**Decision:**
+- It was decided to analyze the 20% e-flow scenario (as opposed to the base case, where e-flow = 10%) using its corresponding P90 debt figure (5.22 M). This approach assumes that the power plant is financed with the prior knowledge that the ecological flow will be 20% (rather than it changing at some point later). 
+
+**Why:**
+- This scenario was chosen because it adds greater significance to the Monte Carlo simulation: it allows us to determine how much the covenant risk for a power plant with a 20% e-flow differs from that of the 10% e-flow base case.
+
+**Results:**
+- Results (65 USD/MWh, L = 8, N = 1,000, seed 42):
+    - P(default) 66.2%
+    - P(lock-up) 70.4%
+    - P(DSRA depleted) 99.0%
+    - Mean sponsor support 1.33 M USD
+
+**Alternative considered:**
+- Alternatively, a scenario was considered in which a simulation is run using an e-flow of 20%, while keeping the fixed P90 debt level from the base case (without recalculation). This scenario models a situation where a loan was originally signed based on an e-flow of 10%, but the regulatory body subsequently increased it to 20%. In this case, we already know from T-08 that applying the P90 value corresponding to a 20% e-flow for every year results in a default being triggered on 24 separate dates.
+
+**Limitation:**
+- the Excel e-flow 20% case uses the base seasonal profile (65.7% in Oct-Mar, D11), while the e-flow 20% series puts 71% in Oct-Mar. Forcing the 65.7% profile leaves P(default) unchanged (66.1%) but lowers P(DSRA depleted) to 78.9% and sponsor support to 0.18 M USD; DSRA and sponsor metrics for this scenario are therefore overstated.
+
+**Source:**
+- Own criteria 
+
