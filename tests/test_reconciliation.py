@@ -10,6 +10,7 @@ FIXTURES = [
     "tests/fixtures/eco20_p90debt.xlsx",
     "tests/fixtures/tariff100_p90.xlsx",
     "tests/fixtures/eco20_sized.xlsx",
+    "tests/fixtures/p50_sized.xlsx",
 ]
 
 

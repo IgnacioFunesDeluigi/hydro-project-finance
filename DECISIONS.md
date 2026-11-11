@@ -1025,4 +1025,21 @@ MECHANISM 2 : SPEARMAN'S CORRELATION:
 | longest_dry_run|	-0.3649 |	1.0000 |	-0.4651||
 | min_annual_energy|	0.9389 |	-0.4651 |1.0000||
 
+## D40 · 2026-11-11 · Monte Carlo with the debt sized at P50 [EST]
+
+**Decision:**
+- It is decided to include the P50 analysis, along with the debt associated with this scenario. For this purpose, the 'p50_sized' fixture (selector = 1, mode = 1) was created, along with its corresponding debt. Using this fixture, the relevant simulation was performed and added to the results table.
+
+**Why:**
+- It has been decided to include the P50 scenario, along with its corresponding debt, in order to address the project’s central question, which requires comparing the modeled P90 and P50 scenarios, each with its respective debt.
+
+**Results (N = 10,000, L = 8, seed 42, 65 USD/MWh):**
+- Debt = 11.94 M USD
+- P(Default) = 94.4%
+- P(lockup) = 97.1%
+- average quantity of semesters in lockup = 9.5
+- P(DSRA depleted) = 42.3%
+
+**Source:**
+- Own criteria
 
