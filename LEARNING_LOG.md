@@ -512,3 +512,74 @@
   - Diagnóstico de las ventanas de septiembre, derivación de la opción A y propuesta de fórmulas y checks.
   - Verificación independiente de todos los valores con una réplica en Python.
   - Redacción de D29 y actualización del model book, del README y de este registro.
+
+## 2026-11-05 a 2026-11-07 · 9 h (estimado, confirmar)
+_Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ignacio._
+- Hice:
+  - Paso 3.1: conceptos de Monte Carlo, bootstrap, bootstrap por bloques circular, error estándar y semillas.
+  - D30: predicciones preregistradas para H3, métrica por métrica, antes de simular.
+  - D31: simulación principal con la deuda P90 fija y su cronograma (opción A).
+  - Paso 3.2: `src/cashflow.py` con `read_row`, `load_constants` y `run_trajectory` (energía, ingresos, EBITDA, impuestos con quebrantos FIFO, CFADS, DSRA, DSCR a 12 meses, lock-up, default, distribuciones y equity IRR). Coincide con el Excel del caso base semestre por semestre.
+  - Paso 3.3: D32 (alcance de la conciliación), tres fixtures del Excel y `tests/test_reconciliation.py` con pytest; el T-08 corrido en v1.2 (24 lock-up y 24 default).
+  - Paso 3.4: autocorrelación real contra 0,64^k, Politis-White (L = 8, D33).
+- Aprendí:
+  - Por qué el Monte Carlo sortea futuros en lugar de elegir una trayectoria representativa (el banco mira la cola, no el promedio).
+  - Por qué L = 1 rompe la persistencia y L = 12 repite la historia; cómo elegir L con la banda de 1,96/√n y con Politis-White.
+  - Separar lo que cambia con la hidrología (ingresos, impuestos, CFADS, DSCR) de lo que no (CAPEX, intereses, servicio de deuda con la deuda fija).
+  - Por qué un covenant default puede dispararlo un solo año y la DSRA no lo evita (la DSRA no entra en el CFADS).
+  - Escribir la predicción antes del resultado (preregistro) y fecharla con un commit.
+- Errores:
+  - Sangría: código fuera del bucle o de la función; `np.min(a, b)` en lugar de `min(a, b)`; usar `opening` de otro bucle; `[t]` de más o de menos; `^` en lugar de `**`.
+  - Fin de línea CRLF en varios archivos (resuelto con `core.autocrlf input`).
+  - Test escrito en `tests/fixtures/` y una comprobación comparando contra la fila equivocada.
+- No entendí:
+  - Al principio, la diferencia entre deuda fija y redimensionada (D31) y el alcance de la conciliación (D32); lo entendí con la explicación en palabras simples.
+- Ayuda de IA:
+  - Explicaciones de conceptos con fuentes; esqueletos de código de cada bloque de `run_trajectory`; el test de conciliación (agregué 4 comprobaciones); detección de bugs; cálculo de Politis-White y verificación independiente de todos los resultados contra el Excel; borrado de caracteres invisibles en `DECISIONS.md`.
+
+## 2026-11-08 a 2026-11-09 · 7 h (estimado, confirmar)
+_Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ignacio._
+- Hice:
+  - Muestreador `block_bootstrap` (bloques circulares con `%`) en `src/bootstrap.py` y primera trayectoria: 1969 dispara el default.
+  - `summarize_trajectory` y `simulate`; D34 (definición de las métricas).
+  - Simulaciones a 65 y a 100,77 USD/MWh; prueba sin impuesto (ablación) que mide el timing impositivo.
+  - Período reciente 2010-2025 con L = 4 y L = 8 (D35): cero defaults y más lock-ups.
+  - Serie semestral de e-flow 20% exportada del notebook 01; fixture `eco20_sized.xlsx` y simulación con su propia deuda (D36).
+- Aprendí:
+  - El caso P90 es pesimista en promedio pero no en los extremos: supone 45 GWh todos los años y nunca un 1969.
+  - El apalancamiento operativo (1,85): cada 1% de energía que falta saca casi 2% de CFADS.
+  - Un año húmedo puede provocar un default años después: el sculpting supone cuándo se usan los quebrantos.
+  - Números aleatorios comunes: comparar escenarios con la misma semilla.
+  - La falta de un año extremo en 16 años no prueba que no exista (62% de no verlo aunque el clima no cambie).
+  - Un caudal ecológico fijo agranda la dispersión relativa de los años secos.
+- Errores:
+  - Pegar código de prueba dentro de `src/`; claves de diccionario que no existían; reutilizar nombres de variables (`sims`, `c`) que pisaron resultados.
+  - Simular e-flow 20% con la tabla de energía del caso base.
+- No entendí:
+  - El mecanismo del timing impositivo y el del perfil estacional; los entendí con la tabla semestre por semestre.
+- Ayuda de IA:
+  - Esqueletos de `summarize_trajectory` y `simulate`; diagnóstico del timing impositivo y prueba del perfil estacional (D36); verificación independiente de cada resultado; pasos para exportar la serie de e-flow 20%.
+
+## 2026-11-10 a 2026-11-11 · 11 h (estimado, confirmar)
+_Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ignacio._
+- Hice:
+  - Tabla de resultados por escenario (`data/processed/montecarlo_results.csv`).
+  - H3 con L = 1, 2, 4, 6, 8, 10 y 12 (D37): rechazada para el banco, válida para el sponsor.
+  - Convergencia en N y en semillas; N = 10.000 (D38).
+  - H1: racha seca más larga contra año más seco, tabla de 2 × 2 y Spearman (D39): parcialmente rechazada.
+  - Simulación con la deuda dimensionada a P50 (D40): respuesta central completa (94% contra 24%).
+  - Tres gráficos en `docs/figures/`, README de la etapa 3.
+- Aprendí:
+  - Leer una simulación contra su error estándar: con N = 1.000 la mayoría de las "tendencias" eran ruido.
+  - La diferencia entre el promedio y la dispersión (`.mean()` contra `.std()`).
+  - El desvío entre semillas tiene que ser del tamaño del error estándar; si es mucho mayor, hay un bug.
+  - Apalancamiento operativo contra apalancamiento financiero.
+  - Una hipótesis que sale falsa, con el mecanismo entendido y predicho por escrito, es un resultado.
+- Errores:
+  - Una semilla aleatoria sin fijar en la prueba de semillas; el error estándar de una celda anterior usado en otra; notebooks guardados sin correr de arriba abajo.
+  - Tablas de Markdown con encabezados que no coincidían con las filas; números truncados en lugar de redondeados.
+- No entendí:
+  - Al principio, el error en la definición de la DSRA agotada (D34) y cómo se plantea H1; los entendí con la explicación en palabras simples.
+- Ayuda de IA:
+  - La definición inicial de las métricas de DSRA y sponsors la propuso la IA y tenía un error: contaba semestres posteriores al préstamo. La IA lo detectó en una revisión semestre por semestre y se corrigió en D34.
+  - Esqueletos de las pruebas de convergencia, de `longest_run` y del gráfico 1 y su estilo; revisión de los gráficos; arreglos menores del README; actualización del model book (versión 1.3) y borrador de este registro.

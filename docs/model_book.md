@@ -6,12 +6,12 @@
 |---|---|
 | Model file | hydro_pf_model_v1.xlsx |
 | Model version | v1.2 |
-| Model Book version | 1.2 |
-| Date | 04/11/2026 |
+| Model Book version | 1.3 |
+| Date | 11/11/2026 |
 | Author | Ignacio Funes Deluigi |
 | Reviewer | - |
 | Status | Under review  |
-| Related documents | data/processed/semiannual_energy.csv; 01_hydrology.ipynb. |
+| Related documents | data/processed/semiannual_energy.csv; 01_hydrology.ipynb; 03_montecarlo.ipynb; src/cashflow.py; tests/test_reconciliation.py. |
 | Order of precedence | If this book and the workbook disagree, the workbook prevails and the difference is logged in Section 10.2 |
 
 ### 0.1 Change log
@@ -20,6 +20,7 @@
 | 1.0 | 30/10/2026 | Ignacio Funes Deluigi | All | First complete version | n/a |
 | 1.1 | 01/11/2026 | Ignacio Funes Deluigi | All | Step 3.0: interest-only dry semesters, debt floor and zero-debt guards, contract term and post-contract price, LCOE and required tariff | P90 debt 8.065 to 8.063 USD M; equity IRR -2.02% to 0.37%; main answer 32.6% to 32.5% |
 | 1.2 | 04/11/2026 | Ignacio Funes Deluigi | Debt, Checks, Sensitivities | Step 3.0b: sculpting with a constant seasonal transfer c so every 12-month DSCR equals the target (D29); new checks; rate +/-0.5 pt sensitivities | P90 debt 8.063 to 8.043 USD M; min 12-month DSCR 1.19 to 1.35; no lock-up; main answer 32.5% to 32.65%; equity tariff 159.71 to 159.90 |
+| 1.2 (book 1.3) | 11/11/2026 | Ignacio Funes Deluigi | None (workbook unchanged) | Stage 3: workbook reconciled with the Python cash flow chain in 6 fixed-debt scenarios (pytest, D32, D40); T-08 rerun in v1.2; seasonal-profile limitation of the e-flow 20% case logged (D36) | None |
 
 ### 0.2 Review and sign-off
 | Stage | Reviewer | Date | Scope | Result |
@@ -382,11 +383,12 @@ Each sheet uses the same structure: Purpose, Inputs used, Structure, Key calcula
 | T-04 | CAPEX +15% | IRR falls; debt falls through higher O&M | Debt 7.06 USD M | Pass |
 | T-05 | Price = 0 | Revenue 0; debt 0; model runs without errors | Debt 0; zero-debt guards added to DSCR, LLCR, covenants and IRR (D26); all checks 0; IRR N/A | Pass |
 | T-06 | Independent recalculation of all 15 scenarios and the required tariffs outside the workbook (Python replica, AI-assisted review) | Matches model | Debt to the dollar; ratios and IRRs to 4 decimals; tariffs within 0.05 USD/MWh | Pass |
-| T-08 | E-flow 20% with P90 debt (case 4, mode 2) | Checks pass; covenant breaches flagged | v1.1: Model status OK; 24 lock-up and 24 default semesters; DSRA depleted in semester 14. Not rerun in v1.2 (replica: 24 lock-up semesters, min 12-month DSCR 0.82) | Pass (v1.1) |
+| T-08 | E-flow 20% with P90 debt (case 4, mode 2) | Checks pass; covenant breaches flagged | v1.2 (stage 3): Model status OK; 24 lock-up and 24 default semesters; reproduced exactly by the Python chain (tests/fixtures/eco20_p90debt.xlsx) | Pass |
 | T-09 | Model status in every case | OK in cases 1-4 (mode 2) and in the base case | OK in v1.1; base case and all mode 1 scenarios OK in v1.2 | Pass |
 | T-07 | Principal >= 0 every period | No negative amortisation | Now a check (C-26). Principal positive in every semester; lowest in the first dry semester (903 USD, from rounding c) (D29) | Pass |
 | T-10 | Required tariff convergence | Two consecutive Goal Seek rounds within 0.10 USD/MWh | v1.2: 100.77 (replica 100.78); 159.90 (replica 159.85) | Pass |
 | T-11 | Rolling 12-month DSCR (D29) | Every 12-month DSCR = 1.35 in the P90 base case except the first test date | 1.35 in 23 test dates; 1.46 at the first; no lock-up | Pass |
+| T-12 | Python reconciliation (stage 3, D32, D40) | The Python chain (src/cashflow.py) reproduces the workbook within 0.1% | 6 scenarios (base P90, P50 with P90 debt, e-flow 20% with P90 debt, tariff 100.77, e-flow 20% sized, P50 sized): maximum difference 0.0 in CFADS, 12-month DSCR, lock-up and default flags, distributions and DSRA withdrawals; equity IRR equal to 1e-14 (`python -m pytest`) | Pass |
 
 ## 9. Scenarios, sensitivities and uncertainty
 
@@ -457,12 +459,14 @@ MATER contracts in 2025 ranged from 49 to 66 USD/MWh (AGUEERA, wind and solar): 
 ## 10. Known limitations and issue log
 
 ### 10.1 Limitations
-- Constant case energy every year; no sequences of dry years.
+- Constant case energy every year; no sequences of dry years. Addressed outside the workbook by the Monte Carlo simulation of stage 3 (notebooks/03_montecarlo.ipynb).
 - Contract term of 20 years; after the contract the plant recontracts at the same real price (D27). Spot exposure is only tested in option C.
 - Fees and IDC funded with equity and expensed for tax; the tax interpretation has not been reviewed by a tax advisor (D19).
 - Losses expire after 5 years (USD 7.7 M expire in the base case).
 - 40% of the civil works base is not depreciated within the 30-year life (D19).
-- Negative CFADS in the dry semesters of 2056-2059 only under the spot option (option C, D27).
+- Negative CFADS in the dry semesters of 2056-2059 only under the spot option (option C, D27). Under simulated hydrology (stage 3), dry semesters of years 13 to 20 can also have negative CFADS (price flat, O&M escalating 2%): an operating risk for the sponsor after the loan, not for the lender (D34).
+- The semiannual split of every case uses the base seasonal profile (65.7% in October-March, D11). The e-flow 20% series has 71% in October-March, so the e-flow 20% schedule expects more dry-semester energy than the river delivers; in the stage 3 simulation this overstates DSRA depletion and sponsor support, while P(default) is unaffected (D36).
+- The debt schedule is sculpted on post-tax P90 CFADS, so it embeds the timing of tax-loss use. At 100.77 USD/MWh a wet year uses the losses earlier and can push a later 12-month DSCR below 1.10 (stage 3 finding: P(default) 36.3% with tax vs 20.5% without).
 - The seasonal transfer c is constant while dry-semester CFADS falls: the last three dry semesters pay more than their CFADS (semiannual DSCR 0.99, 0.98 and 0.96; last LLCR 0.96). The DSRA covers the gap (15,377 USD), with no sponsor injections; covenants are tested on the 12-month DSCR only (D21, D29).
 - Required tariffs (100.77 and 159.90 USD/MWh) are well above MATER prices (49-66 USD/MWh); the equity hurdle rate is an estimate (VERIFICAR, D28).
 - Sponsor support during lock-up is assumed unlimited; default consequences are not modelled (D24).
@@ -478,6 +482,7 @@ MATER contracts in 2025 ranged from 49 to 66 USD/MWh (AGUEERA, wind and solar): 
 | I-02 | Inputs | Label for Energy price shows "0" instead of OFICIAL/EST/VERIFICAR | Documentation | Closed |
 | I-03 | Tax | Interest row label still reads "placeholder, linked in step 2.6" | Labelling | Closed |
 | I-04 | Debt | With interest-only dry semesters (D25) the October-September 12-month DSCR was not controlled: 1.28 at the first September test date and 1.19 at maturity (below the 1.20 lock-up) | The base case breached its own covenant; would inflate the lock-up probability in the Monte Carlo | Closed (D29, step 3.0b) |
+| I-05 | Operations | Case 4 (e-flow 20%) splits the annual P90 with the base seasonal profile (65.7%) instead of its own (71%) (D11) | Overstates DSRA depletion (76.4% vs 25.5%) and sponsor support in the e-flow 20% Monte Carlo; P(default) unchanged (62.7% vs 62.6%) | Open, documented (D36) |
 
 ## Appendix A. Glossary
 | Term | Definition |
