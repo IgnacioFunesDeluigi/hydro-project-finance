@@ -984,3 +984,45 @@ Seed test result table:
 
 **Source:**
 - Own criteria 
+
+## D39 · 2026-11-11 · H1 test result [EST]
+
+**Decision and verdict:**
+- H1 is partially rejected. Covenant risk is driven by dry years, but by the severity of the single driest year, not by sequences of consecutive dry years: every trajectory with a year below about 40.5 GWh defaults (9 out of 10 defaults), while long dry runs without such a year almost never do (0.3%). The minimum annual energy explains the minimum DSCR far better than the longest dry run (Spearman 0.94 vs −0.36). Long dry runs matter only for lock-ups (48.8% vs 42.7%). Tested on the fixed P90 debt (D31), using P(default) and the minimum DSCR as proxies for debt capacity.
+
+**Why:**
+MECHANISM 1 : 2X2 TABLE:
+P(default):
+
+|long_dry_run	|False|	True|
+|:-----|:-----|:-----|
+|extreme_year| | |
+|False	|0.0634|	0.0030|
+|True	|1.0000	|1.0000|
+
+P(lockup):
+
+|long_dry_run|	False|	True|
+|:----|:----|:----|
+|extreme_year	|	||
+|False|	0.4273|	0.4876|
+|True	|1.0000	|1.0000|
+
+Quantity of runs in each box:
+
+|long_dry_run|	False|	True|
+|:----|:----|:----|
+|extreme_year| | |
+|False	|3878	|3936|
+|True	|414	|1772|
+
+
+MECHANISM 2 : SPEARMAN'S CORRELATION:
+
+| |min_dscr_12m	|longest_dry_run|	min_annual_energy|
+|:------|:------|:------|:------|
+| min_dscr_12m |	1.0000 |	-0.3649 |	0.9389 ||
+| longest_dry_run|	-0.3649 |	1.0000 |	-0.4651||
+| min_annual_energy|	0.9389 |	-0.4651 |1.0000||
+
+

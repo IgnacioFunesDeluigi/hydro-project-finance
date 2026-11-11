@@ -36,5 +36,23 @@ def simulate(table, c, n_sims, L, rng, n_years=30):
     for i in range(n_sims):
         positions = block_bootstrap(len(table), n_years, L, rng)
         r = run_trajectory(table[positions].ravel(), c)
-        rows.append(summarize_trajectory(r, c))
+        row = summarize_trajectory(r, c)
+        n_loan_years = int(c["repayment_flag"].sum() // 2)                 # 24 semesters -> 12 years
+        annual = table[positions].sum(axis=1)[:n_loan_years]                 # energy of each loan year (GWh)
+        dry = annual < np.median(table.sum(axis=1))                          # D5: dry = below the record median
+        row["longest_dry_run"] = longest_run(dry)
+        row["min_annual_energy"] = annual.min()
+        rows.append(row)
     return pd.DataFrame(rows)
+
+def longest_run(flags):
+    """Length of the longest sequence of consecutive True values (e.g. consecutive dry years)."""
+    longest = 0
+    current = 0
+    for f in flags:
+        if f:
+            current = current + 1      # one more dry year in the current run
+        else:
+            current = 0      # the run is broken
+        longest = max(longest, current)          # keep the biggest run seen so far
+    return longest
