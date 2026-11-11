@@ -513,8 +513,7 @@
   - Verificación independiente de todos los valores con una réplica en Python.
   - Redacción de D29 y actualización del model book, del README y de este registro.
 
-## 2026-11-05 a 2026-11-07 · 9 h (estimado, confirmar)
-_Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ignacio._
+## 2026-11-05 a 2026-11-07 · 5 h
 - Hice:
   - Paso 3.1: conceptos de Monte Carlo, bootstrap, bootstrap por bloques circular, error estándar y semillas.
   - D30: predicciones preregistradas para H3, métrica por métrica, antes de simular.
@@ -537,8 +536,7 @@ _Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ig
 - Ayuda de IA:
   - Explicaciones de conceptos con fuentes; esqueletos de código de cada bloque de `run_trajectory`; el test de conciliación (agregué 4 comprobaciones); detección de bugs; cálculo de Politis-White y verificación independiente de todos los resultados contra el Excel; borrado de caracteres invisibles en `DECISIONS.md`.
 
-## 2026-11-08 a 2026-11-09 · 7 h (estimado, confirmar)
-_Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ignacio._
+## 2026-11-08 a 2026-11-09 · 6 h
 - Hice:
   - Muestreador `block_bootstrap` (bloques circulares con `%`) en `src/bootstrap.py` y primera trayectoria: 1969 dispara el default.
   - `summarize_trajectory` y `simulate`; D34 (definición de las métricas).
@@ -560,8 +558,7 @@ _Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ig
 - Ayuda de IA:
   - Esqueletos de `summarize_trajectory` y `simulate`; diagnóstico del timing impositivo y prueba del perfil estacional (D36); verificación independiente de cada resultado; pasos para exportar la serie de e-flow 20%.
 
-## 2026-11-10 a 2026-11-11 · 11 h (estimado, confirmar)
-_Borrador escrito por la IA a partir de la sesión; pendiente de revisión de Ignacio._
+## 2026-11-10 a 2026-11-11 · 5 h
 - Hice:
   - Tabla de resultados por escenario (`data/processed/montecarlo_results.csv`).
   - H3 con L = 1, 2, 4, 6, 8, 10 y 12 (D37): rechazada para el banco, válida para el sponsor.
