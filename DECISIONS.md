@@ -1043,3 +1043,26 @@ MECHANISM 2 : SPEARMAN'S CORRELATION:
 **Source:**
 - Own criteria
 
+## D41 
+
+## D42 · 2026-11-17 · Pre-registered predictions for Influence analysis: excluding the 1967–1972 drought [EST]
+**Decisions and Why:**
+- P90 debt is fixed: With fixed debt, you measure only the effect of the sample.
+- The hydrological years 1967 through 1972, inclusive, identified by the year in which they end (the designation for which can be found in D6),  will be excluded.
+
+- Pre-registered predictions:
+   - P(default): It should change to P(default) < 1%, given that it has previously been shown that default scenarios are triggered by specific, exceptionally poor years [1969, 1971]; therefore, if the interval (1967, 1972) is excluded, those years are effectively removed from the overall dataset.
+   - P(lockup): It should change from 57.6% to 45% < P(lockup) < 50%, as it is triggered by sequences of dry years. By removing the interval (1967, 1972), we are excluding dry years from the series; therefore, the probability of a "lockup" should decrease.
+   - P(DSRA depleted): It should change to 5% < P(DSRA depleted) < 9%. Although the DSRA could be depleted even with a 0% probability of default, the probability would decrease as there would be fewer dry years in the series.
+
+**Limitations:**
+- The circular bootstrap artificially joins 1966 to 1973.
+
+**Source:**
+- D39: H1 result, 40.5 threshold.
+- D35: (recent period, 12.0% of DSRA depleted with 0% default).
+- Stage 3 scenarios table
+- Own criteria
+
+
+
