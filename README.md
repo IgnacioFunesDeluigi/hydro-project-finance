@@ -2,19 +2,25 @@
 If a river's flow is less reliable than the bank assumes, how much less debt can the power plant take on?
 
 ## Project status:
-Work in progress: Module A (hydrology), Stage 2 (financial model) and Stage 3 (Monte Carlo) complete; Next step: publish v1.
+v1.0 (November 2026): hydrology, financial model and Monte Carlo complete. Planned: v2 (flood risk with the thesis design-storm methods, country risk) and v3 (generative flow model)
 
 ## Question and hypotheses:
  - Question: How much senior debt can a run-of-river power plant of approximately 10 MW on an Argentine river (with actual daily flow records) sustain, when sized based on a minimum DSCR calculated against P90 energy production; and what is the probability of breaching the DSCR covenant when historical hydrological variability is simulated?
+     - **Answer:** 
+       - Sizing on P90 instead of P50 cuts senior debt by **32.65%** at 65 USD/MWh and lowers the probability of a default-covenant breach (12-month DSCR below 1.10, not a payment default) during the loan **from 94% to 24%**. 
+       - At 159.90 USD/MWh (the tariff that makes the project viable for equity), the cut is 20.24% when the DSCR binds and 9.31% when the 70% gearing also binds
+       - Excluding the 1967–1972 drought from the resampling pool cuts the probability of a default-covenant breach from 24.4% to 3.0% (an 88% reduction).
+
+
  - Hypothesis:
     - H1: Debt capacity is determined by dry years, in particular by sequences of several consecutive dry years.
-       - **Result:** H1 is partially rejected. Covenant risk is driven by dry years, but by the severity of the single driest year, not by sequences of consecutive dry years: every trajectory with a year below about 40.5 GWh defaults (9 out of 10 defaults), while long dry runs without such a year almost never do (0.3%). The minimum annual energy explains the minimum DSCR far better than the longest dry run (Spearman 0.94 vs −0.36). Long dry runs matter only for lock-ups (48.8% vs 42.7%). Tested on the fixed P90 debt (D31), using P(default) and the minimum DSCR as proxies for debt capacity.
+       - **Result:** H1 is partially rejected. Covenant risk is driven by dry years, but by the severity of the single driest year, not by sequences of consecutive dry years: every trajectory with a year below about 40.5 GWh defaults, and 9 out of 10 defaults come from those trajectories, while long dry runs without such a year almost never do (0.3%). The minimum annual energy explains the minimum DSCR far better than the longest dry run (Spearman 0.94 vs −0.36). Long dry runs matter only for lock-ups (48.8% vs 42.7%). Tested on the fixed P90 debt (D31), using P(default) and the minimum DSCR as proxies for debt capacity. Excluding 1967–1972, P(default) falls to 3.0%, and the 3.0% residual comes from tax timing at the last two test dates (D42).
 
     - H2: The design-storm method changes the spillway CAPEX and the tail losses (flood damage and downtime), but has little impact on the debt sized at P90.
        - **Result:** pending (v2, stage 5) 
 
     - H3: If the years are modeled as independent (ignoring the fact that a dry year often follows another), the probability of breaching the covenant is underestimated. 
-       - **Result:** H3 is rejected for the lender: assuming independent years overstates the probability of a covenant default (30% vs 24%), because persistence concentrates the extreme dry years in fewer trajectories. It holds for the sponsor: independence halves the dispersion of the equity IRR. The direction of both effects was pre-registered in D30. The same happens with a tariff = 100.77 USD/MWh (47.8% vs 36.3%).
+       - **Result:** H3 is rejected for the lender: assuming independent years overstates the probability of a default-covenant breach (30.4% vs 24.4%), because persistence concentrates the extreme dry years in fewer trajectories. It holds for the sponsor: independence halves the dispersion of the equity IRR. The direction of both effects was pre-registered in D30. The same happens with a tariff = 100.77 USD/MWh (47.8% vs 36.3%).
          ![P(default) and equity IRR dispersion versus block length L](docs/figures/h3_block_length.png)
  - [Project charter](docs/project_charter.md)
 
@@ -38,7 +44,7 @@ Work in progress: Module A (hydrology), Stage 2 (financial model) and Stage 3 (M
  - Graph: Annual energy 
  ![Annual energy](docs/figures/annual_energy.png)
 
-  - **Most important result:** The results from section 1.14 indicate a total of 24 runs (wet and dry years) against an expected 35.5, with a z-score of −2.79 and an autocorrelation of 0.64. This points to a persistence of dry years: independence is rejected at 95% confidence (a bad year tends to be followed by another bad year). Nevertheless, the impact on debt capacity will be analyzed in the subsequent stages (2 and 3).
+  - **Most important result:** The results from section 1.14 indicate a total of 24 runs (wet and dry years) against an expected 35.5, with a z-score of −2.79 and an autocorrelation of 0.64. This points to a persistence of dry years: independence is rejected at 95% confidence (a bad year tends to be followed by another bad year). Its effect on covenant risk is tested in H3 (above).
 
  - Sensitivity Analysis: Comparative Table of Scenarios
 
@@ -76,14 +82,14 @@ Scenarios:
     - 100.77 USD/MWh for a project IRR equal to the cost of debt (9%).
     - 159.90 USD/MWh for an equity IRR equal to the hurdle rate (18.88%, Damodaran estimate, VERIFICAR).
     - Both are far above the 49-66 USD/MWh of MATER contracts in 2025 (wind and solar): this plant could not win a contract at those prices.
- - At 159.90 USD/MWh the debt reduction falls to 20.2% on the DSCR alone, because of operating leverage: fixed O&M weighs less as the price rises, so CFADS falls less than proportionally to energy (limit about 21%). The actual reduction is 9.3%, because the P50 debt hits the 70% gearing limit.
+ - At 159.90 USD/MWh the debt reduction falls to 20.24% on the DSCR alone, because of operating leverage: fixed O&M weighs less as the price rises, so CFADS falls less than proportionally to energy (limit about 21%). The actual reduction is 9.31%, because the P50 debt hits the 70% gearing limit.
  - Most material assumption: the ecological flow. At 20% of the mean flow, P90 debt falls from 8.04 to 5.22 USD M (−35%), more than any financial sensitivity (price ±10%: ±18%; CAPEX ±15%: about ±12%).
 
 ## Results from the Monte Carlo simulation (Stage 3):
-- **Main answer: Sizing on P90 instead of P50 cuts senior debt by 32.65% and lowers the probability of a covenant default during the loan from 94% to 24%.**
+- **Main answer: Sizing on P90 instead of P50 cuts senior debt by 32.65% and lowers the probability of a default-covenant breach during the loan from 94% to 24%.**
 
 - Graph: P(default) by scenario
-![Probability of covenant default by debt sizing and scenario](docs/figures/p_default_by_scenario.png)
+![Probability of default-covenant breach by debt sizing and scenario](docs/figures/p_default_by_scenario.png)
 
 - Scenario table: P(default), P(lock-up), P(DSRA depleted), average equity IRR
 
@@ -106,6 +112,13 @@ Scenarios:
     - At viable tariff (100.77 USD/MWh), the default probability (P(default)) rises from 24% to 36% due to the timing of taxes: in a wet year, tax losses are utilized sooner than the "sculpting" process had assumed (without taxes, the figure would be 21%).
     - With a 20% e-flow and with its own P90 debt (5.22 M USD), the probability of default is 63%: a fixed ecological flow increases the relative dispersion during dry years.
 
+- **Robustness: excluding the 1967–1972 drought**:
+    - Excluding the 1967–1972 drought from the resampling pool cuts the probability of a default-covenant breach [P(default)] from 24.4% to 3.0% (an 88% reduction).
+    - P(lockup) fell from 57.6% to 44.97%.
+    - P(DSRA depleted): It decreased from 10.0% to 6.1%.
+    - The 3.0% residual is not driven by drought years: wetter loan lives use up tax losses earlier, so tax at the second-to-last test date roughly doubles (299k vs 155k USD) and a moderately weak final year pushes the 12-month DSCR below 1.10
+    - Predictions pre-registered in D42. Results: [robustness_drought_exclusion.csv](data/processed/robustness_drought_exclusion.csv)
+
 ## Method:
  - data quality control: Rename rows and columns, standardize the data, and verify the results. Identify expected days, missing days, and duplicate dates.  
  - Hydrological year: Organize the time series by hydrological year; identify wet and dry years using own criteria [dry year = annual mean flow below the median of the 69 complete hydrological years (D5)].
@@ -122,6 +135,7 @@ Scenarios:
  - Develop a cash flow chain, replicating the logic from the Excel model in Python—and reconcile it against the Excel model across 6 scenarios using `pytest` (D32).
  - Set a fixed value of N (N = 10,000) by performing convergence tests and verified seed tests (D38).
  - Pre-register the expected direction of each H3 metric before running the simulation (D30).
+ - Conduct a robustness test by removing the 1967–1972 drought period from the corresponding time series.
 
 ## Principal assumptions and limitations:
  - No official source was found that establishes a specific value or methodology for determining the ecological flow. Tennant 10% (VERIFICAR: no local regulation found); it is the most material assumption: at 20%, P90 falls 19.4% 
@@ -135,6 +149,8 @@ Scenarios:
  - Bootstrapping cannot generate years that are drier than those in the historical record, as it is based on the historical series of years.
  - Country risk, the exchange rate, and the energy buyer's risk have not yet been modeled.
  - Financial model: no terminal value; price fixed in nominal USD during the contract; spot exposure after the contract only as a sensitivity (D27); the equity hurdle rate is an estimate (VERIFICAR); the required tariffs come from manual Goal Seek rounds (±0.10 USD/MWh). Full list in the [model book](docs/model_book.md), section 10.
+ - The covenant-breach tail rests on two years of a single drought (1969 and 1971, 1967–1972 episode)
+ - Tax treatment (D19) not reviewed by an accountant
 
 For a more complete list of assumptions and limitations, see: [DECISIONS.md](DECISIONS.md)
 
@@ -144,6 +160,7 @@ For a more complete list of assumptions and limitations, see: [DECISIONS.md](DEC
        - annual_energy.csv
        - semiannual_energy.csv
        - montecarlo_results.csv
+       - robustness_drought_exclusion.csv
     - raw: SNIH data
  - Docs
     - figures: .png graph files
@@ -197,6 +214,7 @@ What the AI did:
  - Stage 2: research of sources (MATER, spot prices, Damodaran, Bodmer), proposed formula designs (sculpting window, zero-debt guards), independent recalculation of the model in Python, and edits to DECISIONS.md, the model book and this README
  - Personal study guide (PDF) and closing report, outside the repository
  - Stage 3: explanations of concepts with sources; code skeletons for each block of the cash flow chain, the bootstrap sampler and the simulation loop; the reconciliation test (I added four of its checks); chart 1 and the chart style; bug detection; the initial definition of the DSRA and sponsor metrics, which had an error later corrected (D34); the diagnosis of the tax-timing and seasonal-profile mechanisms (D36); independent verification of all results; minor README fixes
+ - Diagnosis of the 3.0% residual mechanism
 
 What I did:
  - Defined the research question, hypotheses (H1-H3) and project charter; set up the repository and the conda environment.
@@ -208,5 +226,8 @@ What I did:
  - Wrote the README, DECISIONS.md and LEARNING_LOG.md, and corrected them after each review.
  - Passed the stage gate: explained P50 vs P90 and the design-flow choice without notes.
  - Stage 3: the formulas of the cash flow chain in Python; the Excel fixtures; the pre-registered predictions (D30) and decisions D30-D40; the simulations, convergence and seed tests; the interpretation of the results (with guidance on the tax-timing and seasonal-profile mechanisms); charts 2 and 3
+ - D42 pre-registered predictions
+ - Robustness test
+ - Robustness test result interpretation
 
 ## License: MIT
