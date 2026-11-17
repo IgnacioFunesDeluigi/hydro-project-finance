@@ -1058,6 +1058,11 @@ MECHANISM 2 : SPEARMAN'S CORRELATION:
 **Limitations:**
 - The circular bootstrap artificially joins 1966 to 1973.
 
+**Result (2026-11-17):** 
+- P(default) 3.0% (predicted < 1%: failed; residual driven by tax timing at the last two test dates).
+-  P(lockup) 44.97% (predicted 45–50%: missed by 0.03 points, within one standard error).
+- P(DSRA depleted) 6.1% (predicted 5–9%: met).
+
 **Source:**
 - D39: H1 result, 40.5 threshold.
 - D35: (recent period, 12.0% of DSRA depleted with 0% default).

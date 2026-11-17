@@ -27,8 +27,8 @@ def summarize_trajectory(r, c):
         "dsra_depleted": bool(np.any((shortfall - r["withdrawal"])[repay] > 1)), # DSRA paid less than the shortfall (1 USD tolerance)
         "sponsor_support": -1 * np.sum(r["distributions"][repay][r["distributions"][repay] < 0]), # Equity injected by the sponsors during the loan
         "equity_irr": r["equity_irr"], # Equity IRR
-       }
-
+        "first_default_semester": int(np.argmax(r["default"] == 1)) if r["default"].sum() > 0 else -1,  # semester index of the first default (-1 = no default)    
+    }
 
 def simulate(table, c, n_sims, L, rng, n_years=30):
     """Run n_sims block-bootstrap trajectories and return one row of results per trajectory."""
@@ -42,6 +42,8 @@ def simulate(table, c, n_sims, L, rng, n_years=30):
         dry = annual < np.median(table.sum(axis=1))                          # D5: dry = below the record median
         row["longest_dry_run"] = longest_run(dry)
         row["min_annual_energy"] = annual.min()
+        row["mean_annual_energy"] = annual.mean()       # average energy over the loan years (GWh)
+        row["tax_sem26"] = r["tax"][26]                  # tax paid at the second-to-last test date (USD)
         rows.append(row)
     return pd.DataFrame(rows)
 
